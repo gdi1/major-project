@@ -10,6 +10,7 @@ const PreviewPanel = () => {
   const { constraintLists, focusedConstraint } = useSelector(
     (state) => state.currentConstraint
   );
+  console.log(constraintLists);
   const dispatch = useDispatch();
   const setFocused = (x) => {
     if (x === focusedConstraint) return;

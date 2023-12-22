@@ -28,7 +28,38 @@ const constraintsSlice = createSlice({
     ],
     constraints: [],
   },
-  reducers: {},
+  reducers: {
+    addNewConstraint(state, action) {
+      state.constraints.push({ ...action.payload, type: "hard" });
+    },
+    removeConstraint(state, action) {
+      const index = action.payload;
+      state.constraints.splice(index, 1);
+    },
+    addTeam(state, action) {
+      state.teams.push({
+        value: state.teams.length + 1,
+        label: action.payload,
+      });
+    },
+    addLocation(state, action) {
+      state.locations.push({
+        value: state.locations.length + 1,
+        label: action.payload,
+      });
+    },
+    addPeriod(state, action) {
+      state.periods.push({
+        value: state.periods.length + 1,
+        label: action.payload,
+      });
+    },
+    addWeeks(state, action) {
+      state.weeks = [];
+      for (let i = 1; i <= action.payload; i++)
+        state.weeks.push({ value: i, label: `Week ${i}` });
+    },
+  },
 });
 
 export const constraintsActions = constraintsSlice.actions;

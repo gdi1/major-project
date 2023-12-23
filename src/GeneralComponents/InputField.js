@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const InputField = styled.input`
   color: #${text_styles.colors.black};
-  font-size: ${text_styles.resizbale_font.small_med};
+  font-size: ${text_styles.resizbale_font.small_minus};
   font-weight: bold;
 `;
 

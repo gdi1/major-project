@@ -1,15 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { findInsertIndex } from "../Utilities/BinarySearch";
 
 const currentConstraintSlice = createSlice({
   name: "currentConstraintSlice",
   initialState: {
     constraintLists: [[0]],
     focusedConstraint: 0,
+    name: undefined,
   },
   reducers: {
     addNewConstraintBlock(state, action) {
       const type = action.payload;
-      //   const last = state.constraintLists.length - 1;
       const selectedConstraintIndex = state.focusedConstraint;
       const multiselect_types = ["locations", "weeks", "periods", "teams"];
 
@@ -31,19 +32,31 @@ const currentConstraintSlice = createSlice({
         ]);
         state.focusedConstraint += 2;
       } else if (multiselect_types.includes(type)) {
-        state.constraintLists[selectedConstraintIndex].push({
-          type,
-          options: [],
-        });
+        state.constraintLists[selectedConstraintIndex].splice(
+          findInsertIndex(state.constraintLists[selectedConstraintIndex], type),
+          0,
+          {
+            type,
+            options: [],
+          }
+        );
       } else if (type === "at-least" || type == "at-most") {
-        state.constraintLists[selectedConstraintIndex].push({
-          type,
-          times: undefined,
-        });
+        state.constraintLists[selectedConstraintIndex].splice(
+          findInsertIndex(state.constraintLists[selectedConstraintIndex], type),
+          0,
+          {
+            type,
+            times: undefined,
+          }
+        );
       } else if (type !== "play-against" && type !== "not-play-against") {
-        state.constraintLists[selectedConstraintIndex].push({
-          type,
-        });
+        state.constraintLists[selectedConstraintIndex].splice(
+          findInsertIndex(state.constraintLists[selectedConstraintIndex], type),
+          0,
+          {
+            type,
+          }
+        );
       } else {
         state.constraintLists[selectedConstraintIndex].push({
           type,

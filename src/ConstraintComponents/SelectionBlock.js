@@ -50,7 +50,9 @@ const ConstraintBlock = ({ type }) => {
   };
 
   return (
-    <Block onClick={() => addConstraintBlock(type)}>{getContentBlock()}</Block>
+    <Block isSelection={true} onClick={() => addConstraintBlock(type)}>
+      {getContentBlock()}
+    </Block>
   );
 };
 

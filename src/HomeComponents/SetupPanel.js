@@ -1,6 +1,4 @@
 import Container from "../GeneralComponents/Container";
-import GeneralButton from "../GeneralComponents/GeneralButton";
-import Label from "../GeneralComponents/Label";
 import { constraintsActions } from "../store/constraints";
 import InputBundle from "./InputBundle";
 
@@ -16,6 +14,7 @@ const SetupPanel = () => {
       width={"50%"}
       border={"1px solid black"}
       flexDirection={"column"}
+      style={{ borderBottom: "0" }}
     >
       {types.map(({ type, updateFunction }) => (
         <InputBundle

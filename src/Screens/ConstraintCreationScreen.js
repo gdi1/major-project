@@ -9,15 +9,18 @@ import ConstraintIterator from "../Utilities/ConstraintIterator";
 import { useNavigate } from "react-router-dom";
 
 const ConstraintCreationScreen = () => {
-  const { constraintLists } = useSelector((state) => state.currentConstraint);
+  const { constraintLists, name } = useSelector(
+    (state) => state.currentConstraint
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const addNewConstraint = () => {
     dispatch(
       constraintsActions.addNewConstraint({
+        name,
         constraintLists,
-        constraint: new ConstraintIterator(constraintLists).parseConstraint(),
+        // constraint: new ConstraintIterator(constraintLists).parseConstraint(),
       })
     );
     navigate("/");

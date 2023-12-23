@@ -45,6 +45,7 @@ const PreviewPanel = () => {
           style={{
             width: `${(list.length - 1 + list[0]) * 200 + 55}px`,
           }}
+          key={x}
         >
           <GeneralButton
             style={{ width: "25px" }}

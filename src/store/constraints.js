@@ -26,11 +26,12 @@ const constraintsSlice = createSlice({
       { value: 2, label: "Option 2" },
       { value: 3, label: "Option 3" },
     ],
-    constraints: [],
+    hardConstraints: [{ name: "item1dwdwad" }, { name: "item2" }],
+    softConstraints: [{ name: "item3" }, { name: "item4" }],
   },
   reducers: {
     addNewConstraint(state, action) {
-      state.constraints.push({ ...action.payload, type: "hard" });
+      state.hardConstraints.push({ ...action.payload });
     },
     removeConstraint(state, action) {
       const index = action.payload;
@@ -58,6 +59,22 @@ const constraintsSlice = createSlice({
       state.weeks = [];
       for (let i = 1; i <= action.payload; i++)
         state.weeks.push({ value: i, label: `Week ${i}` });
+    },
+    addConstraint(state, action) {
+      const { constraint, index, type } = action.payload;
+      const mapIdToList = {
+        soft: state.softConstraints,
+        hard: state.hardConstraints,
+      };
+      mapIdToList[type].splice(index, 0, constraint);
+    },
+    removeConstraint(state, action) {
+      const { index, type } = action.payload;
+      const mapIdToList = {
+        soft: state.softConstraints,
+        hard: state.hardConstraints,
+      };
+      mapIdToList[type].splice(index, 1);
     },
   },
 });

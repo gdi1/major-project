@@ -1,14 +1,17 @@
-import { useSelector, useDispatch } from "react-redux";
-import { constraintsActions } from "../store/constraints";
 import Container from "../GeneralComponents/Container";
 import SetupPanel from "../HomeComponents/SetupPanel";
 import ConstraintsPanel from "../HomeComponents/ConstraintsPanel";
+import Title from "../GeneralComponents/Title";
+import GeneralButton from "../GeneralComponents/GeneralButton";
 
 const HomeScreen = () => {
   return (
-    <Container justifyContent={"space-between"}>
-      <SetupPanel />
-      <ConstraintsPanel />
+    <Container flexDirection={"column"}>
+      <Title>Welcome to Sport Torunament Scheduling</Title>
+      <Container alignItems={"start"}>
+        <SetupPanel />
+        <ConstraintsPanel />
+      </Container>
     </Container>
   );
 };

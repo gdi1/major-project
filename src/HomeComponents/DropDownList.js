@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-const fadeIn = styled.keyframes`
+const fadeIn = keyframes`
   from {
     opacity: 0;
   }
@@ -13,12 +13,18 @@ export const DropdownList = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+  width: 100%;
   background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   animation: ${fadeIn} 0.3s ease-in-out; /* Use the fadeIn animation */
+  max-height: 30vh;
+  overflow: scroll;
+  padding: 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
 `;
 
 export const DropdownItem = styled.div`
-  display: flex;
-  align-items: space-between;
+  width: 50%;
+  white-space: normal;
+  word-break: break-word;
 `;

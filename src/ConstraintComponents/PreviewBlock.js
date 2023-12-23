@@ -87,7 +87,11 @@ const PreviewBlock = ({ block, x, y }) => {
     }
   };
 
-  return <Block onClick={removeConstraintBlock}>{getContentBlock()}</Block>;
+  return (
+    <Block isSelection={false} onClick={removeConstraintBlock}>
+      {getContentBlock()}
+    </Block>
+  );
 };
 
 export default PreviewBlock;

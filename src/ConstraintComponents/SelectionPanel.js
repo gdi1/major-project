@@ -27,7 +27,7 @@ const SelectionPanel = () => {
       padding={paddings.med}
     >
       {block_types.map((type) => (
-        <SelectionBlock type={type} />
+        <SelectionBlock type={type} key={type} />
       ))}
     </Container>
   );

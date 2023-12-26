@@ -9,6 +9,11 @@ const currentConstraintSlice = createSlice({
     name: undefined,
   },
   reducers: {
+    resetCurrentConstraint(state, action) {
+      state.constraintLists = [[0]];
+      state.focusedConstraint = 0;
+      state.name = undefined;
+    },
     addNewConstraintBlock(state, action) {
       const type = action.payload;
       const selectedConstraintIndex = state.focusedConstraint;
@@ -92,6 +97,9 @@ const currentConstraintSlice = createSlice({
     removeConstraintBlock(state, action) {
       const { x, y } = action.payload;
       state.constraintLists[x].splice(y, 1);
+    },
+    setNewConstraintName(state, action) {
+      state.name = action.payload;
     },
   },
 });

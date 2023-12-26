@@ -7,6 +7,7 @@ import GeneralButton from "../GeneralComponents/GeneralButton";
 import { constraintsActions } from "../store/constraints";
 import ConstraintIterator from "../Utilities/ConstraintIterator";
 import { useNavigate } from "react-router-dom";
+import { currentConstraintActions } from "../store/currentConstraint";
 
 const ConstraintCreationScreen = () => {
   const { constraintLists, name } = useSelector(
@@ -23,6 +24,7 @@ const ConstraintCreationScreen = () => {
         // constraint: new ConstraintIterator(constraintLists).parseConstraint(),
       })
     );
+    dispatch(currentConstraintActions.resetCurrentConstraint());
     navigate("/");
   };
 

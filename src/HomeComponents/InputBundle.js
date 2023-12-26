@@ -5,7 +5,8 @@ import Label from "../GeneralComponents/Label";
 import InputField from "../GeneralComponents/InputField";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DropdownItem, DropdownList } from "./DropDownList";
+import { DropdownList } from "./DropDownList";
+import DropDownItem from "./DropDownItem";
 
 const InputBundle = ({ updateFunction, title, type }) => {
   const [fieldVisible, setFieldVisible] = useState(false);
@@ -25,11 +26,6 @@ const InputBundle = ({ updateFunction, title, type }) => {
       dispatch(updateFunction(inputValue));
       setInputValue("");
     }
-  };
-
-  const handleDeleteOption = (index) => {
-    const newOptions = [...options];
-    newOptions.splice(index, 1);
   };
 
   useEffect(() => {
@@ -82,10 +78,9 @@ const InputBundle = ({ updateFunction, title, type }) => {
               </GeneralButton>
             </Container>
           )}
-          {options.map((option) => (
-            <Container>
-              <DropdownItem>{option.label}</DropdownItem>
-              <GeneralButton style={{ width: "20%" }}>X</GeneralButton>
+          {options.map((option, idx) => (
+            <Container key={idx}>
+              <DropDownItem id={idx} option={option} type={type} />
             </Container>
           ))}
         </DropdownList>

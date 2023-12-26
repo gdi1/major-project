@@ -7,7 +7,9 @@ import GeneralButton from "../GeneralComponents/GeneralButton";
 const HomeScreen = () => {
   return (
     <Container flexDirection={"column"}>
-      <Title>Welcome to Sport Torunament Scheduling</Title>
+      <Title style={{ marginBottom: "50px" }}>
+        Welcome to Sport Tournament Scheduling
+      </Title>
       <Container alignItems={"start"}>
         <SetupPanel />
         <ConstraintsPanel />

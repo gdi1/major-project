@@ -7,7 +7,7 @@ const SetupPanel = () => {
     { type: "teams", updateFunction: constraintsActions.addTeam },
     { type: "locations", updateFunction: constraintsActions.addLocation },
     { type: "periods", updateFunction: constraintsActions.addPeriod },
-    { type: "weeks", updateFunction: constraintsActions.addWeeks },
+    { type: "weeks", updateFunction: constraintsActions.addWeek },
   ];
   return (
     <Container
@@ -16,11 +16,12 @@ const SetupPanel = () => {
       flexDirection={"column"}
       style={{ borderBottom: "0" }}
     >
-      {types.map(({ type, updateFunction }) => (
+      {types.map(({ type, updateFunction }, idx) => (
         <InputBundle
           title={type[0].toUpperCase() + type.substring(1)}
           type={type}
           updateFunction={updateFunction}
+          key={idx}
         />
       ))}
     </Container>

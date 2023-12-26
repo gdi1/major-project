@@ -1,6 +1,5 @@
 import { constraintsActions } from "../store/constraints";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Container from "../GeneralComponents/Container";
 import GeneralButton from "../GeneralComponents/GeneralButton";
 import Drag from "./Drag";
@@ -9,21 +8,22 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { useState } from "react";
 import { Constraint } from "./Constraint";
 import Label from "../GeneralComponents/Label";
+import AddConstraintNameModal from "./AddConstraintNameModal";
 
 const ConstraintsPanel = () => {
   const { hardConstraints, softConstraints } = useSelector(
     (state) => state.constraints
   );
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const mapIdToList = {
     soft: softConstraints,
     hard: hardConstraints,
   };
 
-  const goToNewConstraintCreation = () => {
-    navigate("/new-constraint");
+  const addNewConstraint = () => {
+    setIsModalOpen(true);
   };
 
   const handleDragEnd = (result) => {
@@ -52,20 +52,19 @@ const ConstraintsPanel = () => {
       })
     );
   };
+
   return (
-    <Container
-      width={"50%"}
-      border={"1px solid black"}
-      flexDirection={"column"}
-    >
+    <Container width={"50%"} flexDirection={"column"}>
+      <AddConstraintNameModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
       <Container
         justifyContent={"space-evenly"}
         style={{ marginBottom: "20px" }}
       >
         <GeneralButton>Solve configuration</GeneralButton>
-        <GeneralButton onClick={goToNewConstraintCreation}>
-          Add constraint
-        </GeneralButton>
+        <GeneralButton onClick={addNewConstraint}>Add constraint</GeneralButton>
       </Container>
       <Container
         gap={"10px"}

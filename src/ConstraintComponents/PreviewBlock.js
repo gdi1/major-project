@@ -2,8 +2,9 @@ import Select from "react-select";
 import { MultiSelect } from "react-multi-select-component";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Block from "./Block";
+import Block, { CloseButton } from "./Block";
 import { currentConstraintActions } from "../store/currentConstraint";
+import { useState } from "react";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -23,6 +24,7 @@ const blockNames = {
 const PreviewBlock = ({ block, x, y }) => {
   const global_state = useSelector((state) => state.constraints);
   const { focusedConstraint } = useSelector((state) => state.currentConstraint);
+
   const dispatch = useDispatch();
 
   const handleChange = (selectedOptions) => {
@@ -40,6 +42,8 @@ const PreviewBlock = ({ block, x, y }) => {
     { value: 4, label: 4 },
     { value: 5, label: 5 },
   ];
+
+  // const [showCloseButton, setShowCloseButton] = useState(false);
 
   const getContentBlock = () => {
     const { type } = block;
@@ -59,7 +63,6 @@ const PreviewBlock = ({ block, x, y }) => {
               value={block.options}
               onChange={handleChange}
               labelledBy="Select"
-              style={{ maxWidth: "50px" }}
             />
           </div>
         </React.Fragment>
@@ -72,6 +75,7 @@ const PreviewBlock = ({ block, x, y }) => {
             onClick={(e) => {
               if (focusedConstraint === x) e.stopPropagation();
             }}
+            style={{ pointerEvents: "none" }}
           >
             <Select
               options={options}
@@ -90,6 +94,7 @@ const PreviewBlock = ({ block, x, y }) => {
   return (
     <Block isSelection={false} onClick={removeConstraintBlock}>
       {getContentBlock()}
+      {/* {showCloseButton && <CloseButton className="close-btn"></CloseButton>} */}
     </Block>
   );
 };

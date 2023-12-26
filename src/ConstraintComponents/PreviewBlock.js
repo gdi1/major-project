@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Block, { CloseButton } from "./Block";
 import { currentConstraintActions } from "../store/currentConstraint";
 import { useState } from "react";
+import InputField from "../GeneralComponents/InputField";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -43,6 +44,17 @@ const PreviewBlock = ({ block, x, y }) => {
     { value: 5, label: 5 },
   ];
 
+  const handleInputChange = (e) => {
+    const sanitizedValue = e.target.value.replace(/\D/g, "");
+    dispatch(
+      currentConstraintActions.updateOptions({
+        selectedOptions: sanitizedValue,
+        x,
+        y,
+      })
+    );
+  };
+
   // const [showCloseButton, setShowCloseButton] = useState(false);
 
   const getContentBlock = () => {
@@ -75,13 +87,20 @@ const PreviewBlock = ({ block, x, y }) => {
             onClick={(e) => {
               if (focusedConstraint === x) e.stopPropagation();
             }}
-            style={{ pointerEvents: "none" }}
+            style={{ width: "30%" }}
           >
-            <Select
+            <InputField
+              style={{ width: "100%", boxSizing: "border-box" }}
+              type="number"
+              value={block.times}
+              onChange={handleInputChange}
+              placeholder="Only digits allowed"
+            />
+            {/* <Select
               options={options}
               value={block.times}
               onChange={handleChange}
-            />
+            /> */}
           </div>
           {blockNames[type][1]}
         </React.Fragment>

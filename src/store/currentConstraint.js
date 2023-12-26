@@ -51,7 +51,7 @@ const currentConstraintSlice = createSlice({
           0,
           {
             type,
-            times: undefined,
+            times: 0,
           }
         );
       } else if (type !== "play-against" && type !== "not-play-against") {

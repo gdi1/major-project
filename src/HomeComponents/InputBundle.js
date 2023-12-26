@@ -7,10 +7,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DropdownList } from "./DropDownList";
 import DropDownItem from "./DropDownItem";
+import DayAndTimePicker from "./DayAndTimePicker";
+import AddLocationModal from "./AddLocationModal";
 
 const InputBundle = ({ updateFunction, title, type }) => {
   const [fieldVisible, setFieldVisible] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isAddLocationModalOpen, setIsAddLocationModalOpen] = useState(false);
   const options = useSelector((state) => state.constraints[type]);
   const inputRef = useRef();
   const dispatch = useDispatch();
@@ -60,7 +63,7 @@ const InputBundle = ({ updateFunction, title, type }) => {
               +
             </GeneralButton>
           )}
-          {fieldVisible && (
+          {fieldVisible && type !== "periods" && type !== "locations" && (
             <Container gap={"10px"}>
               <InputField
                 value={inputValue}
@@ -77,6 +80,15 @@ const InputBundle = ({ updateFunction, title, type }) => {
                 X
               </GeneralButton>
             </Container>
+          )}
+          {fieldVisible && type === "periods" && (
+            <DayAndTimePicker setFieldVisible={setFieldVisible} />
+          )}
+          {fieldVisible && type === "locations" && (
+            <AddLocationModal
+              setIsModalOpen={setIsAddLocationModalOpen}
+              isModalOpen={isAddLocationModalOpen}
+            />
           )}
           {options.map((option, idx) => (
             <Container key={idx}>

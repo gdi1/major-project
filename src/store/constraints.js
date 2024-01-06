@@ -22,7 +22,11 @@ const constraintsSlice = createSlice({
       { value: 3, label: "Option 3" },
     ],
     locations: [
-      { value: 1, label: "Option 1" },
+      {
+        value: 1,
+        label: "Cluj-Napoca, Cluj Metropolitan Area, Cluj, Romania",
+        coordinates: [50, 20],
+      },
       { value: 2, label: "Option 2" },
       { value: 3, label: "Option 3" },
     ],
@@ -44,9 +48,11 @@ const constraintsSlice = createSlice({
       });
     },
     addLocation(state, action) {
+      const { coordinates, label } = action.payload;
       state.locations.push({
         value: state.locations.length + 1,
-        label: action.payload,
+        coordinates,
+        label,
       });
     },
     addPeriod(state, action) {

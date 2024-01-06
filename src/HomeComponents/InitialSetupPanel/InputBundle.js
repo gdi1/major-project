@@ -1,19 +1,18 @@
 import { useState, useRef, useEffect } from "react";
-import Container from "../GeneralComponents/Container";
-import GeneralButton from "../GeneralComponents/GeneralButton";
-import Label from "../GeneralComponents/Label";
-import InputField from "../GeneralComponents/InputField";
+import Container from "../../GeneralComponents/Container";
+import GeneralButton from "../../GeneralComponents/GeneralButton";
+import Label from "../../GeneralComponents/Label";
+import InputField from "../../GeneralComponents/InputField";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DropdownList } from "./DropDownList";
+import { DropdownList } from "./DropDownComponents";
 import DropDownItem from "./DropDownItem";
 import DayAndTimePicker from "./DayAndTimePicker";
-import AddLocationModal from "./AddLocationModal";
+import AddLocationModal from "./LocationSetup/AddLocationModal";
 
 const InputBundle = ({ updateFunction, title, type }) => {
   const [fieldVisible, setFieldVisible] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isAddLocationModalOpen, setIsAddLocationModalOpen] = useState(false);
   const options = useSelector((state) => state.constraints[type]);
   const inputRef = useRef();
   const dispatch = useDispatch();
@@ -58,7 +57,7 @@ const InputBundle = ({ updateFunction, title, type }) => {
       </Container>
       {showDropdown && (
         <DropdownList>
-          {!fieldVisible && (
+          {(!fieldVisible || type === "locations") && (
             <GeneralButton onClick={() => setFieldVisible(true)}>
               +
             </GeneralButton>
@@ -86,8 +85,8 @@ const InputBundle = ({ updateFunction, title, type }) => {
           )}
           {fieldVisible && type === "locations" && (
             <AddLocationModal
-              setIsModalOpen={setIsAddLocationModalOpen}
-              isModalOpen={isAddLocationModalOpen}
+              setIsModalOpen={setFieldVisible}
+              isModalOpen={fieldVisible}
             />
           )}
           {options.map((option, idx) => (

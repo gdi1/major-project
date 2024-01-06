@@ -11,9 +11,9 @@ const fadeIn = keyframes`
 
 export const DropdownList = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(4, 23%);
   width: 100%;
+  gap: 10px;
   background-color: #fff;
   animation: ${fadeIn} 0.3s ease-in-out; /* Use the fadeIn animation */
   max-height: 30vh;
@@ -21,10 +21,13 @@ export const DropdownList = styled.div`
   padding: 10px;
   box-sizing: border-box;
   border-bottom: 1px solid black;
+  justify-content: space-between;
 `;
 
 export const DropdownItem = styled.div`
-  width: 50%;
-  white-space: normal;
-  word-break: break-word;
+  white-space: nowrap;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
+//word-break: break-word;

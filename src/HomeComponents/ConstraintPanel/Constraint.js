@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import text_styles from "../style-utils/text_styles";
+import text_styles from "../../style-utils/text_styles";
 
 export const Constraint = styled.div`
   display: flex;

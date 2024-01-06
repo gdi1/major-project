@@ -1,6 +1,6 @@
 import Container from "../GeneralComponents/Container";
-import SetupPanel from "../HomeComponents/SetupPanel";
-import ConstraintsPanel from "../HomeComponents/ConstraintsPanel";
+import SetupPanel from "../HomeComponents/InitialSetupPanel/SetupPanel";
+import ConstraintsPanel from "../HomeComponents/ConstraintPanel/ConstraintsPanel";
 import Title from "../GeneralComponents/Title";
 import GeneralButton from "../GeneralComponents/GeneralButton";
 

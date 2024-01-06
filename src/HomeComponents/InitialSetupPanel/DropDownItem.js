@@ -1,16 +1,17 @@
-import { DropdownItem } from "./DropDownList";
-import InputField from "../GeneralComponents/InputField";
+import { DropdownItem } from "./DropDownComponents";
+import InputField from "../../GeneralComponents/InputField";
 import React, { useRef, useState } from "react";
-import GeneralButton from "../GeneralComponents/GeneralButton";
+import GeneralButton from "../../GeneralComponents/GeneralButton";
 import { useDispatch } from "react-redux";
-import { constraintsActions } from "../store/constraints";
+import { constraintsActions } from "../../store/constraints";
+import Container from "../../GeneralComponents/Container";
 
 const DropDownItem = ({ id, option, type }) => {
   const [isEdit, setIsEdit] = useState(false);
   const optionInputRef = useRef();
   const dispatch = useDispatch();
 
-  const handleDeleteOption = (index) => {
+  const handleDeleteOption = () => {
     dispatch(constraintsActions.removeOption({ type, id }));
   };
 
@@ -25,7 +26,7 @@ const DropDownItem = ({ id, option, type }) => {
     setIsEdit(false);
   };
   return (
-    <React.Fragment>
+    <Container gap="10px" justifyContent="end">
       {!isEdit && (
         <DropdownItem onClick={() => setIsEdit(true)}>
           {option.label}
@@ -37,18 +38,14 @@ const DropDownItem = ({ id, option, type }) => {
         </GeneralButton>
       )}
       {isEdit && (
-        <InputField
-          style={{ width: "50%" }}
-          defaultValue={option.label}
-          ref={optionInputRef}
-        />
+        <InputField defaultValue={option.label} ref={optionInputRef} />
       )}
       {isEdit && (
         <GeneralButton style={{ width: "20%" }} onClick={updateOption}>
           ✅
         </GeneralButton>
       )}
-    </React.Fragment>
+    </Container>
   );
 };
 

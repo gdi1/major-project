@@ -1,20 +1,22 @@
-import { constraintsActions } from "../store/constraints";
+import { constraintsActions } from "../../store/constraints";
 import { useSelector, useDispatch } from "react-redux";
-import Container from "../GeneralComponents/Container";
-import GeneralButton from "../GeneralComponents/GeneralButton";
+import Container from "../../GeneralComponents/Container";
+import GeneralButton from "../../GeneralComponents/GeneralButton";
 import Drag from "./Drag";
 import Drop from "./Drop";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useState } from "react";
 import { Constraint } from "./Constraint";
-import Label from "../GeneralComponents/Label";
-import AddConstraintNameModal from "./AddConstraintNameModal";
+import Label from "../../GeneralComponents/Label";
+import AddConstraintNameModal from "../AddConstraintNameModal";
+import { useNavigate } from "react-router-dom";
 
 const ConstraintsPanel = () => {
   const { hardConstraints, softConstraints } = useSelector(
     (state) => state.constraints
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const mapIdToList = {
@@ -63,7 +65,13 @@ const ConstraintsPanel = () => {
         justifyContent={"space-evenly"}
         style={{ marginBottom: "20px" }}
       >
-        <GeneralButton>Solve configuration</GeneralButton>
+        <GeneralButton
+          onClick={() => {
+            navigate("/show-solution");
+          }}
+        >
+          Solve configuration
+        </GeneralButton>
         <GeneralButton onClick={addNewConstraint}>Add constraint</GeneralButton>
       </Container>
       <Container

@@ -8,7 +8,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<HomeScreen />} />
       <Route path="/new-constraint" element={<ConstraintCreationScreen />} />
-      <Route path="/solution" element={<SolutionScreen />} />
+      <Route path="/show-solution" element={<SolutionScreen />} />
       <Route path="/*" element={<Navigate replace to="/" />} />
     </Routes>
   );

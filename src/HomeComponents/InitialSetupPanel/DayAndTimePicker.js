@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import GeneralButton from "../GeneralComponents/GeneralButton";
-import { constraintsActions } from "../store/constraints";
+import GeneralButton from "../../GeneralComponents/GeneralButton";
+import { constraintsActions } from "../../store/constraints";
 import { useState, useRef, useEffect } from "react";
-import Container from "../GeneralComponents/Container";
+import Container from "../../GeneralComponents/Container";
 
 const generateTimeArray = () => {
   const timesArray = [];

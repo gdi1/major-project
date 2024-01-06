@@ -1,5 +1,5 @@
-import Container from "../GeneralComponents/Container";
-import { constraintsActions } from "../store/constraints";
+import Container from "../../GeneralComponents/Container";
+import { constraintsActions } from "../../store/constraints";
 import InputBundle from "./InputBundle";
 
 const SetupPanel = () => {

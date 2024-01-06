@@ -33,7 +33,17 @@ const ConstraintCreationScreen = () => {
       <Container justifyContent={"space-between"}>
         <div></div>
         <Title>New Constraint</Title>
-        <GeneralButton onClick={addNewConstraint}>Add</GeneralButton>
+        <Container width="auto">
+          <GeneralButton
+            onClick={() => {
+              dispatch(currentConstraintActions.resetCurrentConstraint());
+              navigate("/");
+            }}
+          >
+            Back
+          </GeneralButton>
+          <GeneralButton onClick={addNewConstraint}>Add</GeneralButton>
+        </Container>
       </Container>
       <Container justifyContent={"space-evenly"}>
         <SelectionPanel />

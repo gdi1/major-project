@@ -1,62 +1,44 @@
 import { useSelector } from "react-redux";
 import Container from "../../GeneralComponents/Container";
-import styled from "styled-components";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
-import Label from "../../GeneralComponents/Label";
-import React from "react";
-import Game from "./Game";
+import React, { useState, useCallback, useEffect } from "react";
+import ScheduleView from "./ScheduleView";
+import JourneyView from "./JourneyView";
 
 const SolutionPanel = () => {
-  const { schedule } = useSelector((state) => state.solution);
+  const [view, setView] = useState("schedule");
+  const { selectedTeam } = useSelector((state) => state.solution);
+  const switchButtonTitle =
+    view === "schedule" ? "Switch to View Journey" : "Switch to View Schedule";
+  const switchFunction = useCallback(
+    () => (view === "schedule" ? setView("journey") : setView("schedule")),
+    [view]
+  );
+
+  useEffect(() => {
+    if (!selectedTeam) return;
+    const leafletDivInstructions = document.querySelector(
+      ".leaflet-top.leaflet-right"
+    );
+    if (leafletDivInstructions) {
+      leafletDivInstructions.remove();
+    }
+  }, [selectedTeam]);
 
   return (
-    <Container flexDirection="column" justifyContent="start">
-      <Container justifyContent="space-evenly">
-        <GeneralButton onClick={() => {}}>View Schedule</GeneralButton>
-        <GeneralButton onClick={() => {}}>View Journey</GeneralButton>
-      </Container>
-      <Container
-        flexDirection="column"
-        justifyContent="start"
-        alignItems="start"
-      >
-        {schedule.map(({ week, weekSchedule }) => (
-          <React.Fragment>
-            <Label
-              style={{
-                borderBottom: "1px solid black",
-                wdith: "100%",
-                alignSelf: "center",
-              }}
-            >
-              Week {week}
-            </Label>
-            {weekSchedule.map(({ period, games }) => (
-              <React.Fragment>
-                <Label>{period}</Label>
-                <GamesGrid>
-                  {games.map((game) => (
-                    <Game game={game} />
-                  ))}
-                </GamesGrid>
-              </React.Fragment>
-            ))}
-          </React.Fragment>
-        ))}
-      </Container>
+    <Container
+      flexDirection="column"
+      justifyContent="center"
+      width="85%"
+      style={{ padding: "10px" }}
+    >
+      <GeneralButton onClick={switchFunction} style={{ alignSelf: "end" }}>
+        {switchButtonTitle}
+      </GeneralButton>
+      {view === "schedule" && <ScheduleView />}
+      {view === "journey" && <JourneyView />}
     </Container>
   );
 };
-const GamesGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 24%);
-  width: 100%;
-  gap: 10px;
-  background-color: #fff;
-  max-height: 80vh;
-  overflow: scroll;
-  padding: 10px;
-  box-sizing: border-box;
-  justify-content: space-between;
-`;
+
 export default SolutionPanel;

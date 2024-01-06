@@ -1,10 +1,8 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import { Icon } from "leaflet";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import React from "react";
-// import RoutingMachine from "./RoutingMachine";
 import SearchComponent from "./SearchComponent";
 import GeneralButton from "../../../GeneralComponents/GeneralButton";
 import Container from "../../../GeneralComponents/Container";
@@ -22,6 +20,7 @@ const Map = () => {
         style={{ height: "100%" }}
         center={[56.34045804737987, -2.8089025148829703]}
         zoom={13}
+        scrollWheelZoom={false}
         id="leafletmap"
       >
         <TileLayer

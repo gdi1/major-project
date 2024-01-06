@@ -1,14 +1,18 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Container from "../../GeneralComponents/Container";
 import Label from "../../GeneralComponents/Label";
 import Title from "../../GeneralComponents/Title";
+import { solutionActions } from "../../store/solution";
 
 const TeamsPanel = () => {
+  const dispatch = useDispatch();
   const { teams } = useSelector((state) => state.constraints);
+  const { selectedTeam } = useSelector((state) => state.solution);
+
   return (
     <Container
       flexDirection="column"
-      width="10%"
+      width="12%"
       height="90vh"
       overflow="scroll"
       alignItems="center"
@@ -24,8 +28,17 @@ const TeamsPanel = () => {
             padding: "10px",
             border: "1px solid black",
             cursor: "pointer",
+            width: "80%",
+            textAlign: "center",
+            backgroundColor: selectedTeam === team.value ? "blue" : "white",
           }}
-          onClick={() => {}}
+          onClick={() =>
+            dispatch(
+              selectedTeam !== team.value
+                ? solutionActions.selectTeam(team.value)
+                : solutionActions.deselectedTeam(team.value)
+            )
+          }
         >
           {team.label}
         </Label>

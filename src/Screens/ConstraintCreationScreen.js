@@ -17,13 +17,14 @@ const ConstraintCreationScreen = () => {
   const navigate = useNavigate();
 
   const addNewConstraint = () => {
-    dispatch(
-      constraintsActions.addNewConstraint({
-        name,
-        constraintLists,
-        // constraint: new ConstraintIterator(constraintLists).parseConstraint(),
-      })
-    );
+    if (!name)
+      dispatch(
+        constraintsActions.addNewConstraint({
+          name,
+          constraintLists,
+          // constraint: new ConstraintIterator(constraintLists).parseConstraint(),
+        })
+      );
     dispatch(currentConstraintActions.resetCurrentConstraint());
     navigate("/");
   };

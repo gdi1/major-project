@@ -36,13 +36,6 @@ const PreviewBlock = ({ block, x, y }) => {
     if (focusedConstraint !== x) return;
     dispatch(currentConstraintActions.removeConstraintBlock({ x, y }));
   };
-  const options = [
-    { value: 1, label: 1 },
-    { value: 2, label: 2 },
-    { value: 3, label: 3 },
-    { value: 4, label: 4 },
-    { value: 5, label: 5 },
-  ];
 
   const handleInputChange = (e) => {
     const sanitizedValue = e.target.value.replace(/\D/g, "");
@@ -54,8 +47,6 @@ const PreviewBlock = ({ block, x, y }) => {
       })
     );
   };
-
-  // const [showCloseButton, setShowCloseButton] = useState(false);
 
   const getContentBlock = () => {
     const { type } = block;
@@ -96,11 +87,6 @@ const PreviewBlock = ({ block, x, y }) => {
               onChange={handleInputChange}
               placeholder="Only digits allowed"
             />
-            {/* <Select
-              options={options}
-              value={block.times}
-              onChange={handleChange}
-            /> */}
           </div>
           {blockNames[type][1]}
         </React.Fragment>
@@ -113,7 +99,6 @@ const PreviewBlock = ({ block, x, y }) => {
   return (
     <Block isSelection={false} onClick={removeConstraintBlock}>
       {getContentBlock()}
-      {/* {showCloseButton && <CloseButton className="close-btn"></CloseButton>} */}
     </Block>
   );
 };

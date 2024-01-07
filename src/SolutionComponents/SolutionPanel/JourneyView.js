@@ -14,11 +14,41 @@ const JourneyView = () => {
   );
 
   const waypoints = [
-    { label: "way 1", coordinates: [33.52001088075479, 36.26829385757446] },
-    { label: "way 2", coordinates: [33.51001088075479, 36.27829385757446] },
-    { label: "way 3", coordinates: [33.50546582848033, 36.29547681726967] },
-    { label: "way 4", coordinates: [33.52001088075479, 36.26829385757446] },
-    { label: "way 5", coordinates: [33.51001088075479, 36.27829385757446] },
+    {
+      label: "A",
+      value: 1,
+      coordinates: [33.52001088075479, 36.26829385757446],
+    },
+    {
+      label: "B",
+      value: 2,
+      coordinates: [33.51001088075479, 36.27829385757446],
+    },
+    {
+      label: "C",
+      value: 3,
+      coordinates: [33.50546582848033, 36.29547681726967],
+    },
+    {
+      label: "A",
+      value: 1,
+      coordinates: [33.52001088075479, 36.26829385757446],
+    },
+    {
+      label: "B",
+      value: 2,
+      coordinates: [33.51001088075479, 36.27829385757446],
+    },
+    {
+      label: "A",
+      value: 1,
+      coordinates: [33.52001088075479, 36.26829385757446],
+    },
+    {
+      label: "way 5",
+      value: 2,
+      coordinates: [33.51001088075479, 36.27829385757446],
+    },
   ];
 
   useEffect(() => {

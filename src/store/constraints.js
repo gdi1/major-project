@@ -30,6 +30,11 @@ const constraintsSlice = createSlice({
       { value: 2, label: "Option 2" },
       { value: 3, label: "Option 3" },
     ],
+    maps: { teams: {}, weeks: {}, periods: {}, locations: {} },
+    teamsMap: {},
+    locationsMap: {},
+    periodsMap: {},
+    weeksMap: {},
     hardConstraints: [],
     softConstraints: [],
   },
@@ -37,10 +42,10 @@ const constraintsSlice = createSlice({
     addNewConstraint(state, action) {
       state.hardConstraints.push({ ...action.payload });
     },
-    removeConstraint(state, action) {
-      const index = action.payload;
-      state.constraints.splice(index, 1);
-    },
+    // removeConstraint(state, action) {
+    //   const index = action.payload;
+    //   state.constraints.splice(index, 1);
+    // },
     addTeam(state, action) {
       state.teams.push({
         value: state.teams.length + 1,
@@ -95,6 +100,9 @@ const constraintsSlice = createSlice({
     removeOption(state, action) {
       const { id, type } = action.payload;
       state[type].splice(id, 1);
+      for (let i = id; i < state[type].length; i++) {
+        state[type][i].value--;
+      }
     },
   },
 });

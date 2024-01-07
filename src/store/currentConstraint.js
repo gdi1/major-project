@@ -9,7 +9,7 @@ const currentConstraintSlice = createSlice({
     name: undefined,
   },
   reducers: {
-    resetCurrentConstraint(state, action) {
+    resetCurrentConstraint(state, _) {
       state.constraintLists = [[0]];
       state.focusedConstraint = 0;
       state.name = undefined;
@@ -25,7 +25,7 @@ const currentConstraintSlice = createSlice({
           state.constraintLists[selectedConstraintIndex][1].type === "or")
       )
         return;
-      if (type == "and" || type == "or") {
+      if (type === "and" || type === "or") {
         const indentationLevel =
           state.constraintLists[selectedConstraintIndex][0];
         state.constraintLists.splice(selectedConstraintIndex + 1, 0, [
@@ -45,7 +45,7 @@ const currentConstraintSlice = createSlice({
             options: [],
           }
         );
-      } else if (type === "at-least" || type == "at-most") {
+      } else if (type === "at-least" || type === "at-most") {
         state.constraintLists[selectedConstraintIndex].splice(
           findInsertIndex(state.constraintLists[selectedConstraintIndex], type),
           0,
@@ -100,6 +100,16 @@ const currentConstraintSlice = createSlice({
     },
     setNewConstraintName(state, action) {
       state.name = action.payload;
+    },
+    setNewConstraint(state, action) {
+      const { game, period, week } = action.payload;
+      state.constraintLists[0].push(
+        { type: "teams", options: [{ value: game.teamA, label: "Option 1" }] },
+        { type: "play" },
+        { type: "teams", options: [{ value: game.teamB, label: "Option 2" }] },
+        { type: "weeks", options: [week] },
+        { type: "periods", options: [period] }
+      );
     },
   },
 });

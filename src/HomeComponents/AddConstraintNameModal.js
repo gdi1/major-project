@@ -10,7 +10,11 @@ import GeneralButton from "../GeneralComponents/GeneralButton";
 import Modal from "react-modal";
 import { modal_content } from "../style-utils/modalContent";
 
-const AddConstraintNameModal = ({ isModalOpen, setIsModalOpen }) => {
+const AddConstraintNameModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  newConstraint = undefined,
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,6 +32,8 @@ const AddConstraintNameModal = ({ isModalOpen, setIsModalOpen }) => {
       return;
     }
     dispatch(currentConstraintActions.setNewConstraintName(name));
+    if (newConstraint)
+      dispatch(currentConstraintActions.setNewConstraint(newConstraint));
     navigate("/new-constraint");
   };
   return (

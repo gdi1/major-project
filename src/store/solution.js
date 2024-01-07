@@ -5,6 +5,10 @@ const solutionSlice = createSlice({
   initialState: {
     selectedTeam: undefined,
     selectedTeamJourney: undefined,
+    teamsMap: {},
+    locationsMap: {},
+    periodsMap: {},
+    weeksMap: {},
     schedule: [
       {
         week: 1,

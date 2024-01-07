@@ -2,7 +2,7 @@ import Container from "../../GeneralComponents/Container";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
-const Game = ({ game }) => {
+const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
   const { teamA, teamB, location } = game;
   const { selectedTeam } = useSelector((state) => state.solution);
   const focused = selectedTeam === teamA || selectedTeam === teamB;
@@ -16,8 +16,12 @@ const Game = ({ game }) => {
         boxSizing: "border-box",
         backgroundColor: focused ? "blue" : "white",
       }}
+      onClick={() => {
+        console.log("Hereee");
+        setNewConstraint({ game, week, period });
+        setModalOpened(true);
+      }}
       height="8vh"
-      onClick={() => {}}
     >
       <Container
         gap="10px"

@@ -3,7 +3,7 @@ import text_styles from "../../style-utils/text_styles";
 import borders from "../../style-utils/borders";
 import paddings from "../../style-utils/paddings";
 
-export const Constraint = styled.div`
+const Constraint = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
@@ -14,3 +14,5 @@ export const Constraint = styled.div`
   border: ${borders.small};
   padding: ${paddings.xsmall};
 `;
+
+export default Constraint;

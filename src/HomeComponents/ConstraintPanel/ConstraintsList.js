@@ -1,11 +1,8 @@
 import Drop from "./Drop";
 import Drag from "./Drag";
 import { CenteredLabel } from "../../GeneralComponents/Labels";
-import styled from "styled-components";
 import { RowContainer } from "../../GeneralComponents/Containers";
-import text_styles from "../../style-utils/text_styles";
-import paddings from "../../style-utils/paddings";
-import borders from "../../style-utils/borders";
+import Constraint from "./Constraint";
 
 const ConstraintsList = ({
   type,
@@ -42,17 +39,5 @@ const ConstraintsList = ({
     </Drop>
   );
 };
-
-const Constraint = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  color: #${text_styles.colors.black};
-  font-size: ${text_styles.resizbale_font.small_med};
-  font-weight: bold;
-  border: ${borders.small};
-  padding: ${paddings.xsmall};
-`;
 
 export default ConstraintsList;

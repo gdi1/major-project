@@ -2,9 +2,12 @@ import styled from "styled-components";
 
 export const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 50px auto 50px; /* Fixed, Auto, Fixed */
-  align-items: start;
-  justify-items: start;
+  grid-template-columns: repeat(4, 24%);
+  width: 100%;
+  gap: 10px;
+  background-color: #fff;
+  box-sizing: border-box;
+  justify-content: space-between;
 `;
 
 export const GridItem = styled.div`

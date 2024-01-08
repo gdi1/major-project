@@ -1,59 +1,30 @@
-import { Container } from "../../GeneralComponents/Containers";
+import {
+  ColumnContainer,
+  RowContainer,
+} from "../../GeneralComponents/Containers";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import borders from "../../style-utils/borders";
 
 const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
   const { teamA, teamB, location } = game;
   const { selectedTeam } = useSelector((state) => state.solution);
   const focused = selectedTeam === teamA || selectedTeam === teamB;
 
+  const goToAddNewConstraint = () => {
+    setNewConstraint({ game, week, period });
+    setModalOpened(true);
+  };
+
   return (
-    <Container
-      flexDirection="column"
-      style={{
-        border: "1px solid black",
-        cursor: "pointer",
-        boxSizing: "border-box",
-        backgroundColor: focused ? "blue" : "white",
-      }}
-      onClick={() => {
-        setNewConstraint({ game, week, period });
-        setModalOpened(true);
-      }}
-      height="8vh"
-    >
-      <Container
-        gap="10px"
-        height="auto"
-        style={{ backgroundColor: focused ? "blue" : "white" }}
-      >
-        <TextWithEllipsis
-          style={{
-            width: "40%",
-            textAlign: "right",
-          }}
-        >
-          {teamA}
-        </TextWithEllipsis>
+    <GameDescriptionBody focused={focused} onClick={goToAddNewConstraint}>
+      <TeamsDescription focused={focused}>
+        <LeftTeam>{teamA}</LeftTeam>
         <div>vs</div>
-        <TextWithEllipsis
-          style={{
-            textAlign: "left",
-            width: "40%",
-          }}
-        >
-          {teamB}
-        </TextWithEllipsis>
-      </Container>
-      <TextWithEllipsis
-        style={{
-          width: "60%",
-          textAlign: "center",
-        }}
-      >
-        Location: {location}
-      </TextWithEllipsis>
-    </Container>
+        <RightTeam>{teamB}</RightTeam>
+      </TeamsDescription>
+      <Location>Location: {location}</Location>
+    </GameDescriptionBody>
   );
 };
 
@@ -62,6 +33,34 @@ const TextWithEllipsis = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+`;
+
+const GameDescriptionBody = styled(ColumnContainer)`
+  border: ${borders.small};
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 8vh;
+  background-color: ${(props) => (props.focused ? "blue" : "white")};
+`;
+
+const TeamsDescription = styled(RowContainer)`
+  gap: 10px;
+  height: auto;
+  background-color: ${(props) => (props.focused ? "blue" : "white")};
+`;
+
+const Location = styled(TextWithEllipsis)`
+  width: 60%;
+  text-align: center;
+`;
+
+const LeftTeam = styled(TextWithEllipsis)`
+  width: 40%;
+  text-align: right;
+`;
+const RightTeam = styled(TextWithEllipsis)`
+  width: 40%;
+  text-align: left;
 `;
 
 export default Game;

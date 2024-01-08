@@ -1,50 +1,59 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Container } from "../../GeneralComponents/Containers";
-import { Label } from "../../GeneralComponents/Labels";
+import { ColumnContainer, Container } from "../../GeneralComponents/Containers";
+import { CenteredLabel } from "../../GeneralComponents/Labels";
 import Title from "../../GeneralComponents/Title";
 import { solutionActions } from "../../store/solution";
+import styled from "styled-components";
+import paddings from "../../style-utils/paddings";
+import borders from "../../style-utils/borders";
+import { useCallback } from "react";
 
 const TeamsPanel = () => {
   const dispatch = useDispatch();
   const { teams } = useSelector((state) => state.constraints);
   const { selectedTeam } = useSelector((state) => state.solution);
+  const toggleTeamSelection = (team) => {
+    dispatch(
+      selectedTeam !== team.value
+        ? solutionActions.selectTeam(team.value)
+        : solutionActions.deselectedTeam(team.value)
+    );
+  };
 
   return (
-    <Container
-      flexDirection="column"
-      width="12%"
-      height="90vh"
-      overflow="scroll"
-      alignItems="center"
-      justifyContent="start"
-      style={{ borderRight: "1px solid black" }}
-    >
-      <Title style={{ borderBottom: "1px solid black", paddingBottom: "5px" }}>
-        Teams
-      </Title>
+    <TeamOptionsBody>
+      <TeamsPanelTitle>Teams</TeamsPanelTitle>
       {teams.map((team) => (
-        <Label
-          style={{
-            padding: "10px",
-            border: "1px solid black",
-            cursor: "pointer",
-            width: "80%",
-            textAlign: "center",
-            backgroundColor: selectedTeam === team.value ? "blue" : "white",
-          }}
-          onClick={() =>
-            dispatch(
-              selectedTeam !== team.value
-                ? solutionActions.selectTeam(team.value)
-                : solutionActions.deselectedTeam(team.value)
-            )
-          }
+        <TeamOption
+          focused={selectedTeam === team.value}
+          onClick={() => toggleTeamSelection(team)}
         >
           {team.label}
-        </Label>
+        </TeamOption>
       ))}
-    </Container>
+    </TeamOptionsBody>
   );
 };
+
+const TeamOption = styled(CenteredLabel)`
+  padding: ${paddings.small};
+  border: ${borders.small};
+  cursor: pointer;
+  width: 80%;
+  background-color: ${(props) => (props.focused ? "blue" : "white")};
+`;
+
+const TeamOptionsBody = styled(ColumnContainer)`
+  width: 12%;
+  height: 90vh;
+  overflow: scroll;
+  justify-content: start;
+  border-right: ${borders.small};
+`;
+
+const TeamsPanelTitle = styled(Title)`
+  border-bottom: ${borders.small};
+  padding-bottom: ${paddings.xsmall};
+`;
 
 export default TeamsPanel;

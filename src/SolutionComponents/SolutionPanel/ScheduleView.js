@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
-import { Container } from "../../GeneralComponents/Containers";
-import styled from "styled-components";
-import { Label } from "../../GeneralComponents/Labels";
+import { ColumnContainer, Container } from "../../GeneralComponents/Containers";
+import { CenteredLabel, Label } from "../../GeneralComponents/Labels";
 import React from "react";
 import Game from "./Game";
 import { useState } from "react";
 import AddConstraintNameModal from "../../HomeComponents/AddConstraintNameModal";
+import { GridContainer as GamesGrid } from "../../GeneralComponents/GridComponents";
+import styled from "styled-components";
+import borders from "../../style-utils/borders";
 
 const ScheduleView = () => {
   const { schedule } = useSelector((state) => state.solution);
@@ -13,12 +15,7 @@ const ScheduleView = () => {
   const [newConstraint, setNewConstraint] = useState(undefined);
 
   return (
-    <Container
-      flexDirection="column"
-      justifyContent="start"
-      alignItems="start"
-      style={{ overflow: "scroll", height: "85vh" }}
-    >
+    <TournamentSchedule>
       {isModalOpened && (
         <AddConstraintNameModal
           isModalOpen={isModalOpened}
@@ -27,17 +24,10 @@ const ScheduleView = () => {
         />
       )}
       {schedule.map(({ week, weekSchedule }) => (
-        <React.Fragment>
-          <Label
-            style={{
-              borderBottom: "1px solid black",
-              alignSelf: "center",
-            }}
-          >
-            Week {week}
-          </Label>
+        <WeekSchedule>
+          <WeekLabel>Week {week}</WeekLabel>
           {weekSchedule.map(({ period, games }) => (
-            <React.Fragment>
+            <PeriodSchedule>
               <Label>{period}</Label>
               <GamesGrid>
                 {games.map((game) => (
@@ -50,23 +40,26 @@ const ScheduleView = () => {
                   />
                 ))}
               </GamesGrid>
-            </React.Fragment>
+            </PeriodSchedule>
           ))}
-        </React.Fragment>
+        </WeekSchedule>
       ))}
-    </Container>
+    </TournamentSchedule>
   );
 };
 
-const GamesGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 24%);
-  width: 100%;
-  gap: 10px;
-  background-color: #fff;
-
-  box-sizing: border-box;
-  justify-content: space-between;
+const TournamentSchedule = styled(ColumnContainer)`
+  justify-content: start;
+  align-items: start;
+  overflow: scroll;
+  height: 85vh;
 `;
+
+const WeekLabel = styled(CenteredLabel)`
+  border-bottom: ${borders.small};
+`;
+
+const WeekSchedule = styled(ColumnContainer)``;
+const PeriodSchedule = styled(ColumnContainer)``;
 
 export default ScheduleView;

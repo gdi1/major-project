@@ -1,8 +1,4 @@
-import {
-  ColumnContainer,
-  Container,
-  RowContainer,
-} from "../GeneralComponents/Containers";
+import { ColumnContainer, RowContainer } from "../GeneralComponents/Containers";
 import paddings from "../style-utils/paddings";
 import { useSelector, useDispatch } from "react-redux";
 import PreviewBlock from "./PreviewBlock";
@@ -37,10 +33,8 @@ const PreviewPanel = () => {
       {constraintLists.map((list, x) => (
         <ConstraintRow
           onClick={() => setFocused(x)}
-          style={{
-            width: `${(list.length - 1 + list[0]) * blockWidth + 55}px`,
-            backgroundColor: focusedConstraint === x ? "blue" : "white",
-          }}
+          width={(list.length - 1 + list[0]) * blockWidth + 55}
+          focused={focusedConstraint === x}
           key={x}
         >
           <IndentationButton onClick={() => reduceIndentation(x)}>
@@ -49,10 +43,7 @@ const PreviewPanel = () => {
           <IndentationButton onClick={() => increaseIndentation(x)}>
             +
           </IndentationButton>
-          <BlocksList
-            justifyContent={"safe start"}
-            style={{ marginLeft: `${list[0] * blockWidth + 5}px` }}
-          >
+          <BlocksList indentation={list[0] * blockWidth + 5}>
             {list.slice(1).map((block, y) => (
               <PreviewBlock block={block} x={x} y={y + 1} />
             ))}
@@ -80,8 +71,11 @@ const ConstraintRow = styled(RowContainer)`
   height: auto;
   padding: ${paddings.xsmall};
   justify-content: safe-start;
+  width: ${(props) => props.width}px;
+  background-color: ${(props) => (props.focused ? "blue" : "white")};
 `;
 const BlocksList = styled(RowContainer)`
   justify-content: safe start;
+  margin-left: ${(props) => props.indentation}px;
 `;
 export default PreviewPanel;

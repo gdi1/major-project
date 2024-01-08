@@ -10,6 +10,14 @@ import GeneralButton from "../GeneralComponents/GeneralButton";
 import Modal from "react-modal";
 import { modal_content } from "../style-utils/modalContent";
 import { constraintsActions } from "../store/constraints";
+import {
+  ModalBody,
+  ModalButton,
+  ModalLabel,
+  ModalTitle,
+  ModalButtonGroup,
+  NewConstraintNameInputField,
+} from "./ConstraintModalComponents";
 
 const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   const dispatch = useDispatch();
@@ -63,36 +71,25 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
       onRequestClose={closeModal}
       style={modal_content}
     >
-      <Container flexDirection={"column"} gap={"10px"}>
-        <Title style={{ borderBottom: "1px solid black" }}>
-          Edit Constraint
-        </Title>
-        <Label style={{ alignSelf: "start" }}>Name</Label>
-        <InputField
-          style={{ width: "100%", height: "40px", fontSize: "20px" }}
+      <ModalBody>
+        <ModalTitle>Edit Constraint</ModalTitle>
+        <ModalLabel>Name</ModalLabel>
+        <NewConstraintNameInputField
           defaultValue={constraint ? constraint.name : ""}
           ref={editConstraintNameRef}
         />
-        <Container justifyContent={"space-evenly"}>
-          <GeneralButton style={{ width: "45%" }} onClick={closeModal}>
-            Close
-          </GeneralButton>
-          <GeneralButton
-            style={{ width: "45%" }}
+        <ModalButtonGroup>
+          <ModalButton onClick={closeModal}>Close</ModalButton>
+          <ModalButton
             onClick={() => {
               if (changeName()) closeModal();
             }}
           >
             Done
-          </GeneralButton>
-          <GeneralButton
-            style={{ width: "45%" }}
-            onClick={continueToEditConstraint}
-          >
-            Continue
-          </GeneralButton>
-        </Container>
-      </Container>
+          </ModalButton>
+          <ModalButton onClick={continueToEditConstraint}>Continue</ModalButton>
+        </ModalButtonGroup>
+      </ModalBody>
     </Modal>
   );
 };

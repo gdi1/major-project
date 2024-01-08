@@ -2,11 +2,12 @@ import { useDispatch } from "react-redux";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
 import { constraintsActions } from "../../store/constraints";
 import { useState, useRef, useEffect } from "react";
-import { Container } from "../../GeneralComponents/Containers";
+import { Container, RowContainer } from "../../GeneralComponents/Containers";
 import {
   daysOfWeek,
   generateTimeArray,
 } from "../../Utilities/PeriodsFunctions";
+import styled from "styled-components";
 
 const DayAndTimePicker = ({ setFieldVisible }) => {
   const timesOfDay = generateTimeArray();
@@ -36,23 +37,21 @@ const DayAndTimePicker = ({ setFieldVisible }) => {
     if (daySelectRef.current) daySelectRef.current.focus();
   }, []);
   return (
-    <Container gap={"10px"}>
+    <DateSelectionBody>
       <Container>
-        <select
+        <DateSelect
           value={selectedDay}
           onChange={handleDayChange}
           onKeyDown={handleKeyPress}
           ref={daySelectRef}
-          style={{ height: "100%", width: "50%" }}
         >
           {daysOfWeek.map((day) => (
             <option key={day} value={day}>
               {day}
             </option>
           ))}
-        </select>
-        <select
-          style={{ height: "100%", width: "50%" }}
+        </DateSelect>
+        <DateSelect
           value={selectedTime}
           onChange={handleTimeChange}
           onKeyDown={handleKeyPress}
@@ -62,10 +61,19 @@ const DayAndTimePicker = ({ setFieldVisible }) => {
               {time}
             </option>
           ))}
-        </select>
+        </DateSelect>
       </Container>
       <GeneralButton onClick={() => setFieldVisible(false)}>X</GeneralButton>
-    </Container>
+    </DateSelectionBody>
   );
 };
+
+const DateSelect = styled.select`
+  height: 100%;
+  width: 50%;
+`;
+
+const DateSelectionBody = styled(RowContainer)`
+  gap: 10px;
+`;
 export default DayAndTimePicker;

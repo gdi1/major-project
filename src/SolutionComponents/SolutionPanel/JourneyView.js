@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
-import { Label } from "../../GeneralComponents/Labels";
+import { CenteredLabel, Label } from "../../GeneralComponents/Labels";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import { Icon } from "leaflet";
-import React, { useCallback, useState } from "react";
-import { Container } from "../../GeneralComponents/Containers";
+import { RowContainer } from "../../GeneralComponents/Containers";
 import MapRoute from "./MapRoute";
 import { useEffect } from "react";
+import styled from "styled-components";
 
 const JourneyView = () => {
   const { selectedTeam, selectedTeamJourney } = useSelector(
@@ -61,9 +61,11 @@ const JourneyView = () => {
   }, [selectedTeam]);
 
   return (
-    <Container height="85vh">
+    <JourneyMapBody>
       {!selectedTeam && (
-        <Label>You must first select a team to view its journey.</Label>
+        <CenteredLabel>
+          You must first select a team to view its journey.
+        </CenteredLabel>
       )}
       {selectedTeam && (
         <MapContainer
@@ -80,7 +82,11 @@ const JourneyView = () => {
           <MapRoute waypoints={waypoints} />
         </MapContainer>
       )}
-    </Container>
+    </JourneyMapBody>
   );
 };
+
+const JourneyMapBody = styled(RowContainer)`
+  height: 85vh;
+`;
 export default JourneyView;

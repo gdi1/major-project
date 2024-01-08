@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import { useRef } from "react";
 import Title from "../../../GeneralComponents/Title";
 import GeneralButton from "../../../GeneralComponents/GeneralButton";
@@ -8,7 +7,6 @@ import Map from "./Map";
 import "leaflet/dist/leaflet.css";
 
 const AddLocationModal = ({ isModalOpen, setIsModalOpen }) => {
-  const dispatch = useDispatch();
   const { content, overlay } = modal_content;
   const closeModal = () => {
     setIsModalOpen(false);

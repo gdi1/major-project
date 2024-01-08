@@ -7,17 +7,32 @@ const currentConstraintSlice = createSlice({
     constraintLists: [[0]],
     focusedConstraint: 0,
     name: undefined,
+    mode: "new",
   },
   reducers: {
     resetCurrentConstraint(state, _) {
       state.constraintLists = [[0]];
       state.focusedConstraint = 0;
       state.name = undefined;
+      state.mode = "new";
+    },
+    setCurrentConstraint(state, action) {
+      const { constraintLists, name } = action.payload;
+      state.constraintLists = constraintLists;
+      state.name = name;
+      state.mode = "edit";
     },
     addNewConstraintBlock(state, action) {
       const type = action.payload;
       const selectedConstraintIndex = state.focusedConstraint;
-      const multiselect_types = ["locations", "weeks", "periods", "teams"];
+      const multiselect_types = [
+        "locations",
+        "weeks",
+        "periods",
+        "teams",
+        "play-against",
+        "not-play-against",
+      ];
 
       if (
         state.constraintLists[selectedConstraintIndex][1] &&
@@ -54,7 +69,7 @@ const currentConstraintSlice = createSlice({
             times: 0,
           }
         );
-      } else if (type !== "play-against" && type !== "not-play-against") {
+      } else {
         state.constraintLists[selectedConstraintIndex].splice(
           findInsertIndex(state.constraintLists[selectedConstraintIndex], type),
           0,
@@ -62,15 +77,26 @@ const currentConstraintSlice = createSlice({
             type,
           }
         );
-      } else {
-        state.constraintLists[selectedConstraintIndex].push({
-          type,
-        });
-        state.constraintLists[selectedConstraintIndex].push({
-          type: "teams",
-          options: [],
-        });
       }
+      // } else if (type !== "play-against" && type !== "not-play-against") {
+      //   state.constraintLists[selectedConstraintIndex].splice(
+      //     findInsertIndex(state.constraintLists[selectedConstraintIndex], type),
+      //     0,
+      //     {
+      //       type,
+      //     }
+      //   );
+      // }
+      // } else {
+      //   state.constraintLists[selectedConstraintIndex].push({
+      //     type,
+      //     options: [],
+      //   });
+      //   state.constraintLists[selectedConstraintIndex].push({
+      //     type: "teams",
+      //     options: [],
+      //   });
+      // }
     },
     updateOptions(state, action) {
       const { x, y, selectedOptions } = action.payload;
@@ -105,8 +131,10 @@ const currentConstraintSlice = createSlice({
       const { game, period, week } = action.payload;
       state.constraintLists[0].push(
         { type: "teams", options: [{ value: game.teamA, label: "Option 1" }] },
-        { type: "play" },
-        { type: "teams", options: [{ value: game.teamB, label: "Option 2" }] },
+        {
+          type: "play-against",
+          options: [{ value: game.teamB, label: "Option 2" }],
+        },
         { type: "weeks", options: [week] },
         { type: "periods", options: [period] }
       );

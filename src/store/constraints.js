@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { sortPeriods } from "../Utilities/PeriodsFunctions";
 
 const constraintsSlice = createSlice({
   name: "constraintsSlice",
@@ -31,21 +32,34 @@ const constraintsSlice = createSlice({
       { value: 3, label: "Option 3" },
     ],
     maps: { teams: {}, weeks: {}, periods: {}, locations: {} },
-    teamsMap: {},
-    locationsMap: {},
-    periodsMap: {},
-    weeksMap: {},
     hardConstraints: [],
     softConstraints: [],
   },
   reducers: {
     addNewConstraint(state, action) {
-      state.hardConstraints.push({ ...action.payload });
+      const { name } = action.payload;
+      const isAlreadyConstraint =
+        state.hardConstraints.some((c) => c.name === name) ||
+        state.softConstraints.some((c) => c.name === name);
+      if (!isAlreadyConstraint)
+        state.hardConstraints.push({ ...action.payload });
+      else {
+        let index = state.hardConstraints.findIndex((c) => c.name === name);
+        if (index !== -1) state.hardConstraints[index] = { ...action.payload };
+        else {
+          index = state.softConstraints.findIndex((c) => c.name === name);
+          state.softConstraints[index] = { ...action.payload };
+        }
+      }
     },
-    // removeConstraint(state, action) {
-    //   const index = action.payload;
-    //   state.constraints.splice(index, 1);
-    // },
+    changeName(state, action) {
+      const { index, type, name } = action.payload;
+      const mapTypeToList = {
+        hard: state.hardConstraints,
+        soft: state.softConstraints,
+      };
+      mapTypeToList[type][index].name = name;
+    },
     addTeam(state, action) {
       state.teams.push({
         value: state.teams.length + 1,
@@ -65,6 +79,14 @@ const constraintsSlice = createSlice({
         value: state.periods.length + 1,
         label: action.payload,
       });
+      const sortedPeriods = sortPeriods(
+        state.periods.map((period) => period.label)
+      );
+      console.log(sortedPeriods);
+      state.periods = [];
+      sortedPeriods.forEach((period) =>
+        state.periods.push({ value: state.periods.length + 1, label: period })
+      );
     },
     addWeek(state, action) {
       state.weeks.push({
@@ -103,6 +125,20 @@ const constraintsSlice = createSlice({
       for (let i = id; i < state[type].length; i++) {
         state[type][i].value--;
       }
+    },
+    createValueToOptionMappings(state, _) {
+      state.teams.forEach(
+        (option) => (state.maps.teams[option.value] = option)
+      );
+      state.weeks.forEach(
+        (option) => (state.maps.weeks[option.value] = option)
+      );
+      state.periods.forEach(
+        (option) => (state.maps.periods[option.value] = option)
+      );
+      state.locations.forEach(
+        (option) => (state.maps.locations[option.value] = option)
+      );
     },
   },
 });

@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import Label from "../../GeneralComponents/Label";
+import { Label } from "../../GeneralComponents/Labels";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import { Icon } from "leaflet";
 import React, { useCallback, useState } from "react";
-import Container from "../../GeneralComponents/Container";
+import { Container } from "../../GeneralComponents/Containers";
 import MapRoute from "./MapRoute";
 import { useEffect } from "react";
 

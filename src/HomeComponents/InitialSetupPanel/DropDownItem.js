@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
 import { useDispatch } from "react-redux";
 import { constraintsActions } from "../../store/constraints";
-import Container from "../../GeneralComponents/Container";
+import { Container } from "../../GeneralComponents/Containers";
 
 const DropDownItem = ({ id, option, type }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -16,7 +16,6 @@ const DropDownItem = ({ id, option, type }) => {
   };
 
   const updateOption = () => {
-    console.log("Hereee");
     const updatedOption = optionInputRef.current.value;
     if (!updatedOption) {
       alert("Option must not be empty!");
@@ -28,7 +27,15 @@ const DropDownItem = ({ id, option, type }) => {
   return (
     <Container gap="10px" justifyContent="end">
       {!isEdit && (
-        <DropdownItem onClick={() => setIsEdit(true)}>
+        <DropdownItem
+          onClick={() => {
+            if (type === "teams" || type === "locations") setIsEdit(true);
+          }}
+          style={{
+            cursor:
+              type === "teams" || type === "locations" ? "pointer" : "default",
+          }}
+        >
           {option.label}
         </DropdownItem>
       )}

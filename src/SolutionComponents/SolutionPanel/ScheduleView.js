@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import Container from "../../GeneralComponents/Container";
+import { Container } from "../../GeneralComponents/Containers";
 import styled from "styled-components";
-import Label from "../../GeneralComponents/Label";
+import { Label } from "../../GeneralComponents/Labels";
 import React from "react";
 import Game from "./Game";
 import { useState } from "react";

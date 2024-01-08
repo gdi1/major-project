@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import Container from "../../GeneralComponents/Container";
-import Label from "../../GeneralComponents/Label";
+import { Container } from "../../GeneralComponents/Containers";
+import { Label } from "../../GeneralComponents/Labels";
 import Title from "../../GeneralComponents/Title";
 import { solutionActions } from "../../store/solution";
 

@@ -14,8 +14,10 @@ const positions = {
 export const findInsertIndex = (arr, target) => {
   let low = 1;
   let high = arr.length;
+  console.log("arr", arr);
   while (low < high) {
     let mid = Math.floor((low + high) / 2);
+    console.log(mid);
     if (positions[arr[mid].type] < positions[target]) {
       low = mid + 1;
     } else {

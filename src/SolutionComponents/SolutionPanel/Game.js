@@ -1,4 +1,4 @@
-import Container from "../../GeneralComponents/Container";
+import { Container } from "../../GeneralComponents/Containers";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
@@ -17,7 +17,6 @@ const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
         backgroundColor: focused ? "blue" : "white",
       }}
       onClick={() => {
-        console.log("Hereee");
         setNewConstraint({ game, week, period });
         setModalOpened(true);
       }}

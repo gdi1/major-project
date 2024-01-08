@@ -15,13 +15,14 @@ const Block = styled.div`
   position: relative;
   border: 3px solid black;
   display: flex;
-  width: 200px;
+  width: 220px;
   height: 60px;
-  padding: ${paddings.med};
+  padding: ${paddings.small};
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
   box-sizing: border-box;
+  background-color: white;
   &:hover {
     background-color: ${colors.creme};
   }

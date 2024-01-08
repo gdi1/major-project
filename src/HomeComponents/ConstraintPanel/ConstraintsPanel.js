@@ -1,15 +1,18 @@
 import { constraintsActions } from "../../store/constraints";
 import { useSelector, useDispatch } from "react-redux";
-import Container from "../../GeneralComponents/Container";
+import {
+  ColumnContainer,
+  Container,
+  RowContainer,
+} from "../../GeneralComponents/Containers";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
-import Drag from "./Drag";
-import Drop from "./Drop";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useState } from "react";
-import { Constraint } from "./Constraint";
-import Label from "../../GeneralComponents/Label";
 import AddConstraintNameModal from "../AddConstraintNameModal";
 import { useNavigate } from "react-router-dom";
+import EditConstraintModal from "../EditConstraintModal";
+import styled from "styled-components";
+import ConstraintsList from "./ConstraintsList";
 
 const ConstraintsPanel = () => {
   const { hardConstraints, softConstraints } = useSelector(
@@ -17,7 +20,11 @@ const ConstraintsPanel = () => {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNewConstraintModalOpen, setIsNewConstraintModalOpen] =
+    useState(false);
+  const [isEditConstraintModalOpen, setIsEditConstraintModalOpen] =
+    useState(false);
+  const [editInfo, setEditInfo] = useState({});
 
   const mapIdToList = {
     soft: softConstraints,
@@ -25,7 +32,7 @@ const ConstraintsPanel = () => {
   };
 
   const addNewConstraint = () => {
-    setIsModalOpen(true);
+    setIsNewConstraintModalOpen(true);
   };
 
   const handleDragEnd = (result) => {
@@ -55,33 +62,70 @@ const ConstraintsPanel = () => {
     );
   };
 
+  // const openConstraintInEditMode = (index, type) => {
+  //   dispatch(
+  //     currentConstraintActions.setCurrentConstraint(mapIdToList[type][index])
+  //   );
+  // };
+
   return (
-    <Container width={"50%"} flexDirection={"column"}>
+    <HomePageConstraintsSection>
       <AddConstraintNameModal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isNewConstraintModalOpen}
+        setIsModalOpen={setIsNewConstraintModalOpen}
       />
-      <Container
-        justifyContent={"space-evenly"}
-        style={{ marginBottom: "20px" }}
-      >
+      <EditConstraintModal
+        isModalOpen={isEditConstraintModalOpen}
+        setIsModalOpen={setIsEditConstraintModalOpen}
+        editInfo={editInfo}
+      />
+      <ButtonGroup>
         <GeneralButton
           onClick={() => {
+            dispatch(constraintsActions.createValueToOptionMappings());
             navigate("/show-solution");
           }}
         >
           Solve configuration
         </GeneralButton>
         <GeneralButton onClick={addNewConstraint}>Add constraint</GeneralButton>
-      </Container>
-      <Container
-        gap={"10px"}
-        justifyContent={"space-evenly"}
-        alignItems={"center"}
-        flexDirection={"column"}
-      >
+      </ButtonGroup>
+      <ConstraintsGroup>
         <DragDropContext onDragEnd={handleDragEnd}>
-          <Drop id="hard" style={{ width: "50%" }}>
+          <ConstraintsList
+            type={"hard"}
+            constraints={hardConstraints}
+            setEditInfo={setEditInfo}
+            setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
+          />
+          <ConstraintsList
+            type={"soft"}
+            constraints={softConstraints}
+            setEditInfo={setEditInfo}
+            setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
+          />
+        </DragDropContext>
+      </ConstraintsGroup>
+    </HomePageConstraintsSection>
+  );
+};
+
+const ButtonGroup = styled(RowContainer)`
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+`;
+const ConstraintsGroup = styled(ColumnContainer)`
+  justify-content: space-evenly;
+  gap: 10px;
+`;
+
+const HomePageConstraintsSection = styled(ColumnContainer)`
+  width: 50%;
+`;
+export default ConstraintsPanel;
+
+// {
+/* <Drop id="hard" style={{ width: "50%" }}>
             <Label
               style={{
                 width: "100%",
@@ -112,7 +156,18 @@ const ConstraintsPanel = () => {
                     id={constraint.name}
                     index={index}
                   >
-                    <Constraint>{constraint.name}</Constraint>
+                    <Constraint
+                      onClick={() => {
+                        setEditInfo({
+                          index,
+                          type: "hard",
+                          constraint,
+                        });
+                        setIsEditConstraintModalOpen(true);
+                      }}
+                    >
+                      {constraint.name}
+                    </Constraint>
                   </Drag>
                 );
               })}
@@ -148,14 +203,20 @@ const ConstraintsPanel = () => {
                     id={constraint.name}
                     index={index}
                   >
-                    <Constraint>{constraint.name}</Constraint>
+                    <Constraint
+                      onClick={() => {
+                        setEditInfo({
+                          index,
+                          type: "soft",
+                          constraint,
+                        });
+                        setIsEditConstraintModalOpen(true);
+                      }}
+                    >
+                      {constraint.name}
+                    </Constraint>
                   </Drag>
                 );
               })}
-          </Drop>
-        </DragDropContext>
-      </Container>
-    </Container>
-  );
-};
-export default ConstraintsPanel;
+          </Drop> */
+// }

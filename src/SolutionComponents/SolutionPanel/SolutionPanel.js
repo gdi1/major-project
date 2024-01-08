@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import Container from "../../GeneralComponents/Container";
+import { Container } from "../../GeneralComponents/Containers";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
 import React, { useState, useCallback, useEffect } from "react";
 import ScheduleView from "./ScheduleView";

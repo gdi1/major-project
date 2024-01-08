@@ -1,6 +1,9 @@
-import Container from "../GeneralComponents/Container";
+import { ColumnContainer, Container } from "../GeneralComponents/Containers";
 import SelectionBlock from "./SelectionBlock";
 import paddings from "../style-utils/paddings";
+import styled from "styled-components";
+import borders from "../style-utils/borders";
+
 const SelectionPanel = () => {
   const block_types = [
     "teams",
@@ -17,19 +20,19 @@ const SelectionPanel = () => {
     "not-play-against",
   ];
   return (
-    <Container
-      flexDirection={"column"}
-      width={"15%"}
-      justifyContent={"center"}
-      gap={"5px"}
-      height="90vh"
-      border="1px solid black"
-      padding={paddings.med}
-    >
+    <SelectionBlocks>
       {block_types.map((type) => (
         <SelectionBlock type={type} key={type} />
       ))}
-    </Container>
+    </SelectionBlocks>
   );
 };
+
+const SelectionBlocks = styled(ColumnContainer)`
+  width: 15%;
+  gap: 5px;
+  height: 90vh;
+  border: ${borders.small};
+  padding: ${paddings.small};
+`;
 export default SelectionPanel;

@@ -1,8 +1,4 @@
 let borders = {
-  xsmall: 1,
-  small: 2,
-  med: 3,
-  lrg: 4,
-  xlrg: 5,
+  small: "1px solid black",
 };
 export default borders;

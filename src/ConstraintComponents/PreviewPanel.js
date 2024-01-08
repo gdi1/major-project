@@ -1,10 +1,18 @@
-import Container from "../GeneralComponents/Container";
+import {
+  ColumnContainer,
+  Container,
+  RowContainer,
+} from "../GeneralComponents/Containers";
 import paddings from "../style-utils/paddings";
 import { useSelector, useDispatch } from "react-redux";
 import PreviewBlock from "./PreviewBlock";
 import GeneralButton from "../GeneralComponents/GeneralButton";
 import { currentConstraintActions } from "../store/currentConstraint";
 import React from "react";
+import borders from "../style-utils/borders";
+import styled from "styled-components";
+
+const blockWidth = 220;
 
 const PreviewPanel = () => {
   const { constraintLists, focusedConstraint } = useSelector(
@@ -25,51 +33,55 @@ const PreviewPanel = () => {
     dispatch(currentConstraintActions.increaseIndentation(x));
   };
   return (
-    <Container
-      height="90vh"
-      border="1px solid black"
-      padding={paddings.med}
-      flexDirection={"column"}
-      alignItems={"start"}
-      justifyContent={"start"}
-      overflow={"scroll"}
-    >
+    <ConstraintPanel>
       {constraintLists.map((list, x) => (
-        <Container
-          alignItems={"stretch"}
-          height={"auto"}
-          padding={paddings.small}
+        <ConstraintRow
           onClick={() => setFocused(x)}
-          focused={focusedConstraint === x}
-          justifyContent={"safe start"}
           style={{
-            width: `${(list.length - 1 + list[0]) * 200 + 55}px`,
+            width: `${(list.length - 1 + list[0]) * blockWidth + 55}px`,
+            backgroundColor: focusedConstraint === x ? "blue" : "white",
           }}
           key={x}
         >
-          <GeneralButton
-            style={{ width: "25px" }}
-            onClick={() => reduceIndentation(x)}
-          >
+          <IndentationButton onClick={() => reduceIndentation(x)}>
             -
-          </GeneralButton>
-          <GeneralButton
-            style={{ width: "25px" }}
-            onClick={() => increaseIndentation(x)}
-          >
+          </IndentationButton>
+          <IndentationButton onClick={() => increaseIndentation(x)}>
             +
-          </GeneralButton>
-          <Container
+          </IndentationButton>
+          <BlocksList
             justifyContent={"safe start"}
-            marginLeft={`${list[0] * 200 + 5}px`}
+            style={{ marginLeft: `${list[0] * blockWidth + 5}px` }}
           >
             {list.slice(1).map((block, y) => (
               <PreviewBlock block={block} x={x} y={y + 1} />
             ))}
-          </Container>
-        </Container>
+          </BlocksList>
+        </ConstraintRow>
       ))}
-    </Container>
+    </ConstraintPanel>
   );
 };
+const IndentationButton = styled(GeneralButton)`
+  width: 25px;
+  height: 60px;
+`;
+const ConstraintPanel = styled(ColumnContainer)`
+  height: 90vh;
+  border: ${borders.small};
+  padding: ${paddings.small};
+  align-items: start;
+  justify-content: start;
+  overflow: scroll;
+`;
+
+const ConstraintRow = styled(RowContainer)`
+  align-items: stretch;
+  height: auto;
+  padding: ${paddings.xsmall};
+  justify-content: safe-start;
+`;
+const BlocksList = styled(RowContainer)`
+  justify-content: safe start;
+`;
 export default PreviewPanel;

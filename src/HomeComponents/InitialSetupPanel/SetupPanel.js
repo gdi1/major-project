@@ -1,4 +1,4 @@
-import Container from "../../GeneralComponents/Container";
+import { Container } from "../../GeneralComponents/Containers";
 import { constraintsActions } from "../../store/constraints";
 import InputBundle from "./InputBundle";
 
@@ -7,7 +7,7 @@ const SetupPanel = () => {
     { type: "teams", updateFunction: constraintsActions.addTeam },
     { type: "locations", updateFunction: constraintsActions.addLocation },
     { type: "periods", updateFunction: constraintsActions.addPeriod },
-    { type: "weeks", updateFunction: constraintsActions.addWeek },
+    { type: "weeks", updateFunction: constraintsActions.addWeeks },
   ];
   return (
     <Container

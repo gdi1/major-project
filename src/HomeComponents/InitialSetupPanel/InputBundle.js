@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import Container from "../../GeneralComponents/Container";
+import { Container } from "../../GeneralComponents/Containers";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
-import Label from "../../GeneralComponents/Label";
+import { Label } from "../../GeneralComponents/Labels";
 import InputField from "../../GeneralComponents/InputField";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,9 @@ import { DropdownList } from "./DropDownComponents";
 import DropDownItem from "./DropDownItem";
 import DayAndTimePicker from "./DayAndTimePicker";
 import AddLocationModal from "./LocationSetup/AddLocationModal";
+import { DragDropContext } from "react-beautiful-dnd";
+import Drag from "../ConstraintPanel/Drag";
+import Drop from "../ConstraintPanel/Drop";
 
 const InputBundle = ({ updateFunction, title, type }) => {
   const [fieldVisible, setFieldVisible] = useState(false);
@@ -62,7 +65,7 @@ const InputBundle = ({ updateFunction, title, type }) => {
               +
             </GeneralButton>
           )}
-          {fieldVisible && type !== "periods" && type !== "locations" && (
+          {fieldVisible && type === "teams" && (
             <Container gap={"10px"}>
               <InputField
                 value={inputValue}
@@ -89,10 +92,27 @@ const InputBundle = ({ updateFunction, title, type }) => {
               isModalOpen={fieldVisible}
             />
           )}
-          {options.map((option, idx) => (
-            <Container key={idx}>
-              <DropDownItem id={idx} option={option} type={type} />
+          {fieldVisible && type === "weeks" && (
+            <Container gap={"10px"}>
+              <InputField
+                onChange={handleInputChange}
+                onKeyDown={handleInputKeyDown}
+                ref={inputRef}
+                style={{ width: "70%", height: "100%" }}
+                type="number"
+                placeholder="Enter no. of weeks"
+              />
+              <GeneralButton
+                style={{ width: "20%" }}
+                onClick={() => setFieldVisible(false)}
+              >
+                X
+              </GeneralButton>
             </Container>
+          )}
+
+          {options.map((option, idx) => (
+            <DropDownItem key={idx} id={idx} option={option} type={type} />
           ))}
         </DropdownList>
       )}

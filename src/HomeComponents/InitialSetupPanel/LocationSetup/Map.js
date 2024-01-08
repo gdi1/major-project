@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import React from "react";
 import SearchComponent from "./SearchComponent";
 import GeneralButton from "../../../GeneralComponents/GeneralButton";
-import Container from "../../../GeneralComponents/Container";
+import { Container } from "../../../GeneralComponents/Containers";
 import { useDispatch } from "react-redux";
 import { constraintsActions } from "../../../store/constraints";
 

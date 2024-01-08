@@ -1,11 +1,10 @@
-import Select from "react-select";
 import { MultiSelect } from "react-multi-select-component";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Block, { CloseButton } from "./Block";
+import Block from "./Block";
 import { currentConstraintActions } from "../store/currentConstraint";
-import { useState } from "react";
 import InputField from "../GeneralComponents/InputField";
+import styled from "styled-components";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -18,8 +17,8 @@ const blockNames = {
   "at-most": ["At most", "times"],
   play: "Play",
   "not-play": "Not Play",
-  "play-against": "Play Against",
-  "not-play-against": "Not Play Against",
+  "play-against": "Play Against ",
+  "not-play-against": "Not Play Against ",
 };
 
 const PreviewBlock = ({ block, x, y }) => {
@@ -50,7 +49,15 @@ const PreviewBlock = ({ block, x, y }) => {
 
   const getContentBlock = () => {
     const { type } = block;
-    const multiselect_types = ["locations", "weeks", "periods", "teams"];
+    const multiselect_types = [
+      "locations",
+      "weeks",
+      "periods",
+      "teams",
+      "play-against",
+      "not-play-against",
+    ];
+    const derived_multiselect_types = ["play-against", "not-play-against"];
     if (multiselect_types.includes(type)) {
       return (
         <React.Fragment>
@@ -62,7 +69,11 @@ const PreviewBlock = ({ block, x, y }) => {
             }}
           >
             <MultiSelect
-              options={global_state[type]}
+              options={
+                derived_multiselect_types.includes(type)
+                  ? global_state["teams"]
+                  : global_state[type]
+              }
               value={block.options}
               onChange={handleChange}
               labelledBy="Select"
@@ -80,8 +91,7 @@ const PreviewBlock = ({ block, x, y }) => {
             }}
             style={{ width: "30%" }}
           >
-            <InputField
-              style={{ width: "100%", boxSizing: "border-box" }}
+            <NoOfTimesInputField
               type="number"
               value={block.times}
               onChange={handleInputChange}
@@ -102,5 +112,10 @@ const PreviewBlock = ({ block, x, y }) => {
     </Block>
   );
 };
+
+const NoOfTimesInputField = styled(InputField)`
+  width: 100%;
+  box-sizing: border-box;
+`;
 
 export default PreviewBlock;

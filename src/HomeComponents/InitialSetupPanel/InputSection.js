@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Container } from "../../GeneralComponents/Containers";
+import { RowContainer } from "../../GeneralComponents/Containers";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
 import { Label } from "../../GeneralComponents/Labels";
 import InputField from "../../GeneralComponents/InputField";
@@ -9,11 +9,11 @@ import { DropdownList } from "./DropDownComponents";
 import DropDownItem from "./DropDownItem";
 import DayAndTimePicker from "./DayAndTimePicker";
 import AddLocationModal from "./LocationSetup/AddLocationModal";
-import { DragDropContext } from "react-beautiful-dnd";
-import Drag from "../ConstraintPanel/Drag";
-import Drop from "../ConstraintPanel/Drop";
+import styled from "styled-components";
+import borders from "../../style-utils/borders";
+import paddings from "../../style-utils/paddings";
 
-const InputBundle = ({ updateFunction, title, type }) => {
+const InputSection = ({ updateFunction, title, type }) => {
   const [fieldVisible, setFieldVisible] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const options = useSelector((state) => state.constraints[type]);
@@ -33,31 +33,23 @@ const InputBundle = ({ updateFunction, title, type }) => {
     }
   };
 
+  const toggleShowDropDownOptions = () => {
+    setShowDropdown((prev) => !prev);
+    setFieldVisible(false);
+  };
+
   useEffect(() => {
     if (fieldVisible && inputRef.current) inputRef.current.focus();
   }, [fieldVisible]);
 
   return (
     <React.Fragment>
-      <Container
-        justifyContent={"start"}
-        alignItems={"start"}
-        style={{
-          borderBottom: "1px solid black",
-          padding: "10px",
-          boxSizing: "border-box",
-        }}
-      >
-        <Label style={{ marginRight: "5px" }}>{title}</Label>
-        <GeneralButton
-          onClick={() => {
-            setShowDropdown((prev) => !prev);
-            setFieldVisible(false);
-          }}
-        >
+      <InputSectionHeader>
+        <AttributeLabel>{title}</AttributeLabel>
+        <GeneralButton onClick={toggleShowDropDownOptions}>
           {showDropdown ? "Close" : "Show"}
         </GeneralButton>
-      </Container>
+      </InputSectionHeader>
       {showDropdown && (
         <DropdownList>
           {(!fieldVisible || type === "locations") && (
@@ -66,7 +58,7 @@ const InputBundle = ({ updateFunction, title, type }) => {
             </GeneralButton>
           )}
           {fieldVisible && type === "teams" && (
-            <Container gap={"10px"}>
+            <InputBundle>
               <InputField
                 value={inputValue}
                 onChange={handleInputChange}
@@ -75,13 +67,10 @@ const InputBundle = ({ updateFunction, title, type }) => {
                 style={{ width: "70%", height: "100%" }}
                 ref={inputRef}
               />
-              <GeneralButton
-                style={{ width: "20%" }}
-                onClick={() => setFieldVisible(false)}
-              >
+              <InputButton onClick={() => setFieldVisible(false)}>
                 X
-              </GeneralButton>
-            </Container>
+              </InputButton>
+            </InputBundle>
           )}
           {fieldVisible && type === "periods" && (
             <DayAndTimePicker setFieldVisible={setFieldVisible} />
@@ -93,7 +82,7 @@ const InputBundle = ({ updateFunction, title, type }) => {
             />
           )}
           {fieldVisible && type === "weeks" && (
-            <Container gap={"10px"}>
+            <InputBundle>
               <InputField
                 onChange={handleInputChange}
                 onKeyDown={handleInputKeyDown}
@@ -102,13 +91,10 @@ const InputBundle = ({ updateFunction, title, type }) => {
                 type="number"
                 placeholder="Enter no. of weeks"
               />
-              <GeneralButton
-                style={{ width: "20%" }}
-                onClick={() => setFieldVisible(false)}
-              >
+              <InputButton onClick={() => setFieldVisible(false)}>
                 X
-              </GeneralButton>
-            </Container>
+              </InputButton>
+            </InputBundle>
           )}
 
           {options.map((option, idx) => (
@@ -119,4 +105,25 @@ const InputBundle = ({ updateFunction, title, type }) => {
     </React.Fragment>
   );
 };
-export default InputBundle;
+
+const AttributeLabel = styled(Label)`
+  margin-bottom: 5px;
+`;
+
+const InputSectionHeader = styled(RowContainer)`
+  align-items: start;
+  justify-content: start;
+  border: ${borders.small};
+  padding: ${paddings.small};
+  box-sizing: border-box;
+`;
+
+const InputBundle = styled(RowContainer)`
+  gap: 10px;
+`;
+
+const InputButton = styled(GeneralButton)`
+  width: 20%;
+`;
+
+export default InputSection;

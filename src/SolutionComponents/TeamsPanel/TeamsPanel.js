@@ -1,12 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
-import { ColumnContainer, Container } from "../../GeneralComponents/Containers";
+import { ColumnContainer } from "../../GeneralComponents/Containers";
 import { CenteredLabel } from "../../GeneralComponents/Labels";
 import Title from "../../GeneralComponents/Title";
 import { solutionActions } from "../../store/solution";
 import styled from "styled-components";
 import paddings from "../../style-utils/paddings";
 import borders from "../../style-utils/borders";
-import { useCallback } from "react";
 
 const TeamsPanel = () => {
   const dispatch = useDispatch();

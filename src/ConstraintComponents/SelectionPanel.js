@@ -1,4 +1,4 @@
-import { ColumnContainer, Container } from "../GeneralComponents/Containers";
+import { ColumnContainer } from "../GeneralComponents/Containers";
 import SelectionBlock from "./SelectionBlock";
 import paddings from "../style-utils/paddings";
 import styled from "styled-components";

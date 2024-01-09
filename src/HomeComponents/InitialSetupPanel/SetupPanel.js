@@ -1,6 +1,8 @@
-import { Container } from "../../GeneralComponents/Containers";
+import styled from "styled-components";
+import { ColumnContainer } from "../../GeneralComponents/Containers";
 import { constraintsActions } from "../../store/constraints";
-import InputBundle from "./InputBundle";
+import InputSection from "./InputSection";
+import borders from "../../style-utils/borders";
 
 const SetupPanel = () => {
   const types = [
@@ -10,21 +12,22 @@ const SetupPanel = () => {
     { type: "weeks", updateFunction: constraintsActions.addWeeks },
   ];
   return (
-    <Container
-      width={"50%"}
-      border={"1px solid black"}
-      flexDirection={"column"}
-      style={{ borderBottom: "0" }}
-    >
+    <SetupSection>
       {types.map(({ type, updateFunction }, idx) => (
-        <InputBundle
+        <InputSection
           title={type[0].toUpperCase() + type.substring(1)}
           type={type}
           updateFunction={updateFunction}
           key={idx}
         />
       ))}
-    </Container>
+    </SetupSection>
   );
 };
+
+const SetupSection = styled(ColumnContainer)`
+  width: 50%;
+  border: ${borders.small};
+  border-bottom: 0;
+`;
 export default SetupPanel;

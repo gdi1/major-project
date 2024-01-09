@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { ColumnContainer, Container } from "../../GeneralComponents/Containers";
+import { ColumnContainer } from "../../GeneralComponents/Containers";
 import { CenteredLabel, Label } from "../../GeneralComponents/Labels";
 import React from "react";
 import Game from "./Game";

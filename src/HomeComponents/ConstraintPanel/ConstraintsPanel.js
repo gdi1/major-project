@@ -2,7 +2,6 @@ import { constraintsActions } from "../../store/constraints";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ColumnContainer,
-  Container,
   RowContainer,
 } from "../../GeneralComponents/Containers";
 import GeneralButton from "../../GeneralComponents/GeneralButton";

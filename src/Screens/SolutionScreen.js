@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, RowContainer } from "../GeneralComponents/Containers";
+import { RowContainer } from "../GeneralComponents/Containers";
 import SolutionPanel from "../SolutionComponents/SolutionPanel/SolutionPanel";
 import TeamsPanel from "../SolutionComponents/TeamsPanel/TeamsPanel";
 import Title from "../GeneralComponents/Title";
@@ -7,7 +7,6 @@ import GeneralButton from "../GeneralComponents/GeneralButton";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import borders from "../style-utils/borders";
-import paddings from "../style-utils/paddings";
 
 const SolutionScreen = () => {
   const navigate = useNavigate();
@@ -33,7 +32,7 @@ const SolutionPageHeader = styled(RowContainer)`
 const SolutionPageBody = styled(RowContainer)`
   box-sizing: border-box;
   border: ${borders.small};
-  padding: ${paddings.small};
   align-items: start;
+  justify-content: space-between;
 `;
 export default SolutionScreen;

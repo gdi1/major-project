@@ -1,11 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import SelectionPanel from "../ConstraintComponents/SelectionPanel";
 import PreviewPanel from "../ConstraintComponents/PreviewPanel";
-import {
-  ColumnContainer,
-  Container,
-  RowContainer,
-} from "../GeneralComponents/Containers";
+import { ColumnContainer, RowContainer } from "../GeneralComponents/Containers";
 import Title from "../GeneralComponents/Title";
 import GeneralButton from "../GeneralComponents/GeneralButton";
 import { constraintsActions } from "../store/constraints";

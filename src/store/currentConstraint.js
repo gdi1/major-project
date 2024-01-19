@@ -11,6 +11,10 @@ const currentConstraintSlice = createSlice({
     mode: "new",
   },
   reducers: {
+    removeConstraintList(state, action) {
+      state.constraintLists.splice(action.payload, 1);
+      if (state.constraintLists.length === 0) state.constraintLists = [[0]];
+    },
     setType(state, action) {
       state.type = action.payload;
     },
@@ -29,6 +33,18 @@ const currentConstraintSlice = createSlice({
     addNewConstraintBlock(state, action) {
       const type = action.payload;
       const selectedConstraintIndex = state.focusedConstraint;
+
+      const hasAlready = state.constraintLists[selectedConstraintIndex].some(
+        (block) => block.type === type
+      );
+      if (hasAlready) return;
+
+      const verbs = ["play", "not-play", "play-against", "not-play-against"];
+      const hasVerbAlready = state.constraintLists[
+        selectedConstraintIndex
+      ].some((block) => verbs.includes(block.type));
+      if (verbs.includes(type) && hasVerbAlready) return;
+
       const multiselect_types = [
         "locations",
         "weeks",
@@ -82,25 +98,6 @@ const currentConstraintSlice = createSlice({
           }
         );
       }
-      // } else if (type !== "play-against" && type !== "not-play-against") {
-      //   state.constraintLists[selectedConstraintIndex].splice(
-      //     findInsertIndex(state.constraintLists[selectedConstraintIndex], type),
-      //     0,
-      //     {
-      //       type,
-      //     }
-      //   );
-      // }
-      // } else {
-      //   state.constraintLists[selectedConstraintIndex].push({
-      //     type,
-      //     options: [],
-      //   });
-      //   state.constraintLists[selectedConstraintIndex].push({
-      //     type: "teams",
-      //     options: [],
-      //   });
-      // }
     },
     updateOptions(state, action) {
       const { x, y, selectedOptions } = action.payload;

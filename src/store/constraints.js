@@ -28,8 +28,8 @@ const constraintsSlice = createSlice({
         label: "Cluj-Napoca, Cluj Metropolitan Area, Cluj, Romania",
         coordinates: [50, 20],
       },
-      { value: 2, label: "Option 2" },
-      { value: 3, label: "Option 3" },
+      { value: 2, label: "Option 2", coordinates: [51, 20] },
+      { value: 3, label: "Option 3", coordinates: [50, 21] },
     ],
     maps: { teams: {}, weeks: {}, periods: {}, locations: {} },
     hardConstraints: [],
@@ -83,14 +83,15 @@ const constraintsSlice = createSlice({
         value: state.periods.length + 1,
         label: action.payload,
       });
-      const sortedPeriods = sortPeriods(
-        state.periods.map((period) => period.label)
+      state.periods = sortPeriods(
+        // state.periods.map((period) => period.label)
+        state.periods.map((period) => ({ ...period }))
       );
-      console.log(sortedPeriods);
-      state.periods = [];
-      sortedPeriods.forEach((period) =>
-        state.periods.push({ value: state.periods.length + 1, label: period })
-      );
+      // console.log(sortedPeriods);
+      // state.periods = [];
+      // sortedPeriods.forEach((period) =>
+      //   state.periods.push({ value: state.periods.length + 1, label: period })
+      // );
     },
     addWeek(state, action) {
       state.weeks.push({

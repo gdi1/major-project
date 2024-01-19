@@ -3,6 +3,7 @@ import { ColumnContainer } from "../../GeneralComponents/Containers";
 import { constraintsActions } from "../../store/constraints";
 import InputSection from "./InputSection";
 import borders from "../../style-utils/borders";
+import { useSelector } from "react-redux";
 
 const SetupPanel = () => {
   const types = [
@@ -11,6 +12,8 @@ const SetupPanel = () => {
     { type: "periods", updateFunction: constraintsActions.addPeriod },
     { type: "weeks", updateFunction: constraintsActions.addWeeks },
   ];
+  const { periods, teams } = useSelector((state) => state.constraints);
+  console.log(periods, teams);
   return (
     <SetupSection>
       {types.map(({ type, updateFunction }, idx) => (

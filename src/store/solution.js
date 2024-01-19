@@ -5,6 +5,8 @@ const solutionSlice = createSlice({
   initialState: {
     selectedTeam: undefined,
     selectedTeamJourney: undefined,
+    selectedTeamGames: undefined,
+    violatedSoftConstraints: [],
     teamsMap: {},
     locationsMap: {},
     periodsMap: {},
@@ -16,20 +18,7 @@ const solutionSlice = createSlice({
           {
             period: 1,
             games: [
-              {
-                teamA: 1,
-                teamB: 2,
-                location:
-                  "dwav reaofbmadeamfeov,rsmvbkl,wpaf,eomvgors,bvos,,va,faevkrsmvgkrs kbrkefamkaedeamfkeafea",
-              },
-              {
-                teamA:
-                  "dwav reaofbmadeamfeov,rsmvbkl,wpaf,eomvgors,bvos,,va,faevkrsmvgkrs kbrkefamkaedeamfkeafea",
-                teamB:
-                  "dwav reaofbmadeamfeov,rsmvbkl,wpaf,eomvgors,bvos,,va,faevkrsmvgkrs kbrkefamkaedeamfkeafea",
-                location: 2,
-              },
-              { teamA: 1, teamB: 2, location: 1 },
+              { teamA: 1, teamB: 2, location: 2 },
               { teamA: 2, teamB: 3, location: 2 },
               { teamA: 1, teamB: 2, location: 1 },
               { teamA: 2, teamB: 3, location: 2 },
@@ -96,22 +85,26 @@ const solutionSlice = createSlice({
   reducers: {
     selectTeam(state, action) {
       state.selectedTeam = action.payload;
-      state.selectedTeamJourney = state.schedule
-        .map(({ weekSchedule }) =>
-          weekSchedule.map(({ games }) =>
-            games.map(({ teamA, teamB, location }) =>
-              teamA === action.payload || teamB === action.payload
-                ? location
+      state.selectedTeamGames = state.schedule
+        .map(({ week, weekSchedule }) =>
+          weekSchedule.map(({ period, games }) =>
+            games.map((game) =>
+              game.teamA === action.payload || game.teamB === action.payload
+                ? { game, period, week }
                 : undefined
             )
           )
         )
         .flat(Infinity)
-        .filter((location) => location);
+        .filter((location) => location !== undefined);
+      state.selectedTeamJourney = state.selectedTeamGames.map(
+        ({ game }) => game.location
+      );
     },
-    deselectedTeam(state, _) {
+    deselectTeam(state, _) {
       state.selectedTeam = undefined;
       state.selectedTeamJourney = undefined;
+      state.selectedTeamGames = undefined;
     },
   },
 });
@@ -119,3 +112,30 @@ const solutionSlice = createSlice({
 export const solutionActions = solutionSlice.actions;
 
 export default solutionSlice;
+
+// {
+//   teamA: 1,
+//   teamB: 2,
+//   location:
+//     "dwav reaofbmadeamfeov,rsmvbkl,wpaf,eomvgors,bvos,,va,faevkrsmvgkrs kbrkefamkaedeamfkeafea",
+// },
+// {
+//   teamA:
+//     "dwav reaofbmadeamfeov,rsmvbkl,wpaf,eomvgors,bvos,,va,faevkrsmvgkrs kbrkefamkaedeamfkeafea",
+//   teamB:
+//     "dwav reaofbmadeamfeov,rsmvbkl,wpaf,eomvgors,bvos,,va,faevkrsmvgkrs kbrkefamkaedeamfkeafea",
+//   location: 2,
+// },
+
+// state.selectedTeamJourney = state.schedule
+//   .map(({ weekSchedule }) =>
+//     weekSchedule.map(({ games }) =>
+//       games.map(({ teamA, teamB, location }) =>
+//         teamA === action.payload || teamB === action.payload
+//           ? location
+//           : undefined
+//       )
+//     )
+//   )
+//   .flat(Infinity)
+//   .filter((location) => location);

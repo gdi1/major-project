@@ -7,6 +7,9 @@ import { currentConstraintActions } from "../store/currentConstraint";
 import React from "react";
 import borders from "../style-utils/borders";
 import styled from "styled-components";
+import delete_icon from "../icons/delete_icon.png";
+import tab_key_icon from "../icons/tab_key_icon.png";
+import reverse_tab_icon from "../icons/reverse_tab_icon.png";
 
 const blockWidth = 220;
 
@@ -29,20 +32,25 @@ const PreviewPanel = () => {
     dispatch(currentConstraintActions.increaseIndentation(x));
   };
 
+  const removeConstraintList = (x) => {
+    if (x !== focusedConstraint) return;
+    dispatch(currentConstraintActions.removeConstraintList(x));
+  };
+
   return (
     <ConstraintPanel>
       {constraintLists.map((list, x) => (
         <ConstraintRow
           onClick={() => setFocused(x)}
-          width={(list.length - 1 + list[0]) * blockWidth + 55}
+          width={(list.length - 1 + list[0]) * blockWidth + 100}
           focused={focusedConstraint === x}
           key={x}
         >
-          <IndentationButton onClick={() => reduceIndentation(x)}>
-            -
+          <IndentationButton onClick={() => removeConstraintList(x)}>
+            <img src={delete_icon} style={{ width: "30px", height: "30px" }} />
           </IndentationButton>
           <IndentationButton onClick={() => increaseIndentation(x)}>
-            +
+            <img src={tab_key_icon} style={{ width: "30px", height: "30px" }} />
           </IndentationButton>
           {list[0] > 0 && (
             <IndentationBlock
@@ -51,7 +59,11 @@ const PreviewPanel = () => {
               focused={focusedConstraint === x}
             >
               <OverlayMessage focused={focusedConstraint === x}>
-                Decrease indentation
+                {/* Decrease indentation */}
+                <img
+                  src={reverse_tab_icon}
+                  style={{ width: "50px", height: "50px" }}
+                />
               </OverlayMessage>
             </IndentationBlock>
           )}
@@ -70,9 +82,6 @@ const IndentationBlock = styled.div`
   box-sizing: content-box;
   cursor: pointer;
   position: relative;
-  &:hover {
-    background-color: ${(props) => (props.focused ? "black" : "")};
-  }
 `;
 const OverlayMessage = styled.div`
   position: absolute;
@@ -87,7 +96,7 @@ const OverlayMessage = styled.div`
 `;
 
 const IndentationButton = styled(GeneralButton)`
-  width: 25px;
+  width: 50px;
   height: 60px;
 `;
 const ConstraintPanel = styled(ColumnContainer)`
@@ -107,6 +116,7 @@ const ConstraintRow = styled(RowContainer)`
   width: ${(props) => props.width}px;
   background-color: ${(props) => (props.focused ? "blue" : "white")};
 `;
+
 const BlocksList = styled(RowContainer)`
   justify-content: safe start;
   width: auto;

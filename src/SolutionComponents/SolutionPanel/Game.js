@@ -5,6 +5,7 @@ import {
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import borders from "../../style-utils/borders";
+import { TextWithEllipsis } from "../../GeneralComponents/TextWithEllipsis";
 
 const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
   const { teamA, teamB, location } = game;
@@ -27,13 +28,6 @@ const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
     </GameDescriptionBody>
   );
 };
-
-const TextWithEllipsis = styled.div`
-  word-break: break-word;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-`;
 
 const GameDescriptionBody = styled(ColumnContainer)`
   border: ${borders.small};

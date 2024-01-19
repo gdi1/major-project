@@ -66,6 +66,12 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
       style={modal_content}
     >
       <ModalBody>
+        <ModalButton
+          style={{ alignSelf: "end", width: "auto" }}
+          onClick={closeModal}
+        >
+          Remove
+        </ModalButton>
         <ModalTitle>Edit Constraint</ModalTitle>
         <ModalLabel>Name</ModalLabel>
         <NewConstraintNameInputField
@@ -73,13 +79,12 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
           ref={editConstraintNameRef}
         />
         <ModalButtonGroup>
-          <ModalButton onClick={closeModal}>Close</ModalButton>
           <ModalButton
             onClick={() => {
               if (changeName()) closeModal();
             }}
           >
-            Done
+            OK
           </ModalButton>
           <ModalButton onClick={continueToEditConstraint}>Continue</ModalButton>
         </ModalButtonGroup>

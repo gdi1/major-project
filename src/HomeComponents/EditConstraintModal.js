@@ -21,7 +21,6 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   const { hardConstraints, softConstraints } = useSelector(
     (state) => state.constraints
   );
-  console.log(constraint);
 
   const closeModal = () => {
     setIsModalOpen(false);

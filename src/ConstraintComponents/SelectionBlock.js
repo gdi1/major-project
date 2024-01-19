@@ -5,6 +5,7 @@ import { currentConstraintActions } from "../store/currentConstraint";
 import Block from "./Block";
 import InputField from "../GeneralComponents/InputField";
 import styled from "styled-components";
+import colors from "../style-utils/colors";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -58,11 +59,17 @@ const ConstraintBlock = ({ type }) => {
   };
 
   return (
-    <Block isSelection={true} onClick={() => addConstraintBlock(type)}>
+    <SelectionBlock onClick={() => addConstraintBlock(type)}>
       {getContentBlock()}
-    </Block>
+    </SelectionBlock>
   );
 };
+
+const SelectionBlock = styled(Block)`
+  &:hover {
+    background-color: ${colors.creme};
+  }
+`;
 
 const NoOfTimesInputField = styled(InputField)`
   width: 40%;

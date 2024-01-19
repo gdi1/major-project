@@ -28,6 +28,7 @@ const PreviewPanel = () => {
     if (x !== focusedConstraint) return;
     dispatch(currentConstraintActions.increaseIndentation(x));
   };
+
   return (
     <ConstraintPanel>
       {constraintLists.map((list, x) => (
@@ -43,7 +44,18 @@ const PreviewPanel = () => {
           <IndentationButton onClick={() => increaseIndentation(x)}>
             +
           </IndentationButton>
-          <BlocksList indentation={list[0] * blockWidth + 5}>
+          {list[0] > 0 && (
+            <IndentationBlock
+              indentation={list[0] * blockWidth + 5}
+              onClick={() => reduceIndentation(x)}
+              focused={focusedConstraint === x}
+            >
+              <OverlayMessage focused={focusedConstraint === x}>
+                Decrease indentation
+              </OverlayMessage>
+            </IndentationBlock>
+          )}
+          <BlocksList>
             {list.slice(1).map((block, y) => (
               <PreviewBlock block={block} x={x} y={y + 1} />
             ))}
@@ -53,12 +65,33 @@ const PreviewPanel = () => {
     </ConstraintPanel>
   );
 };
+const IndentationBlock = styled.div`
+  width: ${(props) => props.indentation}px;
+  box-sizing: content-box;
+  cursor: pointer;
+  position: relative;
+  &:hover {
+    background-color: ${(props) => (props.focused ? "black" : "")};
+  }
+`;
+const OverlayMessage = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  display: none;
+  ${IndentationBlock}:hover & {
+    display: ${(props) => (props.focused ? "block" : "")};
+  }
+`;
+
 const IndentationButton = styled(GeneralButton)`
   width: 25px;
   height: 60px;
 `;
 const ConstraintPanel = styled(ColumnContainer)`
-  height: 90vh;
+  height: 85vh;
   border: ${borders.small};
   padding: ${paddings.small};
   align-items: start;
@@ -76,6 +109,7 @@ const ConstraintRow = styled(RowContainer)`
 `;
 const BlocksList = styled(RowContainer)`
   justify-content: safe start;
+  width: auto;
   margin-left: ${(props) => props.indentation}px;
 `;
 export default PreviewPanel;

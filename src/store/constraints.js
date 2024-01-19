@@ -37,18 +37,22 @@ const constraintsSlice = createSlice({
   },
   reducers: {
     addNewConstraint(state, action) {
-      const { name } = action.payload;
+      const { name, type } = action.payload;
+      const constraint = { ...action.payload };
+      delete constraint.type;
+
       const isAlreadyConstraint =
         state.hardConstraints.some((c) => c.name === name) ||
         state.softConstraints.some((c) => c.name === name);
-      if (!isAlreadyConstraint)
-        state.hardConstraints.push({ ...action.payload });
-      else {
+      if (!isAlreadyConstraint) {
+        if (type === "hard") state.hardConstraints.push(constraint);
+        else state.softConstraints.push(constraint);
+      } else {
         let index = state.hardConstraints.findIndex((c) => c.name === name);
-        if (index !== -1) state.hardConstraints[index] = { ...action.payload };
+        if (index !== -1) state.hardConstraints[index] = constraint;
         else {
           index = state.softConstraints.findIndex((c) => c.name === name);
-          state.softConstraints[index] = { ...action.payload };
+          state.softConstraints[index] = constraint;
         }
       }
     },

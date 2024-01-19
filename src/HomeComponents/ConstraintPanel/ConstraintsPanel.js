@@ -17,6 +17,7 @@ const ConstraintsPanel = () => {
   const { hardConstraints, softConstraints } = useSelector(
     (state) => state.constraints
   );
+  console.log(hardConstraints, softConstraints);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isNewConstraintModalOpen, setIsNewConstraintModalOpen] =

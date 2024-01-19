@@ -7,9 +7,13 @@ const currentConstraintSlice = createSlice({
     constraintLists: [[0]],
     focusedConstraint: 0,
     name: undefined,
+    type: "hard",
     mode: "new",
   },
   reducers: {
+    setType(state, action) {
+      state.type = action.payload;
+    },
     resetCurrentConstraint(state, _) {
       state.constraintLists = [[0]];
       state.focusedConstraint = 0;

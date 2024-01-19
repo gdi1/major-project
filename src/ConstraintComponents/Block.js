@@ -1,6 +1,5 @@
 import styled, { keyframes } from "styled-components";
 import paddings from "../style-utils/paddings";
-import colors from "../style-utils/colors";
 
 const fadeIn = keyframes`
   from {
@@ -23,9 +22,7 @@ const Block = styled.div`
   cursor: pointer;
   box-sizing: border-box;
   background-color: white;
-  &:hover {
-    background-color: ${colors.creme};
-  }
+
   animation: ${fadeIn} 0.3s ease-in-out;
   &:hover {
     .close-btn {

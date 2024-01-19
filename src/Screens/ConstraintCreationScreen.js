@@ -9,9 +9,10 @@ import ConstraintIterator from "../Utilities/ConstraintIterator";
 import { useNavigate } from "react-router-dom";
 import { currentConstraintActions } from "../store/currentConstraint";
 import styled from "styled-components";
+import { Label } from "../GeneralComponents/Labels";
 
 const ConstraintCreationScreen = () => {
-  const { constraintLists, name, mode } = useSelector(
+  const { constraintLists, name, mode, type } = useSelector(
     (state) => state.currentConstraint
   );
   const dispatch = useDispatch();
@@ -25,12 +26,19 @@ const ConstraintCreationScreen = () => {
     dispatch(
       constraintsActions.addNewConstraint({
         name,
+        type,
         constraintLists,
         // constraint: new ConstraintIterator(constraintLists).parseConstraint(),
       })
     );
     dispatch(currentConstraintActions.resetCurrentConstraint());
     navigate("/");
+  };
+
+  const handleConstraintTypeChange = (e) => {
+    const newType = e.target.value;
+    console.log(newType);
+    dispatch(currentConstraintActions.setType(newType));
   };
 
   return (
@@ -52,6 +60,18 @@ const ConstraintCreationScreen = () => {
           </GeneralButton>
         </ButtonGroup>
       </PageHeader>
+      <PageSubHeader>
+        <ConstraintName> Name: {name}</ConstraintName>
+        {mode === "new" && (
+          <TypeSelection>
+            <Label>Type: </Label>
+            <select value={type} onChange={handleConstraintTypeChange}>
+              <option value="hard">Hard</option>
+              <option value="soft">Soft</option>
+            </select>
+          </TypeSelection>
+        )}
+      </PageSubHeader>
       <PageBody>
         <SelectionPanel />
         <PreviewPanel />
@@ -60,15 +80,35 @@ const ConstraintCreationScreen = () => {
   );
 };
 
-const ConstraintCreationPage = styled(ColumnContainer)``;
 const PageHeader = styled(RowContainer)`
   justify-content: space-between;
 `;
-const ButtonGroup = styled(RowContainer)`
+
+const PageSubHeader = styled(RowContainer)`
+  justify-content: start;
+  align-items: start;
+  width: 100%;
+  gap: 20px;
+`;
+
+const PageBody = styled(RowContainer)`
+  justify-content: space-evenly;
+`;
+
+const TypeSelection = styled(RowContainer)`
+  justify-content: center;
+  align-items: center;
   width: auto;
 `;
-const PageBody = styled(RowContainer)`
-  jsutify-content: space-evenly;
+
+const ConstraintName = styled(Label)`
+  width: auto;
+`;
+
+const ConstraintCreationPage = styled(ColumnContainer)``;
+
+const ButtonGroup = styled(RowContainer)`
+  width: auto;
 `;
 
 export default ConstraintCreationScreen;

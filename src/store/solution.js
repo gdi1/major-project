@@ -6,10 +6,24 @@ const solutionSlice = createSlice({
     selectedTeam: undefined,
     selectedTeamJourney: undefined,
     selectedTeamGames: undefined,
+    focusedGame: undefined,
     violatedSoftConstraints: [],
     teamsMap: {},
-    locationsMap: {},
-    periodsMap: {},
+    locationsMap: {
+      1: {
+        value: 1,
+        label: "Cluj-Napoca, Cluj Metropolitan Area, Cluj, Romania",
+        coordinates: [50, 20],
+      },
+      2: { value: 2, label: "Loc 2", coordinates: [51, 20] },
+      3: { value: 3, label: "Loc 3", coordinates: [50, 21] },
+    },
+    periodsMap: {
+      1: { value: 1, label: "P 1" },
+      2: { value: 2, label: "P 2" },
+      3: { value: 3, label: "P 3" },
+      4: { value: 4, label: "P 4" },
+    },
     weeksMap: {},
     schedule: [
       {
@@ -26,6 +40,7 @@ const solutionSlice = createSlice({
               { teamA: 2, teamB: 3, location: 2 },
               { teamA: 1, teamB: 2, location: 1 },
               { teamA: 2, teamB: 3, location: 2 },
+              { teamA: 4, teamB: 1, location: 2 },
             ],
           },
           {
@@ -41,6 +56,7 @@ const solutionSlice = createSlice({
               { teamA: 2, teamB: 3, location: 2 },
               { teamA: 1, teamB: 2, location: 1 },
               { teamA: 2, teamB: 3, location: 2 },
+              { teamA: 4, teamB: 1, location: 1 },
             ],
           },
         ],
@@ -61,6 +77,7 @@ const solutionSlice = createSlice({
               { teamA: 2, teamB: 3, location: 2 },
               { teamA: 1, teamB: 2, location: 1 },
               { teamA: 2, teamB: 3, location: 2 },
+              { teamA: 4, teamB: 1, location: 1 },
             ],
           },
           {
@@ -76,6 +93,7 @@ const solutionSlice = createSlice({
               { teamA: 2, teamB: 3, location: 2 },
               { teamA: 1, teamB: 2, location: 1 },
               { teamA: 2, teamB: 3, location: 2 },
+              { teamA: 4, teamB: 1, location: 3 },
             ],
           },
         ],
@@ -98,13 +116,20 @@ const solutionSlice = createSlice({
         .flat(Infinity)
         .filter((location) => location !== undefined);
       state.selectedTeamJourney = state.selectedTeamGames.map(
-        ({ game }) => game.location
+        ({ game }) => state.locationsMap[game.location]
       );
     },
     deselectTeam(state, _) {
       state.selectedTeam = undefined;
       state.selectedTeamJourney = undefined;
       state.selectedTeamGames = undefined;
+      state.focusedGame = undefined;
+    },
+    setFocusedGame(state, action) {
+      state.focusedGame = action.payload;
+    },
+    resetFocusedGame(state, _) {
+      state.focusedGame = undefined;
     },
   },
 });

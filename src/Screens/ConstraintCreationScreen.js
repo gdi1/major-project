@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { currentConstraintActions } from "../store/currentConstraint";
 import styled from "styled-components";
 import { Label } from "../GeneralComponents/Labels";
+import ConstraintFlowPanel from "../ConstraintComponents/ConstraintFlowPanel";
+import { ReactFlowProvider } from "reactflow";
 
 const ConstraintCreationScreen = () => {
   const { constraintLists, name, mode, type } = useSelector(
@@ -74,7 +76,10 @@ const ConstraintCreationScreen = () => {
       </PageSubHeader>
       <PageBody>
         <SelectionPanel />
-        <PreviewPanel />
+        <ReactFlowProvider>
+          <ConstraintFlowPanel />
+        </ReactFlowProvider>
+        {/* <PreviewPanel /> */}
       </PageBody>
     </ConstraintCreationPage>
   );
@@ -92,7 +97,7 @@ const PageSubHeader = styled(RowContainer)`
 `;
 
 const PageBody = styled(RowContainer)`
-  justify-content: space-evenly;
+  justify-content: start;
 `;
 
 const TypeSelection = styled(RowContainer)`

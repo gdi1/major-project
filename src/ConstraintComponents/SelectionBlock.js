@@ -1,11 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MultiSelect } from "react-multi-select-component";
 import { currentConstraintActions } from "../store/currentConstraint";
 import Block from "./Block";
 import InputField from "../GeneralComponents/InputField";
 import styled from "styled-components";
 import colors from "../style-utils/colors";
+import { constraintFlowActions } from "../store/constraintFlow";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -24,6 +25,8 @@ const blockNames = {
 
 const ConstraintBlock = ({ type }) => {
   const dispatch = useDispatch();
+  const { selectedNode } = useSelector((state) => state.flow);
+
   const multiselect_types = [
     "locations",
     "weeks",
@@ -58,10 +61,21 @@ const ConstraintBlock = ({ type }) => {
     dispatch(currentConstraintActions.addNewConstraintBlock(type));
   };
 
+  const addFlowBlock = () => {
+    console.log("hello", selectedNode);
+    if (selectedNode !== undefined)
+      dispatch(constraintFlowActions.addFlowBlock(type));
+    else dispatch(constraintFlowActions.addNewNode(type));
+  };
+
+  const addNewNode = () => {};
+
+  const removeBlock = () => {
+    dispatch(constraintFlowActions.removeFlowBlock(type));
+  };
+
   return (
-    <SelectionBlock onClick={() => addConstraintBlock(type)}>
-      {getContentBlock()}
-    </SelectionBlock>
+    <SelectionBlock onClick={addFlowBlock}>{getContentBlock()}</SelectionBlock>
   );
 };
 

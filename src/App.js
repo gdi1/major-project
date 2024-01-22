@@ -6,9 +6,9 @@ import { useEffect } from "react";
 
 const App = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    if (localStorage.getItem("firstLoadDone") !== null) navigate("/");
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("firstLoadDone") !== null) navigate("/");
+  // }, []);
   return (
     <Routes>
       <Route path="/" element={<HomeScreen />} />

@@ -10,10 +10,7 @@ import borders from "../../style-utils/borders";
 const TeamsPanel = () => {
   const dispatch = useDispatch();
   const { teams } = useSelector((state) => state.constraints);
-  const { selectedTeam, selectedTeamGames, selectedTeamJourney } = useSelector(
-    (state) => state.solution
-  );
-  console.log(selectedTeam, selectedTeamGames, selectedTeamJourney);
+  const { selectedTeam } = useSelector((state) => state.solution);
   const toggleTeamSelection = (team) => {
     if (selectedTeam !== team.value) {
     }

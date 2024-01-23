@@ -11,6 +11,7 @@ const solutionSlice = createSlice({
     violatedSoftConstraints: [],
     schedule: [],
     curvedPaths: [],
+    speed: 5000,
     teamsMap: {
       1: { value: 1, label: "team 1" },
       2: { value: 2, label: "team 2" },
@@ -112,6 +113,15 @@ const solutionSlice = createSlice({
     ],
   },
   reducers: {
+    setSpeed(state, action) {
+      state.speed = action.payload;
+    },
+    reduceSpeed(state, _) {
+      if (state.speed < 10000) state.speed += 1000;
+    },
+    increaseSpeed(state, _) {
+      if (state.speed > 1000) state.speed -= 1000;
+    },
     selectTeam(state, action) {
       state.focusedGame = undefined;
       state.selectedTeam = action.payload;

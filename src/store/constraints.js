@@ -31,11 +31,30 @@ const constraintsSlice = createSlice({
       { value: 2, label: "Option 2", coordinates: [51, 20] },
       { value: 3, label: "Option 3", coordinates: [50, 21] },
     ],
-    maps: { teams: {}, weeks: {}, periods: {}, locations: {} },
     hardConstraints: [],
     softConstraints: [],
   },
   reducers: {
+    addNewFlowConstraint(state, action) {
+      const { name, type } = action.payload;
+      const constraint = { ...action.payload };
+      delete constraint.type;
+
+      const isAlreadyConstraint =
+        state.hardConstraints.some((c) => c.name === name) ||
+        state.softConstraints.some((c) => c.name === name);
+      if (!isAlreadyConstraint) {
+        if (type === "hard") state.hardConstraints.push(constraint);
+        else state.softConstraints.push(constraint);
+      } else {
+        let index = state.hardConstraints.findIndex((c) => c.name === name);
+        if (index !== -1) state.hardConstraints[index] = constraint;
+        else {
+          index = state.softConstraints.findIndex((c) => c.name === name);
+          state.softConstraints[index] = constraint;
+        }
+      }
+    },
     addNewConstraint(state, action) {
       const { name, type } = action.payload;
       const constraint = { ...action.payload };

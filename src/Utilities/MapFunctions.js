@@ -76,3 +76,20 @@ export const formatMarkers = (selectedTeamJourney) => {
   }
   return Object.values(markers);
 };
+
+export const getCoordinatesOfLocations = (selectedTeamJourney) => {
+  return selectedTeamJourney.map(({ coordinates }) => coordinates);
+};
+
+export const filterConsecutiveSameLocations = (locations) => {
+  const filteredLocations = [locations[0]];
+  for (let i = 1; i < locations.length; i++) {
+    if (
+      locations[i][0] === locations[i - 1][0] &&
+      locations[i][1] === locations[i - 1][1]
+    )
+      continue;
+    filteredLocations.push(locations[i]);
+  }
+  return filteredLocations;
+};

@@ -18,7 +18,7 @@ const SelectedTeamGamesDescription = () => {
 
   const toggleFocusedGameOnMap = (idx) => {
     focusedGame === idx
-      ? dispatch(solutionActions.resetFocusedGame(idx))
+      ? dispatch(solutionActions.resetFocusedGame())
       : dispatch(solutionActions.setFocusedGame(idx));
   };
   return (

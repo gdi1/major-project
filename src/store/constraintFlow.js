@@ -6,31 +6,34 @@ const constraintFlowSlice = createSlice({
   name: "constraintsSlice",
   initialState: {
     selectedNode: undefined,
+    type: "hard",
+    name: undefined,
+    mode: "new",
     nodes: [
-      {
-        id: "1",
-        data: { label: "Root Node" },
-        position: { x: -620.5, y: 34.5 },
-        selected: true,
-      },
-      {
-        id: "3",
-        type: "output",
-        data: { label: "Output Node" },
-        position: { x: 250, y: 250 },
-      },
-      {
-        id: "4",
-        type: "customnode",
-        position: { x: 300, y: 300 },
-        data: {
-          types: {
-            teams: [],
-            weeks: [],
-            locations: [],
-          },
-        },
-      },
+      //   {
+      //     id: "1",
+      //     data: { label: "Root Node" },
+      //     position: { x: -620.5, y: 34.5 },
+      //     selected: true,
+      //   },
+      //   {
+      //     id: "3",
+      //     type: "output",
+      //     data: { label: "Output Node" },
+      //     position: { x: 250, y: 250 },
+      //   },
+      //   {
+      //     id: "4",
+      //     type: "ConstraintNode",
+      //     position: { x: 300, y: 300 },
+      //     data: {
+      //       types: {
+      //         teams: [],
+      //         weeks: [],
+      //         locations: [],
+      //       },
+      //     },
+      //   },
     ],
     edges: [
       //   { id: "e1-2", source: "1", target: "4" },
@@ -38,6 +41,18 @@ const constraintFlowSlice = createSlice({
     ],
   },
   reducers: {
+    setName(state, action) {
+      state.name = action.payload;
+    },
+    setType(state, action) {
+      state.type = action.payload;
+    },
+    resetConstraintFlow(state, _) {
+      state.name = undefined;
+      state.type = "hard";
+      state.edges = [];
+      state.nodes = [];
+    },
     removeOptionIds(state, action) {
       const toRemoveIds = action.payload;
       toRemoveIds.forEach((id) => delete state.selectedOptions[id]);
@@ -59,7 +74,7 @@ const constraintFlowSlice = createSlice({
         data.types[type] = type === "at-least" || type === "at-most" ? 0 : [];
         state.nodes.push({
           id: "1",
-          type: "customnode",
+          type: "ConstraintNode",
           data,
           position,
           selected: true,
@@ -76,7 +91,7 @@ const constraintFlowSlice = createSlice({
       state.nodes.forEach((node) => (node.selected = false));
       state.nodes.push({
         id,
-        type: "customnode",
+        type: "ConstraintNode",
         data,
         position,
         selected: true,
@@ -91,14 +106,18 @@ const constraintFlowSlice = createSlice({
     setEdges(state, action) {
       state.edges = action.payload;
     },
-
     addFlowBlock(state, action) {
       if (state.selectedNode === undefined) return;
 
       const type = action.payload;
       const idx = state.nodes.findIndex((n) => n.id === state.selectedNode);
 
-      if (idx === -1 || state.nodes[idx].data.types[type] !== undefined) return;
+      if (
+        idx === -1 ||
+        (!operators.includes(type) &&
+          state.nodes[idx].data.types[type] !== undefined)
+      )
+        return;
 
       const types = Object.keys(state.nodes[idx].data.types);
       if (
@@ -117,7 +136,7 @@ const constraintFlowSlice = createSlice({
         state.nodes.forEach((node) => (node.selected = false));
         state.nodes.push({
           id,
-          type: "customnode",
+          type: "ConstraintNode",
           data,
           position,
           selected: true,
@@ -125,6 +144,10 @@ const constraintFlowSlice = createSlice({
         state.edges.push({ id: `e${node.id}-id`, source: node.id, target: id });
         return;
       }
+
+      const verbs = ["play", "not-play", "play-against", "not-play-against"];
+      if (verbs.includes(type) && types.some((type) => verbs.includes(type)))
+        return;
 
       state.nodes[idx].data.types[type] =
         type === "at-least" || type === "at-most" ? 0 : [];
@@ -150,6 +173,34 @@ const constraintFlowSlice = createSlice({
       const { id, type, selectedOptions } = action.payload;
       const idx = state.nodes.findIndex((node) => node.id === id);
       state.nodes[idx].data.types[type] = selectedOptions;
+    },
+
+    setCurrentConstraint(state, action) {
+      const { name, nodes, edges, type } = action.payload;
+      state.name = name;
+      state.nodes = nodes;
+      state.edges = edges;
+      state.type = type;
+      state.mode = "edit";
+    },
+
+    setNewConstraint(state, action) {
+      const { game, period, week } = action.payload;
+      console.log("payload", game, period, week);
+      state.nodes.push({
+        id: "1",
+        type: "ConstraintNode",
+        position: { x: 0, y: 0 },
+        data: {
+          types: {
+            teams: [game.teamA],
+            "play-against": [game.teamB],
+            weeks: [week],
+            periods: [period],
+          },
+        },
+        selected: true,
+      });
     },
   },
 });

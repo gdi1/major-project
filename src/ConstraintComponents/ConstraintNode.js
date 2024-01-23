@@ -1,11 +1,12 @@
 import { Handle, Position } from "reactflow";
 import FlowBlock from "./FlowBlock";
 import { useSelector } from "react-redux";
+import { sortConstraintBlockTypes } from "../Utilities/BinarySearch";
 
 const operators = ["and", "or"];
 
-const CustomNode = ({ id, data }) => {
-  const types = Object.keys(data.types);
+const ConstraintNode = ({ id, data }) => {
+  const types = sortConstraintBlockTypes(Object.keys(data.types));
   const bottomHandle = types.some((type) => operators.includes(type));
   const { selectedNode } = useSelector((state) => state.flow);
 
@@ -26,4 +27,4 @@ const CustomNode = ({ id, data }) => {
   );
 };
 
-export default CustomNode;
+export default ConstraintNode;

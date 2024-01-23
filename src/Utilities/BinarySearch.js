@@ -26,3 +26,7 @@ export const findInsertIndex = (arr, target) => {
   }
   return low;
 };
+
+export const sortConstraintBlockTypes = (arr) => {
+  return arr.sort((a, b) => positions[a] - positions[b]);
+};

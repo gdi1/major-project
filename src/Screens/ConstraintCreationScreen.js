@@ -12,28 +12,56 @@ import styled from "styled-components";
 import { Label } from "../GeneralComponents/Labels";
 import ConstraintFlowPanel from "../ConstraintComponents/ConstraintFlowPanel";
 import { ReactFlowProvider } from "reactflow";
+import { constraintFlowActions } from "../store/constraintFlow";
+
+const operators = ["and", "or"];
 
 const ConstraintCreationScreen = () => {
-  const { constraintLists, name, mode, type } = useSelector(
-    (state) => state.currentConstraint
-  );
+  // const { constraintLists, name, mode, type } = useSelector(
+  //   (state) => state.currentConstraint
+  // );
+  const { nodes, edges, name, type, mode } = useSelector((state) => state.flow);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const title = mode === "new" ? "New Constraint" : "Edit Constraint";
   const actionButtonTitle = mode === "new" ? "Add" : "Done Editing";
 
-  const addNewConstraint = () => {
-    console.log("here");
+  // const addNewConstraint = () => {
+  //   console.log("here");
+  //   dispatch(
+  //     constraintsActions.addNewConstraint({
+  //       name,
+  //       type,
+  //       constraintLists,
+  //       // constraint: new ConstraintIterator(constraintLists).parseConstraint(),
+  //     })
+  //   );
+  //   dispatch(currentConstraintActions.resetCurrentConstraint());
+  //   navigate("/");
+  // };
+
+  const addNewFlowConstraint = () => {
+    if (nodes.length !== edges.length + 1) {
+      alert("Shape is not right!");
+      return;
+    }
+    if (nodes.length === 1) {
+      const types = Object.keys(nodes[0].data.types);
+      if (types.some((type) => operators.includes(type))) {
+        alert("Shape is not right!");
+        return;
+      }
+    }
     dispatch(
-      constraintsActions.addNewConstraint({
-        name,
-        type,
-        constraintLists,
-        // constraint: new ConstraintIterator(constraintLists).parseConstraint(),
-      })
+      constraintsActions.addNewFlowConstraint({ name, type, nodes, edges })
     );
-    dispatch(currentConstraintActions.resetCurrentConstraint());
+    dispatch(constraintFlowActions.resetConstraintFlow());
+    navigate("/");
+  };
+
+  const goBackAction = () => {
+    dispatch(constraintFlowActions.resetConstraintFlow());
     navigate("/");
   };
 
@@ -49,15 +77,8 @@ const ConstraintCreationScreen = () => {
         <div></div>
         <Title>{title}</Title>
         <ButtonGroup>
-          <GeneralButton
-            onClick={() => {
-              dispatch(currentConstraintActions.resetCurrentConstraint());
-              navigate("/");
-            }}
-          >
-            Back
-          </GeneralButton>
-          <GeneralButton onClick={addNewConstraint}>
+          <GeneralButton onClick={goBackAction}>Back</GeneralButton>
+          <GeneralButton onClick={addNewFlowConstraint}>
             {actionButtonTitle}
           </GeneralButton>
         </ButtonGroup>
@@ -84,6 +105,11 @@ const ConstraintCreationScreen = () => {
     </ConstraintCreationPage>
   );
 };
+
+// () => {
+//   dispatch(currentConstraintActions.resetCurrentConstraint());
+//   navigate("/");
+// }
 
 const PageHeader = styled(RowContainer)`
   justify-content: space-between;

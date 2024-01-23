@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
 import { CenteredLabel } from "../../GeneralComponents/Labels";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import markerIconPng from "leaflet/dist/images/marker-icon.png";
-import { Icon } from "leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import {
   ColumnContainer,
   RowContainer,
@@ -10,30 +8,29 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import borders from "../../style-utils/borders";
-import MapCurve from "./MapComponents/MapCurve";
 import SelectedTeamGamesDescription from "./SelectedTeamGamesDescription";
 import FitMapBounds from "./MapComponents/FitMapBounds";
 import {
-  formatJourneyCurvesEnds,
   calculateCenterCoordinates,
   formatMarkers,
 } from "../../Utilities/MapFunctions";
-import FlyToOnMap from "./MapComponents/FlyToOnMap";
 import LocationMarker from "./MapComponents/LocationMarker";
-import L from "leaflet";
+import MapMovingMarker from "./MapComponents/MapMovingMarker";
+import FlyToOnMap from "./MapComponents/FlyToOnMap";
+import ButtonControl from "./MapComponents/ButtonControl";
+
+const controlButtonTypes = ["increase", "decrease", "start", "pause", "stop"];
 
 const JourneyView = () => {
-  const { selectedTeam, selectedTeamJourney, selectedTeamGames, focusedGame } =
-    useSelector((state) => state.solution);
+  const { selectedTeam, selectedTeamJourney, focusedGame } = useSelector(
+    (state) => state.solution
+  );
+
+  const movingMarkerRef = useRef(null);
 
   const [flyToPoint, setFlyToPoint] = useState(undefined);
 
-  const selectedTeamJourneyBezierCurvesEnds =
-    formatJourneyCurvesEnds(selectedTeamJourney);
   const center = calculateCenterCoordinates(selectedTeamJourney);
-  // const fitBoundsPoints = selectedTeamJourney.map(
-  //   ({ coordinates }) => coordinates
-  // );
   const markers = formatMarkers(selectedTeamJourney);
 
   useEffect(() => {
@@ -48,10 +45,6 @@ const JourneyView = () => {
     if (focusedGame !== undefined)
       setFlyToPoint(selectedTeamJourney[focusedGame].coordinates);
   }, [focusedGame]);
-
-  useEffect(() => {
-    console.log("Map", L.map);
-  });
 
   return (
     <JourneyBody>
@@ -77,13 +70,15 @@ const JourneyView = () => {
                 whenReady={(map) => {
                   console.log("created", map);
                 }}
+                doubleClickZoom={false}
               >
                 <TileLayer
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+
                 {/* <MapRoute waypoints={waypoints} /> */}
-                <MapCurve points={undefined} />
+                {/* <MapCurve points={undefined} /> */}
                 <FitMapBounds />
                 {markers.map(({ coordinates, games, label }) => (
                   <LocationMarker
@@ -92,7 +87,14 @@ const JourneyView = () => {
                     label={label}
                   />
                 ))}
+                <MapMovingMarker movingMarkerRef={movingMarkerRef} />
                 {focusedGame !== undefined && <FlyToOnMap point={flyToPoint} />}
+                {controlButtonTypes.map((type) => (
+                  <ButtonControl
+                    type={type}
+                    movingMarkerRef={movingMarkerRef}
+                  />
+                ))}
               </MapContainer>
             )}
           </JourneyMapBody>

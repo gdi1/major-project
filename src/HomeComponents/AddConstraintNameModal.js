@@ -12,6 +12,7 @@ import {
   ModalButtonGroup,
   NewConstraintNameInputField,
 } from "./ConstraintModalComponents";
+import { constraintFlowActions } from "../store/constraintFlow";
 
 const AddConstraintNameModal = ({
   isModalOpen,
@@ -45,9 +46,11 @@ const AddConstraintNameModal = ({
       alert("Name already exists!");
       return;
     }
-    dispatch(currentConstraintActions.setNewConstraintName(name));
+    // dispatch(currentConstraintActions.setNewConstraintName(name));
+    dispatch(constraintFlowActions.setName(name));
     if (newConstraint)
-      dispatch(currentConstraintActions.setNewConstraint(newConstraint));
+      dispatch(constraintFlowActions.setNewConstraint(newConstraint));
+    // dispatch(currentConstraintActions.setNewConstraint(newConstraint));
     navigate("/new-constraint");
   };
   return (

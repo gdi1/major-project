@@ -13,6 +13,7 @@ import {
   ModalButtonGroup,
   NewConstraintNameInputField,
 } from "./ConstraintModalComponents";
+import { constraintFlowActions } from "../store/constraintFlow";
 
 const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   const dispatch = useDispatch();
@@ -50,11 +51,18 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   const continueToEditConstraint = () => {
     if (!changeName()) return;
     dispatch(
-      currentConstraintActions.setCurrentConstraint({
+      constraintFlowActions.setCurrentConstraint({
         ...constraint,
         name: editConstraintNameRef.current.value,
+        type,
       })
     );
+    // dispatch(
+    //   currentConstraintActions.setCurrentConstraint({
+    //     ...constraint,
+    //     name: editConstraintNameRef.current.value,
+    //   })
+    // );
     navigate("/new-constraint");
   };
   return (

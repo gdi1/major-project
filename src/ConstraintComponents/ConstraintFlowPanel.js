@@ -10,14 +10,14 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import borders from "../style-utils/borders";
 import { useCallback, useMemo } from "react";
-import CustomNode from "./CustomNode";
+import ConstraintNode from "./ConstraintNode";
 import NodeSelection from "./NodeSelection";
 import { useSelector, useDispatch } from "react-redux";
 import { constraintFlowActions } from "../store/constraintFlow";
 
 const ConstraintFlowPanel = () => {
   const dispatch = useDispatch();
-  const nodeTypes = useMemo(() => ({ customnode: CustomNode }), []);
+  const nodeTypes = useMemo(() => ({ ConstraintNode: ConstraintNode }), []);
 
   const { nodes, edges } = useSelector((state) => state.flow);
   const { getNodes, getEdges } = useReactFlow();
@@ -79,6 +79,7 @@ const ConstraintFlowPanel = () => {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         isValidConnection={isValidConnection}
+        fitViewOptions={{ padding: 3 }}
         fitView
       >
         <NodeSelection />

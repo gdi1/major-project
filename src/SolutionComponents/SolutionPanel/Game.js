@@ -13,6 +13,7 @@ const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
   const focused = selectedTeam === teamA.value || selectedTeam === teamB.value;
 
   const goToAddNewConstraint = () => {
+    console.log("payload1", game, week, period);
     setNewConstraint({ game, week, period });
     setModalOpened(true);
   };

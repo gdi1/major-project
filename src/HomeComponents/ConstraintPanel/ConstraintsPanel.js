@@ -8,11 +8,15 @@ import {
 import GeneralButton from "../../GeneralComponents/GeneralButton";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useState } from "react";
-import AddConstraintNameModal from "../AddConstraintNameModal";
+import AddConstraintNameModal from "./ConstraintModals/AddConstraintNameModal";
 import { useNavigate } from "react-router-dom";
-import EditConstraintModal from "../EditConstraintModal";
+import EditConstraintModal from "./ConstraintModals/EditConstraintModal";
 import styled from "styled-components";
 import ConstraintsList from "./ConstraintsList";
+import { CenteredLabel } from "../../GeneralComponents/Labels";
+import Title from "../../GeneralComponents/Title";
+import borders from "../../style-utils/borders";
+import paddings from "../../style-utils/paddings";
 
 const ConstraintsPanel = () => {
   const { hardConstraints, softConstraints, teams, weeks, locations, periods } =
@@ -61,19 +65,6 @@ const ConstraintsPanel = () => {
     );
   };
 
-  const solveConfiguration = () => {
-    // dispatch(
-    //   solutionActions.createValueToOptionMappings({
-    //     teams,
-    //     weeks,
-    //     locations,
-    //     periods,
-    //   })
-    // );
-    dispatch(solutionActions.setSolution());
-    navigate("/show-solution");
-  };
-
   return (
     <HomePageConstraintsSection>
       <AddConstraintNameModal
@@ -85,43 +76,66 @@ const ConstraintsPanel = () => {
         setIsModalOpen={setIsEditConstraintModalOpen}
         editInfo={editInfo}
       />
-      <ButtonGroup>
-        <GeneralButton onClick={solveConfiguration}>
-          Solve configuration
-        </GeneralButton>
+      <ConstraintHeader>
+        <Title>Constraints</Title>
         <GeneralButton onClick={addNewConstraint}>Add constraint</GeneralButton>
-      </ButtonGroup>
+      </ConstraintHeader>
       <ConstraintsGroup>
         <DragDropContext onDragEnd={handleDragEnd}>
-          <ConstraintsList
-            type={"hard"}
-            constraints={hardConstraints}
-            setEditInfo={setEditInfo}
-            setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
-          />
-          <ConstraintsList
-            type={"soft"}
-            constraints={softConstraints}
-            setEditInfo={setEditInfo}
-            setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
-          />
+          <ConstraintListContainer>
+            <RowContainer>
+              <CenteredLabel>Hard</CenteredLabel>
+            </RowContainer>
+            <ConstraintsList
+              type={"hard"}
+              constraints={hardConstraints}
+              setEditInfo={setEditInfo}
+              setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
+            />
+          </ConstraintListContainer>
+          <ConstraintListContainer>
+            <RowContainer>
+              <CenteredLabel>Soft</CenteredLabel>
+            </RowContainer>
+            <ConstraintsList
+              type={"soft"}
+              constraints={softConstraints}
+              setEditInfo={setEditInfo}
+              setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
+            />
+          </ConstraintListContainer>
         </DragDropContext>
       </ConstraintsGroup>
     </HomePageConstraintsSection>
   );
 };
 
+const ConstraintHeader = styled(RowContainer)`
+  height: auto;
+  border-bottom: ${borders.small};
+  justify-content: space-between;
+  margin-bottom: 40px;
+`;
+
 const ButtonGroup = styled(RowContainer)`
   justify-content: space-evenly;
   margin-bottom: 20px;
 `;
-const ConstraintsGroup = styled(ColumnContainer)`
+const ConstraintsGroup = styled(RowContainer)`
   justify-content: space-evenly;
-  gap: 10px;
+  align-items: start;
+  height: auto;
+  gap: 20px;
 `;
 
 const HomePageConstraintsSection = styled(ColumnContainer)`
-  width: 50%;
+  width: 80%;
+  height: auto;
+`;
+
+const ConstraintListContainer = styled(ColumnContainer)`
+  width: 40%;
+  height: auto;
 `;
 export default ConstraintsPanel;
 

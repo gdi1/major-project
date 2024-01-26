@@ -8,11 +8,12 @@ const FitMapBounds = () => {
   const bounds = new L.LatLngBounds();
   const { selectedTeamJourney } = useSelector((state) => state.solution);
   const points = getCoordinatesOfLocations(selectedTeamJourney);
-
-  points.forEach((point) => {
-    bounds.extend(point);
-  });
-  map.fitBounds(bounds);
+  if (points.length > 0) {
+    points.forEach((point) => {
+      bounds.extend(point);
+    });
+    map.fitBounds(bounds);
+  }
   return null;
 };
 

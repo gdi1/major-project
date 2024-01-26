@@ -26,25 +26,27 @@ function MapMovingMarker({ movingMarkerRef }) {
       movingMarkerRef.current.stop();
       map.removeLayer(movingMarkerRef.current);
     }
-    movingMarkerRef.current = L.Marker.movingMarker(
-      locations,
-      Array(locations.length - 1).fill(speed),
-      {
-        icon: new Icon({
-          iconUrl: process.env.PUBLIC_URL + "/team_icon.png",
-          shadowUrl,
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-        }),
-        autostart: true,
-        loop: true,
-      }
-    ).addTo(map);
+    if (locations.length > 1) {
+      movingMarkerRef.current = L.Marker.movingMarker(
+        locations,
+        Array(locations.length - 1).fill(speed),
+        {
+          icon: new Icon({
+            iconUrl: process.env.PUBLIC_URL + "/team_icon.png",
+            shadowUrl,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+          }),
+          autostart: true,
+          loop: true,
+        }
+      ).addTo(map);
 
-    movingMarkerRef.current.on("click", (e) => {
-      if (e.sourceTarget.isRunning()) e.sourceTarget.pause();
-      else e.sourceTarget.resume();
-    });
+      movingMarkerRef.current.on("click", (e) => {
+        if (e.sourceTarget.isRunning()) e.sourceTarget.pause();
+        else e.sourceTarget.resume();
+      });
+    }
   }, [selectedTeam]);
 
   useEffect(() => {

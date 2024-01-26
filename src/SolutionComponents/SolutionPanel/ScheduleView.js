@@ -4,7 +4,7 @@ import { CenteredLabel, Label } from "../../GeneralComponents/Labels";
 import React from "react";
 import Game from "./Game";
 import { useState } from "react";
-import AddConstraintNameModal from "../../HomeComponents/AddConstraintNameModal";
+import AddConstraintNameModal from "../../HomeComponents/ConstraintPanel/ConstraintModals/AddConstraintNameModal";
 import { GridContainer as GamesGrid } from "../../GeneralComponents/GridComponents";
 import styled from "styled-components";
 import borders from "../../style-utils/borders";

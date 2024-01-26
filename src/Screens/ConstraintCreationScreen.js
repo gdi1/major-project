@@ -68,7 +68,8 @@ const ConstraintCreationScreen = () => {
   const handleConstraintTypeChange = (e) => {
     const newType = e.target.value;
     console.log(newType);
-    dispatch(currentConstraintActions.setType(newType));
+    // dispatch(currentConstraintActions.setType(newType));
+    dispatch(constraintFlowActions.setType(newType));
   };
 
   return (

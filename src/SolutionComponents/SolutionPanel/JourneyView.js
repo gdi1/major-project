@@ -13,6 +13,8 @@ import FitMapBounds from "./MapComponents/FitMapBounds";
 import {
   calculateCenterCoordinates,
   formatMarkers,
+  filterConsecutiveSameLocations,
+  getCoordinatesOfLocations,
 } from "../../Utilities/MapFunctions";
 import LocationMarker from "./MapComponents/LocationMarker";
 import MapMovingMarker from "./MapComponents/MapMovingMarker";
@@ -25,6 +27,7 @@ const JourneyView = () => {
   const { selectedTeam, selectedTeamJourney, focusedGame } = useSelector(
     (state) => state.solution
   );
+  console.log("csacsa", selectedTeam, selectedTeamJourney, focusedGame);
 
   const movingMarkerRef = useRef(null);
 
@@ -89,12 +92,15 @@ const JourneyView = () => {
                 ))}
                 <MapMovingMarker movingMarkerRef={movingMarkerRef} />
                 {focusedGame !== undefined && <FlyToOnMap point={flyToPoint} />}
-                {controlButtonTypes.map((type) => (
-                  <ButtonControl
-                    type={type}
-                    movingMarkerRef={movingMarkerRef}
-                  />
-                ))}
+                {filterConsecutiveSameLocations(
+                  getCoordinatesOfLocations(selectedTeamJourney)
+                ).length > 1 &&
+                  controlButtonTypes.map((type) => (
+                    <ButtonControl
+                      type={type}
+                      movingMarkerRef={movingMarkerRef}
+                    />
+                  ))}
               </MapContainer>
             )}
           </JourneyMapBody>

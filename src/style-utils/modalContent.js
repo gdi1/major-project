@@ -18,6 +18,6 @@ export const modal_content = {
   },
   overlay: {
     background: "linear-gradient(rgba(0, 0, 0, 0.681), rgba(0, 0, 0, 0.68))",
-    zIndex: 10,
+    zIndex: 10000,
   },
 };

@@ -1,9 +1,9 @@
-import { currentConstraintActions } from "../store/currentConstraint";
+import { currentConstraintActions } from "../../../store/currentConstraint";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import Modal from "react-modal";
-import { modal_content } from "../style-utils/modalContent";
+import { modal_content } from "../../../style-utils/modalContent";
 import {
   ModalBody,
   ModalButton,
@@ -12,7 +12,7 @@ import {
   ModalButtonGroup,
   NewConstraintNameInputField,
 } from "./ConstraintModalComponents";
-import { constraintFlowActions } from "../store/constraintFlow";
+import { constraintFlowActions } from "../../../store/constraintFlow";
 
 const AddConstraintNameModal = ({
   isModalOpen,

@@ -1,8 +1,12 @@
 import Drop from "./Drop";
 import Drag from "./Drag";
 import { CenteredLabel } from "../../GeneralComponents/Labels";
-import { RowContainer } from "../../GeneralComponents/Containers";
+import {
+  ColumnContainer,
+  RowContainer,
+} from "../../GeneralComponents/Containers";
 import Constraint from "./Constraint";
+import styled from "styled-components";
 
 const ConstraintsList = ({
   type,
@@ -10,12 +14,13 @@ const ConstraintsList = ({
   setEditInfo,
   setIsEditConstraintModalOpen,
 }) => {
-  const title = type === "hard" ? "Hard" : "Soft";
   return (
-    <Drop id={type} style={{ width: "50%" }}>
-      <RowContainer>
-        <CenteredLabel>{title}</CenteredLabel>
-      </RowContainer>
+    <Drop
+      id={type}
+      style={{
+        width: "100%",
+      }}
+    >
       {constraints.length === 0 && <RowContainer>No constraints.</RowContainer>}
       {constraints.length > 0 &&
         constraints.map((constraint, index) => {
@@ -39,5 +44,10 @@ const ConstraintsList = ({
     </Drop>
   );
 };
+
+// const ConstraintListContainer = styled.div`
+//   width: 40%;
+// `;
+// display: flex;
 
 export default ConstraintsList;

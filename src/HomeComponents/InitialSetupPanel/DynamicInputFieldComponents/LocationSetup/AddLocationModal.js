@@ -1,8 +1,8 @@
 import { useRef } from "react";
-import Title from "../../../GeneralComponents/Title";
-import GeneralButton from "../../../GeneralComponents/GeneralButton";
+import Title from "./../../../../GeneralComponents/Title";
+import GeneralButton from "./../../../../GeneralComponents/GeneralButton";
 import Modal from "react-modal";
-import { modal_content } from "../../../style-utils/modalContent";
+import { modal_content } from "../../../../style-utils/modalContent";
 import Map from "./Map";
 import "leaflet/dist/leaflet.css";
 

@@ -4,10 +4,10 @@ import { Icon } from "leaflet";
 import { useRef, useState } from "react";
 import React from "react";
 import SearchComponent from "./SearchComponent";
-import GeneralButton from "../../../GeneralComponents/GeneralButton";
-import { Container } from "../../../GeneralComponents/Containers";
+import GeneralButton from "../../../../GeneralComponents/GeneralButton";
+import { Container } from "../../../../GeneralComponents/Containers";
 import { useDispatch } from "react-redux";
-import { constraintsActions } from "../../../store/constraints";
+import { constraintsActions } from "../../../../store/constraints";
 
 const Map = () => {
   const [searchedLocation, setSearchedLocation] = useState(null);

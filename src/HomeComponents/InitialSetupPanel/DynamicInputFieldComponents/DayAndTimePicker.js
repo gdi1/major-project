@@ -1,15 +1,15 @@
 import { useDispatch } from "react-redux";
-import GeneralButton from "../../GeneralComponents/GeneralButton";
-import { constraintsActions } from "../../store/constraints";
+import GeneralButton from "../../../GeneralComponents/GeneralButton";
+import { constraintsActions } from "../../../store/constraints";
 import { useState, useRef, useEffect } from "react";
-import { Container, RowContainer } from "../../GeneralComponents/Containers";
+import { Container, RowContainer } from "../../../GeneralComponents/Containers";
 import {
   daysOfWeek,
   generateTimeArray,
-} from "../../Utilities/PeriodsFunctions";
+} from "../../../Utilities/PeriodsFunctions";
 import styled from "styled-components";
 
-const DayAndTimePicker = ({ setFieldVisible }) => {
+const DayAndTimePicker = () => {
   const timesOfDay = generateTimeArray();
   const daySelectRef = useRef();
   const dispatch = useDispatch();
@@ -63,7 +63,6 @@ const DayAndTimePicker = ({ setFieldVisible }) => {
           ))}
         </DateSelect>
       </Container>
-      <GeneralButton onClick={() => setFieldVisible(false)}>X</GeneralButton>
     </DateSelectionBody>
   );
 };

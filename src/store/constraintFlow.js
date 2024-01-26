@@ -52,6 +52,7 @@ const constraintFlowSlice = createSlice({
       state.type = "hard";
       state.edges = [];
       state.nodes = [];
+      state.selectedNode = undefined;
     },
     removeOptionIds(state, action) {
       const toRemoveIds = action.payload;

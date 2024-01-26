@@ -1,10 +1,10 @@
-import { currentConstraintActions } from "../store/currentConstraint";
+import { currentConstraintActions } from "../../../store/currentConstraint";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import Modal from "react-modal";
-import { modal_content } from "../style-utils/modalContent";
-import { constraintsActions } from "../store/constraints";
+import { modal_content } from "../../../style-utils/modalContent";
+import { constraintsActions } from "../../../store/constraints";
 import {
   ModalBody,
   ModalButton,
@@ -13,7 +13,7 @@ import {
   ModalButtonGroup,
   NewConstraintNameInputField,
 } from "./ConstraintModalComponents";
-import { constraintFlowActions } from "../store/constraintFlow";
+import { constraintFlowActions } from "../../../store/constraintFlow";
 
 const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   const dispatch = useDispatch();
@@ -65,6 +65,12 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
     // );
     navigate("/new-constraint");
   };
+
+  const removeConstraint = () => {
+    dispatch(constraintsActions.removeConstraint({ index, type }));
+    closeModal();
+  };
+
   return (
     <Modal
       ariaHideApp={false}
@@ -76,7 +82,7 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
       <ModalBody>
         <ModalButton
           style={{ alignSelf: "end", width: "auto" }}
-          onClick={closeModal}
+          onClick={removeConstraint}
         >
           Remove
         </ModalButton>

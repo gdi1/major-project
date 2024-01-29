@@ -11,10 +11,10 @@ const fadeIn = keyframes`
 `;
 
 const Block = styled.div`
-  position: relative;
   border: 3px solid black;
   display: flex;
-  width: 220px;
+  gap: 10px;
+  width: 250px;
   height: 60px;
   padding: ${paddings.small};
   align-items: center;

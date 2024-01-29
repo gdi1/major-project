@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { mock_solution } from "../Utilities/MockSolution";
+import {
+  mock_solution,
+  mock_teamsMap,
+  mock_locationsMap,
+  mock_periodsMap,
+  mock_weeksMap,
+} from "../Utilities/MockSolution";
 
 const solutionSlice = createSlice({
   name: "solutionSlice",
@@ -12,107 +18,40 @@ const solutionSlice = createSlice({
     schedule: [],
     curvedPaths: [],
     speed: 5000,
-    teamsMap: {
-      1: { value: 1, label: "team 1" },
-      2: { value: 2, label: "team 2" },
-      3: { value: 3, label: "team 3" },
-      4: { value: 4, label: "team 4" },
-    },
-    locationsMap: {
-      1: {
-        value: 1,
-        label: "Cluj-Napoca, Cluj Metropolitan Area, Cluj, Romania",
-        coordinates: [50, 20],
-      },
-      2: { value: 2, label: "Loc 2", coordinates: [51, 20] },
-      3: { value: 3, label: "Loc 3", coordinates: [50, 21] },
-    },
-    periodsMap: {
-      1: { value: 1, label: "P 1" },
-      2: { value: 2, label: "P 2" },
-      3: { value: 3, label: "P 3" },
-      4: { value: 4, label: "P 4" },
-    },
-    weeksMap: {
-      1: { value: 1, label: "Week 1" },
-      2: { value: 2, label: "Week 2" },
-    },
-    solution: [
-      {
-        week: 1,
-        weekSchedule: [
-          {
-            period: 1,
-            games: [
-              { teamA: 1, teamB: 2, location: 2 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 4, teamB: 1, location: 2 },
-            ],
-          },
-          {
-            period: 2,
-            games: [
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 4, teamB: 1, location: 1 },
-            ],
-          },
-        ],
-      },
-      {
-        week: 2,
-        weekSchedule: [
-          {
-            period: 3,
-            games: [
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 4, teamB: 1, location: 1 },
-            ],
-          },
-          {
-            period: 4,
-            games: [
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 1, teamB: 2, location: 1 },
-              { teamA: 2, teamB: 3, location: 2 },
-              { teamA: 4, teamB: 1, location: 3 },
-            ],
-          },
-        ],
-      },
-    ],
+    teamsMap: {},
+    locationsMap: {},
+    periodsMap: {},
+    weeksMap: {},
+    solution: [],
+    isOutdated: false,
+    internalData: undefined,
   },
   reducers: {
+    setInternalData(state, action) {
+      state.internalData = action.payload;
+
+      const { teams, locations, periods, weeks } = action.payload;
+      console.log(teams, locations, periods, weeks);
+      teams.forEach((team) => (state.teamsMap[team.value] = team));
+      locations.forEach(
+        (location) => (state.locationsMap[location.value] = location)
+      );
+      periods.forEach((period) => (state.periodsMap[period.value] = period));
+      weeks.forEach((week) => (state.weeksMap[week.value] = week));
+
+      state.solution = mock_solution; // action.payload;
+      state.schedule = state.solution.map(({ week, weekSchedule }) => ({
+        week: state.weeksMap[week],
+        weekSchedule: weekSchedule.map(({ period, games }) => ({
+          period: state.periodsMap[period],
+          games: games.map(({ teamA, teamB, location }) => ({
+            teamA: state.teamsMap[teamA],
+            teamB: state.teamsMap[teamB],
+            location: state.locationsMap[location],
+          })),
+        })),
+      }));
+    },
     setSpeed(state, action) {
       state.speed = action.payload;
     },
@@ -163,16 +102,11 @@ const solutionSlice = createSlice({
       state.focusedGame = undefined;
     },
 
-    createValueToOptionMappings(state, action) {
-      const { teams, weeks, periods, locations } = action.payload;
-      teams.forEach((option) => (state.teamsMap[option.value] = option));
-      weeks.forEach((option) => (state.weeksMap[option.value] = option));
-      periods.forEach((option) => (state.periodsMap[option.value] = option));
-      locations.forEach(
-        (option) => (state.locationsMap[option.value] = option)
-      );
-    },
-    setSolution(state, action) {
+    setSolution(state, _) {
+      // state.teamsMap = mock_teamsMap;
+      // state.locationsMap = mock_locationsMap;
+      // state.periodsMap = mock_periodsMap;
+      // state.weeksMap = mock_weeksMap;
       state.solution = mock_solution; // action.payload;
       state.schedule = state.solution.map(({ week, weekSchedule }) => ({
         week: state.weeksMap[week],

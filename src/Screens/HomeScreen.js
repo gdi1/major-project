@@ -11,55 +11,77 @@ import SidebarComponent from "../HomeComponents/SidebarComponent";
 import GeneralButton from "../GeneralComponents/GeneralButton";
 import SetupOptionsPanel from "../HomeComponents/InitialSetupPanel/SetupOptionsPanel";
 import { solutionActions } from "../store/solution";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import borders from "../style-utils/borders";
-import { Outlet } from "react-router-dom";
+import SaveCurrentSetupModal from "../HomeComponents/SaveCurrentSetupModal";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [show, setShow] = useState("home");
+  const [optionsTypes, setOptionsTypes] = useState([]);
+  const [showSaveCurrentSetupModal, setShowSaveCurrentSetupModal] =
+    useState(false);
+
+  const internalData = useSelector((state) => state.constraints);
+  const { outdatedConstraints } = internalData;
+  console.log("int data:", internalData);
+
   const solveConfiguration = () => {
-    // dispatch(
-    //   solutionActions.createValueToOptionMappings({
-    //     teams,
-    //     weeks,
-    //     locations,
-    //     periods,
-    //   })
-    // );
-    dispatch(solutionActions.setSolution());
+    if (outdatedConstraints.length > 0) {
+      alert(
+        "Constraints are inconsistent! Please resolve them before generating a solution."
+      );
+      return;
+    }
+    dispatch(solutionActions.setInternalData(internalData));
     navigate("/show-solution");
   };
 
   return (
     <React.Fragment>
       <RowContainer style={{ height: "100vh", alignItems: "start" }}>
-        <SidebarComponent setShow={setShow} />
+        <SaveCurrentSetupModal
+          setIsModalOpen={setShowSaveCurrentSetupModal}
+          isModalOpen={showSaveCurrentSetupModal}
+        />
+        <SidebarComponent
+          show={show}
+          setShow={setShow}
+          setOptionsTypes={setOptionsTypes}
+          optionsTypes={optionsTypes}
+          setShowSaveCurrentSetupModal={setShowSaveCurrentSetupModal}
+        />
         <HomePage>
           <Header>
             <HomePageTitle>Sport Tournament Scheduling</HomePageTitle>
-            <GeneralButton onClick={solveConfiguration}>
-              Solve current configuration
-            </GeneralButton>
+            <ButtonGroup>
+              <GeneralButton onClick={solveConfiguration}>
+                Solve current configuration
+              </GeneralButton>
+            </ButtonGroup>
           </Header>
-          {/* <HomePageBodySection> */}
-          {/* <SetupPanel /> */}
-          {/* <div style={{ paddingTop: "150px" }}></div> */}
-          {(show === "home" || show === "options") && <SetupOptionsPanel />}
-          {(show === "home" || show === "constraints") && <ConstraintsPanel />}
-          {/* </HomePageBodySection> */}
-          {/* <HomePageBodySection>
-            <SnapshotsPanel />
-            <WorkingCopy />
-          </HomePageBodySection> */}
+          {(show === "home" || show === "options") && (
+            <SetupOptionsPanel
+              optionsTypes={optionsTypes.length > 0 ? optionsTypes : undefined}
+            />
+          )}
+          {(show === "home" || show === "constraints") && (
+            <ConstraintsPanel
+              optionsTypes={optionsTypes.length > 0 ? optionsTypes : undefined}
+            />
+          )}
+          {(show === "home" || show === "snapshots") && <SnapshotsPanel />}
         </HomePage>
-        <Outlet />
       </RowContainer>
     </React.Fragment>
   );
 };
+
+const ButtonGroup = styled(RowContainer)`
+  margin-bottom: 20px;
+`;
+
 const Header = styled(ColumnContainer)`
   height: 150px;
   padding: 20px;
@@ -85,8 +107,18 @@ const HomePageBodySection = styled(RowContainer)`
   width: 100%;
 `;
 
+export default HomeScreen;
+
 // align-items: start;
 //   justify-content: start;
 // overflow-y: scroll;
 
-export default HomeScreen;
+// {/* <HomePageBodySection> */}
+//           {/* <SetupPanel /> */}
+//           {/* <div style={{ paddingTop: "150px" }}></div> */}
+
+// {/* </HomePageBodySection> */}
+//           {/* <HomePageBodySection>
+//             <SnapshotsPanel />
+//             <WorkingCopy />
+//           </HomePageBodySection> */}

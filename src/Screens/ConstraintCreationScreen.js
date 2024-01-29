@@ -15,6 +15,15 @@ import { ReactFlowProvider } from "reactflow";
 import { constraintFlowActions } from "../store/constraintFlow";
 
 const operators = ["and", "or"];
+const types = [
+  "teams",
+  "locations",
+  "periods",
+  "weeks",
+  "not-play-against",
+  "play-against",
+];
+const verbs = ["play", "not play", "play-against", "not-play-against"];
 
 const ConstraintCreationScreen = () => {
   // const { constraintLists, name, mode, type } = useSelector(
@@ -52,6 +61,37 @@ const ConstraintCreationScreen = () => {
         alert("Shape is not right!");
         return;
       }
+    }
+    const allLeafNodesNonEmpty = nodes.every((node) =>
+      types.every(
+        (cur) =>
+          node.data.types[cur] === undefined || node.data.types[cur].length > 0
+      )
+    );
+    const allNodesEitherNonLeafOrLeafWithTeamsAndVerb = nodes.every((node) => {
+      const nodeTypes = Object.keys(node.data.types);
+      return (
+        nodeTypes.some((type) => operators.includes(type)) ||
+        (nodeTypes.includes("teams") &&
+          nodeTypes.some((type) => verbs.includes(type)))
+      );
+    });
+    const atLeastOneLeafNode = nodes.some((node) => {
+      const nodeTypes = Object.keys(node.data.types);
+      return nodeTypes.some((type) => types.includes(type));
+    });
+
+    if (!allLeafNodesNonEmpty) {
+      alert("allLeafNodesNonEmpty is not right!");
+      return;
+    }
+    if (!allNodesEitherNonLeafOrLeafWithTeamsAndVerb) {
+      alert("allNodesEitherNonLeafOrLeafWithTeamsAndVerb is not right!");
+      return;
+    }
+    if (!atLeastOneLeafNode) {
+      alert("atLeastOneLeafNode is not right!");
+      return;
     }
     dispatch(
       constraintsActions.addNewFlowConstraint({ name, type, nodes, edges })

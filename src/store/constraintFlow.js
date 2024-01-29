@@ -9,36 +9,8 @@ const constraintFlowSlice = createSlice({
     type: "hard",
     name: undefined,
     mode: "new",
-    nodes: [
-      //   {
-      //     id: "1",
-      //     data: { label: "Root Node" },
-      //     position: { x: -620.5, y: 34.5 },
-      //     selected: true,
-      //   },
-      //   {
-      //     id: "3",
-      //     type: "output",
-      //     data: { label: "Output Node" },
-      //     position: { x: 250, y: 250 },
-      //   },
-      //   {
-      //     id: "4",
-      //     type: "ConstraintNode",
-      //     position: { x: 300, y: 300 },
-      //     data: {
-      //       types: {
-      //         teams: [],
-      //         weeks: [],
-      //         locations: [],
-      //       },
-      //     },
-      //   },
-    ],
-    edges: [
-      //   { id: "e1-2", source: "1", target: "4" },
-      //   { id: "e2-3", source: "1", target: "3" },
-    ],
+    nodes: [],
+    edges: [],
   },
   reducers: {
     setName(state, action) {
@@ -53,6 +25,7 @@ const constraintFlowSlice = createSlice({
       state.edges = [];
       state.nodes = [];
       state.selectedNode = undefined;
+      state.mode = "new";
     },
     removeOptionIds(state, action) {
       const toRemoveIds = action.payload;
@@ -209,3 +182,31 @@ const constraintFlowSlice = createSlice({
 export const constraintFlowActions = constraintFlowSlice.actions;
 
 export default constraintFlowSlice;
+
+//   {
+//     id: "1",
+//     data: { label: "Root Node" },
+//     position: { x: -620.5, y: 34.5 },
+//     selected: true,
+//   },
+//   {
+//     id: "3",
+//     type: "output",
+//     data: { label: "Output Node" },
+//     position: { x: 250, y: 250 },
+//   },
+//   {
+//     id: "4",
+//     type: "ConstraintNode",
+//     position: { x: 300, y: 300 },
+//     data: {
+//       types: {
+//         teams: [],
+//         weeks: [],
+//         locations: [],
+//       },
+//     },
+//   },
+
+//   { id: "e1-2", source: "1", target: "4" },
+//   { id: "e2-3", source: "1", target: "3" },

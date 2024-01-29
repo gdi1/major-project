@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const snapshotsHistorySlice = createSlice({
   name: "snapshotsHistory",
   initialState: {
-    snapshots: ["a"],
+    snapshots: [],
   },
   reducers: {
     addSnapshot(state, action) {
@@ -11,6 +11,9 @@ const snapshotsHistorySlice = createSlice({
     },
     removeSnapshot(state, action) {
       state.snapshots.splice(action.payload, 1);
+    },
+    removeAllSnapshots(state, _) {
+      state.snapshots = [];
     },
   },
 });

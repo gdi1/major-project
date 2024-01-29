@@ -7,13 +7,13 @@ import ReactFlow, {
   getOutgoers,
   useReactFlow,
 } from "reactflow";
-import "reactflow/dist/style.css";
 import borders from "../style-utils/borders";
 import { useCallback, useMemo } from "react";
 import ConstraintNode from "./ConstraintNode";
 import NodeSelection from "./NodeSelection";
 import { useSelector, useDispatch } from "react-redux";
 import { constraintFlowActions } from "../store/constraintFlow";
+import "reactflow/dist/style.css";
 
 const ConstraintFlowPanel = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const ConstraintFlowPanel = () => {
 
   const { nodes, edges } = useSelector((state) => state.flow);
   const { getNodes, getEdges } = useReactFlow();
-  console.log(edges);
+  console.log("Edges", edges);
 
   const onNodesChange = useCallback(
     (changes) => {
@@ -51,6 +51,10 @@ const ConstraintFlowPanel = () => {
     (connection) => {
       const nodes = getNodes();
       const edges = getEdges();
+      if (edges.map((edge) => edge.target).includes(connection.target))
+        return false;
+
+      console.log("getedges", edges);
       const target = nodes.find((node) => node.id === connection.target);
       const hasCycle = (node, visited = new Set()) => {
         if (visited.has(node.id)) return false;
@@ -66,7 +70,7 @@ const ConstraintFlowPanel = () => {
       if (target.id === connection.source) return false;
       return !hasCycle(target);
     },
-    [getNodes, getEdges]
+    [getNodes, getEdges, edges]
   );
 
   return (

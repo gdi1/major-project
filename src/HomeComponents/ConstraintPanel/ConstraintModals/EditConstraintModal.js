@@ -1,4 +1,3 @@
-import { currentConstraintActions } from "../../../store/currentConstraint";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
@@ -11,7 +10,7 @@ import {
   ModalLabel,
   ModalTitle,
   ModalButtonGroup,
-  NewConstraintNameInputField,
+  NameInputField,
 } from "./ConstraintModalComponents";
 import { constraintFlowActions } from "../../../store/constraintFlow";
 
@@ -80,15 +79,15 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
       style={modal_content}
     >
       <ModalBody>
-        <ModalButton
+        {/* <ModalButton
           style={{ alignSelf: "end", width: "auto" }}
           onClick={removeConstraint}
         >
           Remove
-        </ModalButton>
+        </ModalButton> */}
         <ModalTitle>Edit Constraint</ModalTitle>
         <ModalLabel>Name</ModalLabel>
-        <NewConstraintNameInputField
+        <NameInputField
           defaultValue={constraint ? constraint.name : ""}
           ref={editConstraintNameRef}
         />

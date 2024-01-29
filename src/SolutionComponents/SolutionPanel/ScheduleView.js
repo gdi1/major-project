@@ -13,6 +13,11 @@ const ScheduleView = () => {
   const { schedule } = useSelector((state) => state.solution);
   const [isModalOpened, setModalOpened] = useState(false);
   const [newConstraint, setNewConstraint] = useState(undefined);
+  const { teamsMap, locationsMap, periodsMap, weeksMap } = useSelector(
+    (state) => state.solution
+  );
+  console.log("Heree", teamsMap, locationsMap, periodsMap, weeksMap);
+  console.log(schedule);
 
   return (
     <TournamentSchedule>

@@ -72,3 +72,29 @@ export const mock_solution = [
     ],
   },
 ];
+
+export const mock_teamsMap = {
+  1: { value: 1, label: "team 1" },
+  2: { value: 2, label: "team 2" },
+  3: { value: 3, label: "team 3" },
+  4: { value: 4, label: "team 4" },
+};
+export const mock_locationsMap = {
+  1: {
+    value: 1,
+    label: "Cluj-Napoca, Cluj Metropolitan Area, Cluj, Romania",
+    coordinates: [50, 20],
+  },
+  2: { value: 2, label: "Loc 2", coordinates: [51, 20] },
+  3: { value: 3, label: "Loc 3", coordinates: [50, 21] },
+};
+export const mock_periodsMap = {
+  1: { value: 1, label: "P 1" },
+  2: { value: 2, label: "P 2" },
+  3: { value: 3, label: "P 3" },
+  4: { value: 4, label: "P 4" },
+};
+export const mock_weeksMap = {
+  1: { value: 1, label: "Week 1" },
+  2: { value: 2, label: "Week 2" },
+};

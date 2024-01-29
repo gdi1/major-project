@@ -7,10 +7,11 @@ import styled from "styled-components";
 import Block from "./Block";
 import InputField from "../GeneralComponents/InputField";
 import colors from "../style-utils/colors";
+import delete_icon from "./../icons/delete_icon.png";
 
 const blockNames = {
   teams: "Team(s) ",
-  locations: "Location ",
+  locations: "Location(s) ",
   weeks: "Week(s)",
   periods: "Period(s)",
   and: "AND",
@@ -68,13 +69,13 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
           {blockNames[type]}
           <div
             style={{ width: "60%" }}
-            onMouseEnter={() => {
-              setShowRemoveOverlayMessage(false);
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            onMouseLeave={() => setShowRemoveOverlayMessage(true)}
+            // onMouseEnter={() => {
+            //   setShowRemoveOverlayMessage(false);
+            // }}
+            // onClick={(e) => {
+            //   e.stopPropagation();
+            // }}
+            // onMouseLeave={() => setShowRemoveOverlayMessage(true)}
           >
             <MultiSelect
               options={
@@ -94,12 +95,12 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
         <React.Fragment>
           {blockNames[type][0]}
           <div
-            onMouseEnter={() => setShowRemoveOverlayMessage(false)}
-            onMouseLeave={() => setShowRemoveOverlayMessage(true)}
+            // onMouseEnter={() => setShowRemoveOverlayMessage(false)}
+            // onMouseLeave={() => setShowRemoveOverlayMessage(true)}
             style={{ width: "30%" }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
+            // onClick={(e) => {
+            //   e.stopPropagation();
+            // }}
           >
             <NoOfTimesInputField
               value={selectedOptions}
@@ -117,42 +118,19 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
 
   return (
     <PreviewBlockComponent
-      onClick={removeBlock}
-      showX={showRemoveOverlayMessage}
-      onMouseEnter={() => setShowRemoveOverlayMessage(true)}
-      onMouseLeave={() => setShowRemoveOverlayMessage(false)}
+    // onClick={removeBlock}
+    // showX={showRemoveOverlayMessage}
+    // onMouseEnter={() => setShowRemoveOverlayMessage(true)}
+    // onMouseLeave={() => setShowRemoveOverlayMessage(false)}
     >
       {getContentBlock()}
+      <Icon src={delete_icon} onClick={removeBlock} />
     </PreviewBlockComponent>
   );
 };
 
 const PreviewBlockComponent = styled(Block)`
-  position: relative;
-
-  &:hover {
-    background-color: ${(props) => (props.showX ? colors.creme : "")};
-  }
-
-  background: ${(props) =>
-    props.showX
-      ? `linear-gradient(
-    to top left,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0) calc(50% - 0.8px),
-    rgba(0, 0, 0, 1) 50%,
-    rgba(0, 0, 0, 0) calc(50% + 0.8px),
-    rgba(0, 0, 0, 0) 100%
-  ),
-  linear-gradient(
-    to top right,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0) calc(50% - 0.8px),
-    rgba(0, 0, 0, 1) 50%,
-    rgba(0, 0, 0, 0) calc(50% + 0.8px),
-    rgba(0, 0, 0, 0) 100%
-  )`
-      : ""};
+  width: 300px;
 `;
 
 const NoOfTimesInputField = styled(InputField)`
@@ -160,4 +138,35 @@ const NoOfTimesInputField = styled(InputField)`
   box-sizing: border-box;
 `;
 
+const Icon = styled.img`
+  width: 20px;
+  height: 20px;
+`;
+
 export default FlowBlock;
+
+// position: relative;
+
+//   &:hover {
+//     background-color: ${(props) => (props.showX ? colors.creme : "")};
+//   }
+
+//   background: ${(props) =>
+//     props.showX
+//       ? `linear-gradient(
+//     to top left,
+//     rgba(0, 0, 0, 0) 0%,
+//     rgba(0, 0, 0, 0) calc(50% - 0.8px),
+//     rgba(0, 0, 0, 1) 50%,
+//     rgba(0, 0, 0, 0) calc(50% + 0.8px),
+//     rgba(0, 0, 0, 0) 100%
+//   ),
+//   linear-gradient(
+//     to top right,
+//     rgba(0, 0, 0, 0) 0%,
+//     rgba(0, 0, 0, 0) calc(50% - 0.8px),
+//     rgba(0, 0, 0, 1) 50%,
+//     rgba(0, 0, 0, 0) calc(50% + 0.8px),
+//     rgba(0, 0, 0, 0) 100%
+//   )`
+//       : ""};

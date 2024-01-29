@@ -1,12 +1,11 @@
 import Drop from "./Drop";
 import Drag from "./Drag";
-import { CenteredLabel } from "../../GeneralComponents/Labels";
-import {
-  ColumnContainer,
-  RowContainer,
-} from "../../GeneralComponents/Containers";
+import { RowContainer } from "../../GeneralComponents/Containers";
 import Constraint from "./Constraint";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import delete_icon from "./../../icons/delete_icon.png";
+import { constraintsActions } from "../../store/constraints";
 
 const ConstraintsList = ({
   type,
@@ -14,6 +13,12 @@ const ConstraintsList = ({
   setEditInfo,
   setIsEditConstraintModalOpen,
 }) => {
+  const { outdatedConstraints } = useSelector((state) => state.constraints);
+  const dispatch = useDispatch();
+
+  const removeConstraint = (index) => {
+    dispatch(constraintsActions.removeConstraint({ index, type }));
+  };
   return (
     <Drop
       id={type}
@@ -35,8 +40,16 @@ const ConstraintsList = ({
                   });
                   setIsEditConstraintModalOpen(true);
                 }}
+                outdated={outdatedConstraints.includes(constraint.name)}
               >
-                {constraint.name}
+                <ConstraintName>{constraint.name}</ConstraintName>
+                <Icon
+                  src={delete_icon}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeConstraint(index);
+                  }}
+                />
               </Constraint>
             </Drag>
           );
@@ -45,9 +58,16 @@ const ConstraintsList = ({
   );
 };
 
-// const ConstraintListContainer = styled.div`
-//   width: 40%;
-// `;
-// display: flex;
+const ConstraintName = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
+const Icon = styled.img`
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  justify-self: end;
+`;
 
 export default ConstraintsList;

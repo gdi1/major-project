@@ -10,7 +10,7 @@ import {
   ModalLabel,
   ModalTitle,
   ModalButtonGroup,
-  NewConstraintNameInputField,
+  NameInputField,
 } from "./ConstraintModalComponents";
 import { constraintFlowActions } from "../../../store/constraintFlow";
 
@@ -18,6 +18,7 @@ const AddConstraintNameModal = ({
   isModalOpen,
   setIsModalOpen,
   newConstraint = undefined,
+  isSoft = false,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,11 +47,10 @@ const AddConstraintNameModal = ({
       alert("Name already exists!");
       return;
     }
-    // dispatch(currentConstraintActions.setNewConstraintName(name));
     dispatch(constraintFlowActions.setName(name));
+    if (isSoft) dispatch(constraintFlowActions.setType("soft"));
     if (newConstraint)
       dispatch(constraintFlowActions.setNewConstraint(newConstraint));
-    // dispatch(currentConstraintActions.setNewConstraint(newConstraint));
     navigate("/new-constraint");
   };
   return (
@@ -64,10 +64,7 @@ const AddConstraintNameModal = ({
       <ModalBody>
         <ModalTitle>Add Constraint</ModalTitle>
         <ModalLabel>Name</ModalLabel>
-        <NewConstraintNameInputField
-          placeholder="Enter name"
-          ref={newConstraintNameRef}
-        />
+        <NameInputField placeholder="Enter name" ref={newConstraintNameRef} />
         <ModalButtonGroup>
           <ModalButton onClick={closeModal}>Close</ModalButton>
           <ModalButton onClick={goToNewConstraintCreation}>
@@ -80,3 +77,6 @@ const AddConstraintNameModal = ({
 };
 
 export default AddConstraintNameModal;
+
+// dispatch(currentConstraintActions.setNewConstraintName(name));
+// dispatch(currentConstraintActions.setNewConstraint(newConstraint));

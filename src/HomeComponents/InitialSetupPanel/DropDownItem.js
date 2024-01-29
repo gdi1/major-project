@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { constraintsActions } from "../../store/constraints";
 import { RowContainer } from "../../GeneralComponents/Containers";
 import styled from "styled-components";
+import edit_icon from "./../../icons/edit_icon.png";
 
 const DropDownItem = ({ id, option, type }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -33,13 +34,20 @@ const DropDownItem = ({ id, option, type }) => {
     <OptionBundle>
       {!isEdit && (
         <React.Fragment>
-          <Option onClick={editAttributeOption}>{option.label}</Option>
+          <Option>{option.label}</Option>
+          <OptionButton onClick={editAttributeOption}>
+            <Icon src={edit_icon} />
+          </OptionButton>
           <OptionButton onClick={handleDeleteOption}>X</OptionButton>
         </React.Fragment>
       )}
       {isEdit && (
         <React.Fragment>
-          <InputField defaultValue={option.label} ref={optionInputRef} />
+          <InputField
+            style={{ boxSizing: "border-box", height: "100%" }}
+            defaultValue={option.label}
+            ref={optionInputRef}
+          />
           <OptionButton onClick={updateOption}>✅</OptionButton>
         </React.Fragment>
       )}
@@ -47,14 +55,18 @@ const DropDownItem = ({ id, option, type }) => {
   );
 };
 
+const Icon = styled.img`
+  width: 20px;
+  height: 20px;
+`;
+
 const OptionBundle = styled(RowContainer)`
   gap: 10px;
   justify-content: end;
+  box-sizing: border-box;
 `;
 
-const OptionButton = styled(GeneralButton)`
-  width: 20%;
-`;
+const OptionButton = styled(GeneralButton)``;
 
 const Option = styled(DropdownItem)`
   cursor: ${(props) =>

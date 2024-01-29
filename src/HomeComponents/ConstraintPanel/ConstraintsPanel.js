@@ -1,5 +1,4 @@
 import { constraintsActions } from "../../store/constraints";
-import { solutionActions } from "../../store/solution";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ColumnContainer,
@@ -9,20 +8,20 @@ import GeneralButton from "../../GeneralComponents/GeneralButton";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useState } from "react";
 import AddConstraintNameModal from "./ConstraintModals/AddConstraintNameModal";
-import { useNavigate } from "react-router-dom";
 import EditConstraintModal from "./ConstraintModals/EditConstraintModal";
 import styled from "styled-components";
 import ConstraintsList from "./ConstraintsList";
 import { CenteredLabel } from "../../GeneralComponents/Labels";
 import Title from "../../GeneralComponents/Title";
 import borders from "../../style-utils/borders";
-import paddings from "../../style-utils/paddings";
 
-const ConstraintsPanel = () => {
-  const { hardConstraints, softConstraints, teams, weeks, locations, periods } =
+const constraints_types = ["hard", "soft"];
+
+const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
+  const { hardConstraints, softConstraints, outdatedConstraints, teams } =
     useSelector((state) => state.constraints);
+  console.log(hardConstraints, outdatedConstraints);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [isNewConstraintModalOpen, setIsNewConstraintModalOpen] =
     useState(false);
   const [isEditConstraintModalOpen, setIsEditConstraintModalOpen] =
@@ -35,6 +34,12 @@ const ConstraintsPanel = () => {
   };
 
   const addNewConstraint = () => {
+    if (teams.length === 0) {
+      alert(
+        "You must at least input some teams before creating a new constraint."
+      );
+      return;
+    }
     setIsNewConstraintModalOpen(true);
   };
 
@@ -54,6 +59,7 @@ const ConstraintsPanel = () => {
       constraintsActions.removeConstraint({
         index: sourceIndex,
         type: sourceListId,
+        isDrag: true,
       })
     );
     dispatch(
@@ -70,6 +76,7 @@ const ConstraintsPanel = () => {
       <AddConstraintNameModal
         isModalOpen={isNewConstraintModalOpen}
         setIsModalOpen={setIsNewConstraintModalOpen}
+        isSoft={optionsTypes.length === 1 && optionsTypes[0] === "soft"}
       />
       <EditConstraintModal
         isModalOpen={isEditConstraintModalOpen}
@@ -82,28 +89,32 @@ const ConstraintsPanel = () => {
       </ConstraintHeader>
       <ConstraintsGroup>
         <DragDropContext onDragEnd={handleDragEnd}>
-          <ConstraintListContainer>
-            <RowContainer>
-              <CenteredLabel>Hard</CenteredLabel>
-            </RowContainer>
-            <ConstraintsList
-              type={"hard"}
-              constraints={hardConstraints}
-              setEditInfo={setEditInfo}
-              setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
-            />
-          </ConstraintListContainer>
-          <ConstraintListContainer>
-            <RowContainer>
-              <CenteredLabel>Soft</CenteredLabel>
-            </RowContainer>
-            <ConstraintsList
-              type={"soft"}
-              constraints={softConstraints}
-              setEditInfo={setEditInfo}
-              setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
-            />
-          </ConstraintListContainer>
+          {optionsTypes.includes("hard") && (
+            <ConstraintListContainer>
+              <RowContainer style={{ marginBottom: "20px" }}>
+                <CenteredLabel>Hard</CenteredLabel>
+              </RowContainer>
+              <ConstraintsList
+                type={"hard"}
+                constraints={hardConstraints}
+                setEditInfo={setEditInfo}
+                setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
+              />
+            </ConstraintListContainer>
+          )}
+          {optionsTypes.includes("soft") && (
+            <ConstraintListContainer>
+              <RowContainer style={{ marginBottom: "20px" }}>
+                <CenteredLabel>Soft</CenteredLabel>
+              </RowContainer>
+              <ConstraintsList
+                type={"soft"}
+                constraints={softConstraints}
+                setEditInfo={setEditInfo}
+                setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
+              />
+            </ConstraintListContainer>
+          )}
         </DragDropContext>
       </ConstraintsGroup>
     </HomePageConstraintsSection>

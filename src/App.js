@@ -5,9 +5,13 @@ import SolutionScreen from "./Screens/SolutionScreen";
 import { useEffect } from "react";
 import SetupOptionsPanel from "./HomeComponents/InitialSetupPanel/SetupOptionsPanel";
 import ConstraintsPanel from "./HomeComponents/ConstraintPanel/ConstraintsPanel";
+import { useDispatch } from "react-redux";
+import { snapshotsHistoryActions } from "./store/snapshotsHistory";
 
 const App = () => {
   const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // dispatch(snapshotsHistoryActions.removeAllSnapshots());
   // useEffect(() => {
   //   if (localStorage.getItem("firstLoadDone") !== null) navigate("/");
   // }, []);

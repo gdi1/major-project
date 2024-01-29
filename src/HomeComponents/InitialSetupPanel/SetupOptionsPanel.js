@@ -6,9 +6,9 @@ import {
 import { Label } from "../../GeneralComponents/Labels";
 import borders from "../../style-utils/borders";
 import paddings from "../../style-utils/paddings";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
-import { useState, useRef } from "react";
+import React, { useState } from "react";
 import Title from "../../GeneralComponents/Title";
 import DropDownItem from "./DropDownItem";
 
@@ -22,7 +22,7 @@ const titles = {
   weeks: "Weeks",
 };
 
-const SetupOptionsPanel = () => {
+const SetupOptionsPanel = ({ optionsTypes = types }) => {
   const options = useSelector((state) => state.constraints);
   const [showTypes, setShowTypes] = useState([]);
 
@@ -37,7 +37,7 @@ const SetupOptionsPanel = () => {
       <SectionHeader>
         <Title>Options</Title>
       </SectionHeader>
-      {types.map((type) => (
+      {optionsTypes.map((type) => (
         <OptionSection>
           <OptionHeader>
             <OptionLabel>{titles[type]}</OptionLabel>
@@ -91,12 +91,13 @@ const fadeIn = keyframes`
 export const OptionsGridContainer = styled.div`
   display: grid;
   animation: ${fadeIn} 0.3s ease-in-out;
-  grid-template-columns: repeat(auto-fit, 250px);
+  grid-template-columns: repeat(auto-fit, 200px);
   width: 100%;
   row-gap: 40px;
+  column-gap: 10px;
   background-color: #fff;
   box-sizing: border-box;
-  justify-content: space-between;
+  justify-content: start;
   margin-bottom: 40px;
 `;
 

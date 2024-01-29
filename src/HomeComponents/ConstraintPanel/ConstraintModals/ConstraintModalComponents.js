@@ -17,7 +17,7 @@ export const ModalTitle = styled(Title)`
   border-bottom: ${borders.small};
 `;
 
-export const NewConstraintNameInputField = styled(InputField)`
+export const NameInputField = styled(InputField)`
   width: 100%;
   height: 40px;
   font-size: 20px;

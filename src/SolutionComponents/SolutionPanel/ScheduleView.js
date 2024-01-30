@@ -16,32 +16,29 @@ const ScheduleView = () => {
   const { teamsMap, locationsMap, periodsMap, weeksMap } = useSelector(
     (state) => state.solution
   );
-  console.log("Heree", teamsMap, locationsMap, periodsMap, weeksMap);
-  console.log(schedule);
 
   return (
     <TournamentSchedule>
-      {isModalOpened && (
-        <AddConstraintNameModal
-          isModalOpen={isModalOpened}
-          setIsModalOpen={setModalOpened}
-          newConstraint={newConstraint}
-        />
-      )}
+      <AddConstraintNameModal
+        isModalOpen={isModalOpened}
+        setIsModalOpen={setModalOpened}
+        newConstraint={newConstraint}
+      />
       {schedule.map(({ week, weekSchedule }) => (
-        <WeekSchedule>
+        <WeekSchedule key={week.label}>
           <WeekLabel>{week.label}</WeekLabel>
           {weekSchedule.map(({ period, games }) => (
-            <PeriodSchedule>
+            <PeriodSchedule key={period.label}>
               <Label>{period.label}</Label>
               <GamesGrid>
-                {games.map((game) => (
+                {games.map((game, gameIdx) => (
                   <Game
                     game={game}
                     week={week}
                     period={period}
                     setNewConstraint={setNewConstraint}
                     setModalOpened={setModalOpened}
+                    key={gameIdx}
                   />
                 ))}
               </GamesGrid>

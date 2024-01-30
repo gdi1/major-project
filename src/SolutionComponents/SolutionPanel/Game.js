@@ -8,7 +8,7 @@ import borders from "../../style-utils/borders";
 import { TextWithEllipsis } from "../../GeneralComponents/TextWithEllipsis";
 
 const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
-  console.log(game);
+  // console.log(game);
   const { teamA, teamB, location } = game;
   const { selectedTeam } = useSelector((state) => state.solution);
   const focused = selectedTeam === teamA.value || selectedTeam === teamB.value;

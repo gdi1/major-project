@@ -9,36 +9,56 @@ import borders from "../../style-utils/borders";
 import paddings from "../../style-utils/paddings";
 import outdated_icon from "../../icons/outdated_icon.png";
 import incomplete_icon from "../../icons/incomplete_icon.png";
+import { useDispatch } from "react-redux";
+import { snapshotsHistoryActions } from "../../store/snapshotsHistory";
 
 const Snapshot = ({ snapshot, idx }) => {
   const { name, date } = snapshot;
   const { isOutdated, solution } = snapshot.solution;
   const noSolution = solution.length === 0;
+  const dispatch = useDispatch();
+
+  const deleteSnapshot = () => {
+    dispatch(snapshotsHistoryActions.removeSnapshot(idx));
+  };
+
+  const downloadJSON = () => {
+    const json = JSON.stringify(snapshot);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "data.json";
+    document.body.appendChild(link);
+    link.click();
+
+    URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+  };
+
   return (
     <SnapshotBody>
       <SnapshotDetails>
         <Name>{name}</Name>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "start",
-            gap: "10px",
-          }}
-        >
+        <DateAndSolutionStatusContainer>
           <Date>Created: {date.toLocaleString()}</Date>
-          {isOutdated && !noSolution && <OutdatedIcon src={outdated_icon} />}
-          {!isOutdated && noSolution && <OutdatedIcon src={incomplete_icon} />}
-        </div>
+          {isOutdated && !noSolution && (
+            <SolutionStatusIcon src={outdated_icon} />
+          )}
+          {!isOutdated && noSolution && (
+            <SolutionStatusIcon src={incomplete_icon} />
+          )}
+        </DateAndSolutionStatusContainer>
       </SnapshotDetails>
       <SnapshotActionsGroup>
         <GeneralButton>
           <Icon src={go_back_icon} />
         </GeneralButton>
-        <GeneralButton>
+        <GeneralButton onClick={downloadJSON}>
           <Icon src={export_icon} />
         </GeneralButton>
-        <GeneralButton>
+        <GeneralButton onClick={deleteSnapshot}>
           <Icon src={delete_icon} />
         </GeneralButton>
       </SnapshotActionsGroup>
@@ -50,9 +70,16 @@ const Name = styled(Label)`
   width: 60%;
 `;
 
-const OutdatedIcon = styled.img`
+const SolutionStatusIcon = styled.img`
   width: 40px;
   height: 40px;
+`;
+
+const DateAndSolutionStatusContainer = styled(RowContainer)`
+  justify-content: start;
+  width: auto;
+  height: auto;
+  gap: 10px;
 `;
 
 const Date = styled.div``;

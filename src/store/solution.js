@@ -25,6 +25,7 @@ const solutionSlice = createSlice({
     solution: [],
     isOutdated: false,
     internalData: undefined,
+    isSolution: false,
   },
   reducers: {
     setInternalData(state, action) {
@@ -51,6 +52,7 @@ const solutionSlice = createSlice({
           })),
         })),
       }));
+      state.isSolution = true;
     },
     setSpeed(state, action) {
       state.speed = action.payload;
@@ -75,12 +77,12 @@ const solutionSlice = createSlice({
               )
               .map(({ teamA, teamB, location }) => ({
                 game: {
-                  teamA: state.teamsMap[teamA].label,
-                  teamB: state.teamsMap[teamB].label,
+                  teamA: state.teamsMap[teamA],
+                  teamB: state.teamsMap[teamB],
                   location: state.locationsMap[location],
                 },
-                week: state.weeksMap[week].label,
-                period: state.periodsMap[period].label,
+                week: state.weeksMap[week],
+                period: state.periodsMap[period],
               }))
           )
         )

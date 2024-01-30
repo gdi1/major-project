@@ -14,6 +14,7 @@ import { solutionActions } from "../store/solution";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SaveCurrentSetupModal from "../HomeComponents/SaveCurrentSetupModal";
+import outdated_icon from "./../icons/outdated_icon.png";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const HomeScreen = () => {
 
   const internalData = useSelector((state) => state.constraints);
   const { outdatedConstraints } = internalData;
-  console.log("int data:", internalData);
+  const { isSolution, isOutdated } = useSelector((state) => state.solution);
 
   const solveConfiguration = () => {
     if (outdatedConstraints.length > 0) {
@@ -57,8 +58,16 @@ const HomeScreen = () => {
             <HomePageTitle>Sport Tournament Scheduling</HomePageTitle>
             <ButtonGroup>
               <GeneralButton onClick={solveConfiguration}>
-                Solve current configuration
+                Generate new solution
               </GeneralButton>
+              {isSolution && (
+                <RowContainer style={{ width: "auto", gap: "5px" }}>
+                  <GeneralButton onClick={() => navigate("/show-solution")}>
+                    View previous solution
+                  </GeneralButton>
+                  {isOutdated && <Icon src={outdated_icon} />}
+                </RowContainer>
+              )}
             </ButtonGroup>
           </Header>
           {(show === "home" || show === "options") && (
@@ -78,8 +87,14 @@ const HomeScreen = () => {
   );
 };
 
+const Icon = styled.img`
+  width: 40px;
+  height: 40px;
+`;
+
 const ButtonGroup = styled(RowContainer)`
   margin-bottom: 20px;
+  gap: 40px;
 `;
 
 const Header = styled(ColumnContainer)`

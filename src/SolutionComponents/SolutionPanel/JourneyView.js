@@ -27,11 +27,11 @@ const JourneyView = () => {
   const { selectedTeam, selectedTeamJourney, focusedGame } = useSelector(
     (state) => state.solution
   );
-  console.log("csacsa", selectedTeam, selectedTeamJourney, focusedGame);
 
   const movingMarkerRef = useRef(null);
 
   const [flyToPoint, setFlyToPoint] = useState(undefined);
+  const [pulsatingGames, setPulsatingGames] = useState([]);
 
   const center = calculateCenterCoordinates(selectedTeamJourney);
   const markers = formatMarkers(selectedTeamJourney);
@@ -45,8 +45,10 @@ const JourneyView = () => {
   }, [selectedTeam]);
 
   useEffect(() => {
-    if (focusedGame !== undefined)
+    if (focusedGame !== undefined) {
       setFlyToPoint(selectedTeamJourney[focusedGame].coordinates);
+      setPulsatingGames([]);
+    }
   }, [focusedGame]);
 
   return (
@@ -60,7 +62,7 @@ const JourneyView = () => {
         <React.Fragment>
           <JourneyDetailedItinerary>
             <CenteredLabel>Games</CenteredLabel>
-            <SelectedTeamGamesDescription />
+            <SelectedTeamGamesDescription pulsatingGames={pulsatingGames} />
           </JourneyDetailedItinerary>
           <JourneyMapBody>
             {selectedTeam && (
@@ -70,35 +72,35 @@ const JourneyView = () => {
                 zoom={5}
                 scrollWheelZoom={false}
                 id="leafletmap"
-                whenReady={(map) => {
-                  console.log("created", map);
-                }}
                 doubleClickZoom={false}
               >
                 <TileLayer
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-
-                {/* <MapRoute waypoints={waypoints} /> */}
-                {/* <MapCurve points={undefined} /> */}
                 <FitMapBounds />
-                {markers.map(({ coordinates, games, label }) => (
+                {markers.map(({ coordinates, games, label }, idx) => (
                   <LocationMarker
                     coordinates={coordinates}
                     games={games}
                     label={label}
+                    key={`${selectedTeam}-${idx}`}
                   />
                 ))}
-                <MapMovingMarker movingMarkerRef={movingMarkerRef} />
+                <MapMovingMarker
+                  movingMarkerRef={movingMarkerRef}
+                  setPulsatingGames={setPulsatingGames}
+                  pulsatingGames={pulsatingGames}
+                />
                 {focusedGame !== undefined && <FlyToOnMap point={flyToPoint} />}
                 {filterConsecutiveSameLocations(
                   getCoordinatesOfLocations(selectedTeamJourney)
                 ).length > 1 &&
-                  controlButtonTypes.map((type) => (
+                  controlButtonTypes.map((type, idx) => (
                     <ButtonControl
                       type={type}
                       movingMarkerRef={movingMarkerRef}
+                      key={idx}
                     />
                   ))}
               </MapContainer>
@@ -112,10 +114,12 @@ const JourneyView = () => {
 
 const JourneyBody = styled(RowContainer)`
   gap: 10px;
+  justify-content: space-between;
 `;
 
 const JourneyMapBody = styled(RowContainer)`
   height: 85vh;
+  width: 70%;
 `;
 
 const JourneyDetailedItinerary = styled(ColumnContainer)`
@@ -129,49 +133,9 @@ const JourneyDetailedItinerary = styled(ColumnContainer)`
 
 export default JourneyView;
 
-//[56.34045804737987, -2.8089025148829703]
+// whenReady={(map) => {
+//   console.log("created", map);
+// }}
 
-// [
-//   {
-//     startpoint: [50.54136296522163, 28.520507812500004],
-//     endpoint: [48.45835188280866, 33.57421875000001],
-//   },
-// ]
-
-// const waypoints = [
-//   {
-//     label: "A",
-//     value: 1,
-//     coordinates: [33.52001088075479, 36.26829385757446],
-//   },
-//   {
-//     label: "B",
-//     value: 2,
-//     coordinates: [33.51001088075479, 36.27829385757446],
-//   },
-//   {
-//     label: "C",
-//     value: 3,
-//     coordinates: [33.50546582848033, 36.29547681726967],
-//   },
-//   {
-//     label: "A",
-//     value: 1,
-//     coordinates: [33.52001088075479, 36.26829385757446],
-//   },
-//   {
-//     label: "B",
-//     value: 2,
-//     coordinates: [33.51001088075479, 36.27829385757446],
-//   },
-//   {
-//     label: "A",
-//     value: 1,
-//     coordinates: [33.52001088075479, 36.26829385757446],
-//   },
-//   {
-//     label: "way 5",
-//     value: 2,
-//     coordinates: [33.51001088075479, 36.27829385757446],
-//   },
-// ];
+// {/* <MapRoute waypoints={waypoints} /> */}
+//                 {/* <MapCurve points={undefined} /> */}

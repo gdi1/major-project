@@ -75,7 +75,7 @@ const SidebarComponent = ({
         <MenuItem>
           <MenuItemLabel onClick={() => setShowSaveCurrentSetupModal(true)}>
             <Icon src={save_icon} />
-            {collapsed ? "" : "Save current setup"}
+            {collapsed ? "" : "Save current state"}
           </MenuItemLabel>
         </MenuItem>
         <MenuItem>
@@ -158,7 +158,7 @@ const SidebarComponent = ({
               label={"Snapshots Settings"}
               icon={<Icon src={snapshot_icon} />}
             >
-              <MenuItem onClick={() => setShow("history")}>
+              <MenuItem onClick={() => setShow("snapshots")}>
                 <MenuItemLabel>
                   <Icon src={history_icon} />
                   History

@@ -24,8 +24,9 @@ L.Marker.MovingMarker = L.Marker.extend({
     loop: false,
   },
 
-  initialize: function (latlngs, durations, options) {
+  initialize: function (latlngs, durations, options, setIndex) {
     L.Marker.prototype.initialize.call(this, latlngs[0], options);
+    this.setIndex = setIndex;
 
     this._latlngs = latlngs.map(function (e, index) {
       return L.latLng(e);
@@ -220,6 +221,7 @@ L.Marker.MovingMarker = L.Marker.extend({
   },
 
   _loadLine: function (index) {
+    this.setIndex([index]);
     this._currentIndex = index;
     this._currentDuration = this._durations[index];
     this._currentLine = this._latlngs.slice(index, index + 2);
@@ -270,6 +272,7 @@ L.Marker.MovingMarker = L.Marker.extend({
           // the last position
           this.setLatLng(this._latlngs[this._latlngs.length - 1]);
           this.stop(elapsedTime);
+          this.setIndex([this._currentIndex + 1]);
           return null;
         }
       }
@@ -311,6 +314,6 @@ L.Marker.MovingMarker = L.Marker.extend({
   },
 });
 
-L.Marker.movingMarker = function (latlngs, duration, options) {
-  return new L.Marker.MovingMarker(latlngs, duration, options);
+L.Marker.movingMarker = function (latlngs, duration, options, setIndex) {
+  return new L.Marker.MovingMarker(latlngs, duration, options, setIndex);
 };

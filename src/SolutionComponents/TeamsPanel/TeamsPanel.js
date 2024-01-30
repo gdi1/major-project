@@ -9,7 +9,7 @@ import borders from "../../style-utils/borders";
 
 const TeamsPanel = () => {
   const dispatch = useDispatch();
-  const { teams } = useSelector((state) => state.constraints);
+  const { teams } = useSelector((state) => state.solution.internalData);
   const { selectedTeam } = useSelector((state) => state.solution);
   const toggleTeamSelection = (team) => {
     if (selectedTeam !== team.value) {
@@ -28,6 +28,7 @@ const TeamsPanel = () => {
         <TeamOption
           focused={selectedTeam === team.value}
           onClick={() => toggleTeamSelection(team)}
+          key={team.label}
         >
           {team.label}
         </TeamOption>

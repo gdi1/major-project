@@ -82,14 +82,20 @@ export const getCoordinatesOfLocations = (selectedTeamJourney) => {
 };
 
 export const filterConsecutiveSameLocations = (locations) => {
-  const filteredLocations = [locations[0]];
+  const filteredLocations = [{ coordinates: locations[0] }];
+  let cnt = 1;
   for (let i = 1; i < locations.length; i++) {
     if (
       locations[i][0] === locations[i - 1][0] &&
       locations[i][1] === locations[i - 1][1]
-    )
+    ) {
+      cnt += 1;
       continue;
-    filteredLocations.push(locations[i]);
+    }
+    filteredLocations[filteredLocations.length - 1].cnt = cnt;
+    cnt = 1;
+    filteredLocations.push({ coordinates: locations[i] });
   }
+  filteredLocations[filteredLocations.length - 1].cnt = cnt;
   return filteredLocations;
 };

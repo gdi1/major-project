@@ -13,6 +13,7 @@ import {
   NameInputField,
 } from "./ConstraintModalComponents";
 import { constraintFlowActions } from "../../../store/constraintFlow";
+import { NotificationManager } from "react-notifications";
 
 const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   const changeName = () => {
     const name = editConstraintNameRef.current.value;
     if (!name) {
-      alert("New name mustn't be empty!");
+      // alert("New name mustn't be empty!");
+      NotificationManager.error("New name mustn't be empty!", "Error");
       return false;
     }
     const isAlready =
@@ -40,7 +42,8 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
       (hardConstraints.some((c) => c.name === name) ||
         softConstraints.some((c) => c.name === name));
     if (isAlready) {
-      alert("Name already exists!");
+      // alert("Name already exists!");
+      NotificationManager.error("Name already exists!", "Error");
       return false;
     }
     dispatch(constraintsActions.changeName({ index, type, name }));
@@ -79,12 +82,6 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
       style={modal_content}
     >
       <ModalBody>
-        {/* <ModalButton
-          style={{ alignSelf: "end", width: "auto" }}
-          onClick={removeConstraint}
-        >
-          Remove
-        </ModalButton> */}
         <ModalTitle>Edit Constraint</ModalTitle>
         <ModalLabel>Name</ModalLabel>
         <NameInputField
@@ -94,7 +91,13 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
         <ModalButtonGroup>
           <ModalButton
             onClick={() => {
-              if (changeName()) closeModal();
+              if (changeName()) {
+                NotificationManager.success(
+                  "Successfully changed name",
+                  "Success"
+                );
+                closeModal();
+              }
             }}
           >
             OK

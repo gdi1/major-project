@@ -20,11 +20,12 @@ const NodeSelection = () => {
     },
   });
 
-  return (
-    <div>
-      <p>Selected nodes: {selectedNodes.join(", ")}</p>
-      <p>Selected edges: {selectedEdges.join(", ")}</p>
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <p>Selected nodes: {selectedNodes.join(", ")}</p>
+  //     <p>Selected edges: {selectedEdges.join(", ")}</p>
+  //   </div>
+  // );
+  return;
 };
 export default NodeSelection;

@@ -10,7 +10,9 @@ const snapshotsHistorySlice = createSlice({
       state.snapshots.unshift(action.payload);
     },
     removeSnapshot(state, action) {
-      state.snapshots.splice(action.payload, 1);
+      state.snapshots = state.snapshots.filter(
+        ({ name }) => name !== action.payload
+      );
     },
     removeAllSnapshots(state, _) {
       state.snapshots = [];

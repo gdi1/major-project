@@ -16,7 +16,10 @@ const SolutionScreen = () => {
       <SolutionPageHeader>
         <div />
         <Title>Solution</Title>
-        <GeneralButton onClick={() => navigate("/")}>Back</GeneralButton>
+        <ButtonGroup>
+          <GeneralButton>Save</GeneralButton>
+          <GeneralButton onClick={() => navigate("/")}>Back</GeneralButton>
+        </ButtonGroup>
       </SolutionPageHeader>
       <SolutionPageBody>
         <TeamsPanel />
@@ -34,5 +37,9 @@ const SolutionPageBody = styled(RowContainer)`
   border: ${borders.small};
   align-items: start;
   justify-content: space-between;
+`;
+const ButtonGroup = styled(RowContainer)`
+  width: auto;
+  gap: 5px;
 `;
 export default SolutionScreen;

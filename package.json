@@ -21,6 +21,8 @@
     "react-leaflet": "^4.2.1",
     "react-modal": "^3.16.1",
     "react-multi-select-component": "^4.3.4",
+    "react-notifications": "^1.7.4",
+    "react-notifications-component": "^4.0.1",
     "react-pro-sidebar": "^1.1.0-alpha.2",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.21.0",

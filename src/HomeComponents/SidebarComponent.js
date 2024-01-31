@@ -21,7 +21,8 @@ const SidebarComponent = ({
   setShow,
   setOptionsTypes,
   optionsTypes,
-  setShowSaveCurrentSetupModal,
+  setShowSaveWorkingCopyModal,
+  setShowExportEverythingModal,
 }) => {
   const [collapsed, setCollapsed] = useState(true);
 
@@ -73,21 +74,21 @@ const SidebarComponent = ({
           )}
         </MenuItem>
         <MenuItem>
-          <MenuItemLabel onClick={() => setShowSaveCurrentSetupModal(true)}>
+          <MenuItemLabel onClick={() => setShowSaveWorkingCopyModal(true)}>
             <Icon src={save_icon} />
-            {collapsed ? "" : "Save current state"}
+            {collapsed ? "" : "Save working copy"}
           </MenuItemLabel>
         </MenuItem>
         <MenuItem>
           <MenuItemLabel>
             <Icon src={import_icon} />
-            {collapsed ? "" : "Import"}
+            {collapsed ? "" : "General Import"}
           </MenuItemLabel>
         </MenuItem>
         <MenuItem>
-          <MenuItemLabel>
+          <MenuItemLabel onClick={() => setShowExportEverythingModal(true)}>
             <Icon src={export_icon} />
-            {collapsed ? "" : "Export"}
+            {collapsed ? "" : "Export everything"}
           </MenuItemLabel>
         </MenuItem>
         <MenuItem
@@ -164,12 +165,6 @@ const SidebarComponent = ({
                   History
                 </MenuItemLabel>
               </MenuItem>
-              <MenuItem>
-                <MenuItemLabel>
-                  <Icon src={go_back_icon} />
-                  Revert to Working Copy
-                </MenuItemLabel>
-              </MenuItem>
             </SubMenu>
           </React.Fragment>
         )}
@@ -187,6 +182,7 @@ const MenuItemLabel = styled.div`
   display: flex;
   gap: 10px;
 `;
+
 export default SidebarComponent;
 
 // {

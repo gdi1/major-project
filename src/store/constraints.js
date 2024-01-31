@@ -151,9 +151,45 @@ const constraintsSlice = createSlice({
           (n) => n !== name
         );
     },
+    removeConstraintByName(state, action) {
+      state.hardConstraints = state.hardConstraints.filter(
+        (c) => c.name !== action.payload
+      );
+      state.softConstraints = state.softConstraints.filter(
+        (c) => c.name !== action.payload
+      );
+    },
+
     updateOption(state, action) {
       const { id, updatedOption, type } = action.payload;
       state[type][id].label = updatedOption;
+      const value = state[type][id].value;
+      const constraint_lists_types = ["hardConstraints", "softConstraints"];
+
+      constraint_lists_types.forEach((constraints_list_type) => {
+        state[constraints_list_type].forEach((constraint) => {
+          constraint.nodes.forEach((node) => {
+            if (node.data.types[type]) {
+              node.data.types[type] = node.data.types[type].map((el) =>
+                el.value === value ? { ...el, label: updatedOption } : el
+              );
+              if (type === "teams") {
+                const additional_types = ["play-against", "not-play-against"];
+                for (const add_type of additional_types) {
+                  if (node.data.types[add_type]) {
+                    node.data.types[add_type] = node.data.types[add_type].map(
+                      (el) =>
+                        el.value === value
+                          ? { ...el, label: updatedOption }
+                          : el
+                    );
+                  }
+                }
+              }
+            }
+          });
+        });
+      });
     },
     removeOption(state, action) {
       const { id, type } = action.payload;
@@ -191,34 +227,22 @@ const constraintsSlice = createSlice({
           });
         });
       });
-
-      // state.softConstraints.forEach((constraint) => {
-      //   constraint.nodes.forEach((node) => {
-      //     if (node.data.types[type]) {
-      //       node.data.types[type] = node.data.types[type].filter(
-      //         (el) => el.value !== value
-      //       );
-      //       if (node.data.types[type].length === 0)
-      //         state.outdatedConstraints.push(constraint.name);
-
-      //       if (type === "teams") {
-      //         const additional_types = ["play-against", "not-play-against"];
-      //         for (const add_type of additional_types) {
-      //           if (node.data.types[add_type]) {
-      //             node.data.types[add_type] = node.data.types[add_type].filter(
-      //               (el) => el.value !== value
-      //             );
-      //             if (
-      //               node.data.types[add_type].length === 0 &&
-      //               !state.outdatedConstraints.includes(constraint.name)
-      //             )
-      //               state.outdatedConstraints.push(constraint.name);
-      //           }
-      //         }
-      //       }
-      //     }
-      //   });
-      // });
+    },
+    setState(state, action) {
+      const {
+        teams,
+        weeks,
+        locations,
+        periods,
+        hardConstraints,
+        softConstraints,
+      } = action.payload;
+      state.teams = teams;
+      state.locations = locations;
+      state.weeks = weeks;
+      state.periods = periods;
+      state.hardConstraints = hardConstraints;
+      state.softConstraints = softConstraints;
     },
   },
 });
@@ -252,3 +276,31 @@ export default constraintsSlice;
 //       )
 //     )
 // );
+
+// state.softConstraints.forEach((constraint) => {
+//   constraint.nodes.forEach((node) => {
+//     if (node.data.types[type]) {
+//       node.data.types[type] = node.data.types[type].filter(
+//         (el) => el.value !== value
+//       );
+//       if (node.data.types[type].length === 0)
+//         state.outdatedConstraints.push(constraint.name);
+
+//       if (type === "teams") {
+//         const additional_types = ["play-against", "not-play-against"];
+//         for (const add_type of additional_types) {
+//           if (node.data.types[add_type]) {
+//             node.data.types[add_type] = node.data.types[add_type].filter(
+//               (el) => el.value !== value
+//             );
+//             if (
+//               node.data.types[add_type].length === 0 &&
+//               !state.outdatedConstraints.includes(constraint.name)
+//             )
+//               state.outdatedConstraints.push(constraint.name);
+//           }
+//         }
+//       }
+//     }
+//   });
+// });

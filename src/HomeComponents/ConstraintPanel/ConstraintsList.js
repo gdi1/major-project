@@ -12,13 +12,14 @@ const ConstraintsList = ({
   constraints,
   setEditInfo,
   setIsEditConstraintModalOpen,
+  setConstraintToDelete,
 }) => {
   const { outdatedConstraints } = useSelector((state) => state.constraints);
   const dispatch = useDispatch();
 
-  const removeConstraint = (index) => {
-    dispatch(constraintsActions.removeConstraint({ index, type }));
-  };
+  // const removeConstraint = (index) => {
+  //   dispatch(constraintsActions.removeConstraint({ index, type }));
+  // };
   return (
     <Drop
       id={type}
@@ -47,7 +48,8 @@ const ConstraintsList = ({
                   src={delete_icon}
                   onClick={(e) => {
                     e.stopPropagation();
-                    removeConstraint(index);
+                    // removeConstraint(index);
+                    setConstraintToDelete(constraint.name);
                   }}
                 />
               </Constraint>

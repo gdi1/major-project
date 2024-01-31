@@ -6,7 +6,7 @@ import {
 } from "../../GeneralComponents/Containers";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddConstraintNameModal from "./ConstraintModals/AddConstraintNameModal";
 import EditConstraintModal from "./ConstraintModals/EditConstraintModal";
 import styled from "styled-components";
@@ -14,6 +14,7 @@ import ConstraintsList from "./ConstraintsList";
 import { CenteredLabel } from "../../GeneralComponents/Labels";
 import Title from "../../GeneralComponents/Title";
 import borders from "../../style-utils/borders";
+import DeleteConstraintModal from "./ConstraintModals/DeleteConstraintModal";
 
 const constraints_types = ["hard", "soft"];
 
@@ -26,6 +27,18 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
   const [isEditConstraintModalOpen, setIsEditConstraintModalOpen] =
     useState(false);
   const [editInfo, setEditInfo] = useState({});
+
+  const [constraintToDelete, setConstraintToDelete] = useState(undefined);
+  const [showConstraintDeleteModal, setShowConstraintDeleteModal] =
+    useState(false);
+
+  useEffect(() => {
+    if (constraintToDelete) setShowConstraintDeleteModal(true);
+  }, [constraintToDelete]);
+
+  useEffect(() => {
+    if (!showConstraintDeleteModal) setConstraintToDelete(undefined);
+  }, [showConstraintDeleteModal]);
 
   const mapIdToList = {
     soft: softConstraints,
@@ -82,6 +95,11 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
         setIsModalOpen={setIsEditConstraintModalOpen}
         editInfo={editInfo}
       />
+      <DeleteConstraintModal
+        isModalOpen={showConstraintDeleteModal}
+        setIsModalOpen={setShowConstraintDeleteModal}
+        constraintToDelete={constraintToDelete}
+      />
       <ConstraintHeader>
         <Title>Constraints</Title>
         <GeneralButton onClick={addNewConstraint}>Add constraint</GeneralButton>
@@ -98,6 +116,7 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
                 constraints={hardConstraints}
                 setEditInfo={setEditInfo}
                 setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
+                setConstraintToDelete={setConstraintToDelete}
               />
             </ConstraintListContainer>
           )}

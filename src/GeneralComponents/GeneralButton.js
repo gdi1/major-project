@@ -6,6 +6,25 @@ const GeneralButton = styled.button`
   font-size: ${text_styles.resizbale_font.small_med};
   font-weight: bold;
   cursor: pointer;
+
+  position: relative;
+  display: inline-block;
+
+  &:hover span {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  span::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+  }
 `;
 
 export default GeneralButton;

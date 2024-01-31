@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import constraintsSlice from "./constraints";
 import solutionSlice from "./solution";
-import currentConstraintSlice from "./currentConstraint";
+// import currentConstraintSlice from "./currentConstraint";
 import constraintFlowSlice from "./constraintFlow";
 import { combineReducers } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
@@ -19,7 +19,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   constraints: constraintsSlice.reducer,
   solution: solutionSlice.reducer,
-  currentConstraint: currentConstraintSlice.reducer,
+  // currentConstraint: currentConstraintSlice.reducer,
   flow: constraintFlowSlice.reducer,
   workingCopy: workingCopySlice.reducer,
   snapshotsHistory: snapshotsHistorySlice.reducer,

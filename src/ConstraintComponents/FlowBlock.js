@@ -8,6 +8,8 @@ import Block from "./Block";
 import InputField from "../GeneralComponents/InputField";
 import colors from "../style-utils/colors";
 import delete_icon from "./../icons/delete_icon.png";
+import GeneralButton from "../GeneralComponents/GeneralButton";
+import { TooltipText } from "../GeneralComponents/TooltipText";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -124,7 +126,10 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
     // onMouseLeave={() => setShowRemoveOverlayMessage(false)}
     >
       {getContentBlock()}
-      <Icon src={delete_icon} onClick={removeBlock} />
+      <GeneralButton>
+        <Icon src={delete_icon} onClick={removeBlock} />
+        <TooltipText>Delete '{type}' block</TooltipText>
+      </GeneralButton>
     </PreviewBlockComponent>
   );
 };

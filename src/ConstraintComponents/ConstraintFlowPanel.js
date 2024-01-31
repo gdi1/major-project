@@ -6,6 +6,8 @@ import ReactFlow, {
   applyNodeChanges,
   getOutgoers,
   useReactFlow,
+  Controls,
+  Background,
 } from "reactflow";
 import borders from "../style-utils/borders";
 import { useCallback, useMemo } from "react";
@@ -14,6 +16,7 @@ import NodeSelection from "./NodeSelection";
 import { useSelector, useDispatch } from "react-redux";
 import { constraintFlowActions } from "../store/constraintFlow";
 import "reactflow/dist/style.css";
+import Legend from "./Legend";
 
 const ConstraintFlowPanel = () => {
   const dispatch = useDispatch();
@@ -87,6 +90,9 @@ const ConstraintFlowPanel = () => {
         fitView
       >
         <NodeSelection />
+        <Background color="#aaa" gap={16} />
+        <Controls />
+        <Legend />
       </ReactFlow>
     </ConstraintFlow>
   );

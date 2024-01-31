@@ -1,11 +1,9 @@
 import { ColumnContainer, RowContainer } from "../GeneralComponents/Containers";
-import SetupPanel from "../HomeComponents/InitialSetupPanel/SetupPanel";
 import ConstraintsPanel from "../HomeComponents/ConstraintPanel/ConstraintsPanel";
 import Title from "../GeneralComponents/Title";
 import styled from "styled-components";
 import margins from "../style-utils/margins";
 import SnapshotsPanel from "../HomeComponents/SnapshotsPanel/SnapshotsPanel";
-import WorkingCopy from "../HomeComponents/SnapshotsPanel/WorkingCopy";
 import React, { useState } from "react";
 import SidebarComponent from "../HomeComponents/SidebarComponent";
 import GeneralButton from "../GeneralComponents/GeneralButton";
@@ -13,15 +11,20 @@ import SetupOptionsPanel from "../HomeComponents/InitialSetupPanel/SetupOptionsP
 import { solutionActions } from "../store/solution";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import SaveCurrentSetupModal from "../HomeComponents/SaveCurrentSetupModal";
+import SaveWorkingCopyModal from "../HomeComponents/Modals/SaveWorkingCopyModal";
 import outdated_icon from "./../icons/outdated_icon.png";
+import { encodeAllInternalData } from "../Utilities/EncodingFunctions";
+import ExportEverythingModal from "../HomeComponents/Modals/ExportEverythingModal";
+import { NotificationManager } from "react-notifications";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [show, setShow] = useState("home");
   const [optionsTypes, setOptionsTypes] = useState([]);
-  const [showSaveCurrentSetupModal, setShowSaveCurrentSetupModal] =
+  const [showSaveWorkingCopyModal, setShowSaveWorkingCopyModal] =
+    useState(false);
+  const [showExportEverythingModal, setShowExportEverythingModal] =
     useState(false);
 
   const internalData = useSelector((state) => state.constraints);
@@ -30,11 +33,15 @@ const HomeScreen = () => {
 
   const solveConfiguration = () => {
     if (outdatedConstraints.length > 0) {
-      alert(
-        "Constraints are inconsistent! Please resolve them before generating a solution."
+      NotificationManager.error(
+        "Constraints are inconsistent! Please resolve them before generating a solution.",
+        "Error"
       );
       return;
     }
+    const formattedConfiguration = encodeAllInternalData(internalData);
+    console.log(formattedConfiguration);
+
     dispatch(solutionActions.setInternalData(internalData));
     navigate("/show-solution");
   };
@@ -42,16 +49,21 @@ const HomeScreen = () => {
   return (
     <React.Fragment>
       <RowContainer style={{ height: "100vh", alignItems: "start" }}>
-        <SaveCurrentSetupModal
-          setIsModalOpen={setShowSaveCurrentSetupModal}
-          isModalOpen={showSaveCurrentSetupModal}
+        <SaveWorkingCopyModal
+          setIsModalOpen={setShowSaveWorkingCopyModal}
+          isModalOpen={showSaveWorkingCopyModal}
+        />
+        <ExportEverythingModal
+          setIsModalOpen={setShowExportEverythingModal}
+          isModalOpen={showExportEverythingModal}
         />
         <SidebarComponent
           show={show}
           setShow={setShow}
           setOptionsTypes={setOptionsTypes}
           optionsTypes={optionsTypes}
-          setShowSaveCurrentSetupModal={setShowSaveCurrentSetupModal}
+          setShowSaveWorkingCopyModal={setShowSaveWorkingCopyModal}
+          setShowExportEverythingModal={setShowExportEverythingModal}
         />
         <HomePage>
           <Header>
@@ -109,6 +121,7 @@ const Header = styled(ColumnContainer)`
 
 const HomePage = styled(ColumnContainer)`
   overflow-y: scroll;
+  overflow-x: hidden;
   justify-content: start;
   gap: 20px;
 `;

@@ -5,14 +5,15 @@ import {
   ModalBody,
   ModalButtonGroup,
   NameInputField,
-} from "./ConstraintPanel/ConstraintModals/ConstraintModalComponents";
-import { modal_content } from "../style-utils/modalContent";
+} from "../ConstraintPanel/ConstraintModals/ConstraintModalComponents";
+import { modal_content } from "../../style-utils/modalContent";
 import Modal from "react-modal";
 import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { snapshotsHistoryActions } from "../store/snapshotsHistory";
+import { snapshotsHistoryActions } from "../../store/snapshotsHistory";
+import { NotificationManager } from "react-notifications";
 
-const SaveCurrentSetupModal = ({ isModalOpen, setIsModalOpen }) => {
+const SaveWorkingCopyModal = ({ isModalOpen, setIsModalOpen }) => {
   const modalRef = useRef();
   const nameRef = useRef();
   const internalState = useSelector((state) => state.constraints);
@@ -22,14 +23,14 @@ const SaveCurrentSetupModal = ({ isModalOpen, setIsModalOpen }) => {
 
   const closeModal = () => setIsModalOpen(false);
 
-  const saveCurrentSetup = () => {
+  const saveWorkingCopy = () => {
     const name = nameRef.current.value;
     if (!name || name.trim() === "") {
-      alert("Mush give a name to the snapshot");
+      NotificationManager.error("Mush give a name to the snapshot!", "Error");
       return;
     }
     if (snapshots.map((snapshot) => snapshot.name).includes(name)) {
-      alert("This name already exists");
+      NotificationManager.error("This name already exists!", "Error");
       return;
     }
     dispatch(
@@ -37,8 +38,12 @@ const SaveCurrentSetupModal = ({ isModalOpen, setIsModalOpen }) => {
         name,
         internalState,
         solution,
-        date: new Date(),
+        date: new window.Date().toISOString(),
       })
+    );
+    NotificationManager.success(
+      `Successfully took snapshot ${name} of the working copy!`,
+      "Success"
     );
     closeModal();
   };
@@ -52,15 +57,15 @@ const SaveCurrentSetupModal = ({ isModalOpen, setIsModalOpen }) => {
       style={modal_content}
     >
       <ModalBody>
-        <ModalTitle>Save current setup</ModalTitle>
+        <ModalTitle>Save working copy</ModalTitle>
         <ModalLabel>Name</ModalLabel>
         <NameInputField placeholder="Enter name" ref={nameRef} />
         <ModalButtonGroup>
           <ModalButton onClick={closeModal}>Close</ModalButton>
-          <ModalButton onClick={saveCurrentSetup}>Save</ModalButton>
+          <ModalButton onClick={saveWorkingCopy}>Save</ModalButton>
         </ModalButtonGroup>
       </ModalBody>
     </Modal>
   );
 };
-export default SaveCurrentSetupModal;
+export default SaveWorkingCopyModal;

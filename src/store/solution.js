@@ -122,6 +122,42 @@ const solutionSlice = createSlice({
         })),
       }));
     },
+    setState(state, action) {
+      const {
+        selectedTeam,
+        selectedTeamJourney,
+        selectedTeamGames,
+        focusedGame,
+        violatedSoftConstraints,
+        schedule,
+        curvedPaths,
+        speed,
+        teamsMap,
+        locationsMap,
+        periodsMap,
+        weeksMap,
+        solution,
+        isOutdated,
+        internalData,
+        isSolution,
+      } = action.payload;
+      state.selectedTeam = selectedTeam;
+      state.selectedTeamJourney = selectedTeamJourney;
+      state.selectedTeamGames = selectedTeamGames;
+      state.focusedGame = focusedGame;
+      state.violatedSoftConstraints = violatedSoftConstraints;
+      state.schedule = schedule;
+      state.curvedPaths = curvedPaths;
+      state.speed = speed;
+      state.teamsMap = teamsMap;
+      state.locationsMap = locationsMap;
+      state.periodsMap = periodsMap;
+      state.weeksMap = weeksMap;
+      state.solution = solution;
+      state.isOutdated = isOutdated;
+      state.internalData = internalData;
+      state.isSolution = isSolution;
+    },
   },
 });
 

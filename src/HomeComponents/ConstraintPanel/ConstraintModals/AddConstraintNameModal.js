@@ -13,6 +13,7 @@ import {
   NameInputField,
 } from "./ConstraintModalComponents";
 import { constraintFlowActions } from "../../../store/constraintFlow";
+import { NotificationManager } from "react-notifications";
 
 const AddConstraintNameModal = ({
   isModalOpen,
@@ -37,14 +38,17 @@ const AddConstraintNameModal = ({
   const goToNewConstraintCreation = () => {
     const name = newConstraintNameRef.current.value;
     if (!name) {
-      alert("Must enter a name to continue!");
+      NotificationManager.error(
+        "Constraint must have a name to continue!",
+        "Error"
+      );
       return;
     }
     const isAlready =
       hardConstraints.some((c) => c.name === name) ||
       softConstraints.some((c) => c.name === name);
     if (isAlready) {
-      alert("Name already exists!");
+      NotificationManager.error("Name already exists!", "Error");
       return;
     }
     dispatch(constraintFlowActions.setName(name));

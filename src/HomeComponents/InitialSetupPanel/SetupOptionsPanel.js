@@ -42,14 +42,19 @@ const SetupOptionsPanel = ({ optionsTypes = types }) => {
           <OptionHeader>
             <OptionLabel>{titles[type]}</OptionLabel>
             <GeneralButton onClick={() => toggleShowTypes(type)}>
-              Show
+              {showTypes.includes(type) ? "Close" : "Show"}
             </GeneralButton>
           </OptionHeader>
           {showTypes.includes(type) && (
             <OptionsGridContainer>
               <DynamicInputField type={type} />
               {options[type].map((option, idx) => (
-                <DropDownItem key={idx} id={idx} option={option} type={type} />
+                <DropDownItem
+                  key={option.value}
+                  id={idx}
+                  option={option}
+                  type={type}
+                />
               ))}
             </OptionsGridContainer>
           )}

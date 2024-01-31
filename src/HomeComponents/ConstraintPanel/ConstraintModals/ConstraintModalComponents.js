@@ -13,6 +13,11 @@ export const ModalLabel = styled(Label)`
   align-self: start;
 `;
 
+export const CenteredModalLabel = styled(Label)`
+  align-self: start;
+  text-align: center;
+`;
+
 export const ModalTitle = styled(Title)`
   border-bottom: ${borders.small};
 `;

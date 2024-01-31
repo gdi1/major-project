@@ -13,6 +13,7 @@ import { Label } from "../GeneralComponents/Labels";
 import ConstraintFlowPanel from "../ConstraintComponents/ConstraintFlowPanel";
 import { ReactFlowProvider } from "reactflow";
 import { constraintFlowActions } from "../store/constraintFlow";
+import { NotificationManager } from "react-notifications";
 
 const operators = ["and", "or"];
 const types = [
@@ -52,13 +53,16 @@ const ConstraintCreationScreen = () => {
 
   const addNewFlowConstraint = () => {
     if (nodes.length !== edges.length + 1) {
-      alert("Shape is not right!");
+      NotificationManager.error("The constraint is not tree shaped!", "Error");
       return;
     }
     if (nodes.length === 1) {
       const types = Object.keys(nodes[0].data.types);
       if (types.some((type) => operators.includes(type))) {
-        alert("Shape is not right!");
+        NotificationManager.error(
+          "The only node can't be an operator node!",
+          "Error"
+        );
         return;
       }
     }
@@ -82,21 +86,39 @@ const ConstraintCreationScreen = () => {
     });
 
     if (!allLeafNodesNonEmpty) {
-      alert("allLeafNodesNonEmpty is not right!");
+      // alert("allLeafNodesNonEmpty is not right!");
+      NotificationManager.error(
+        "You must select at least one option for each multi select block!",
+        "Error"
+      );
       return;
     }
     if (!allNodesEitherNonLeafOrLeafWithTeamsAndVerb) {
-      alert("allNodesEitherNonLeafOrLeafWithTeamsAndVerb is not right!");
+      // alert("allNodesEitherNonLeafOrLeafWithTeamsAndVerb is not right!");
+      NotificationManager.error(
+        "Non leaf nodes must be either AND or OR, leaf nodes must contain 'Teams' and a verb at least.",
+        "Error"
+      );
       return;
     }
     if (!atLeastOneLeafNode) {
-      alert("atLeastOneLeafNode is not right!");
+      // alert("atLeastOneLeafNode is not right!");
+      NotificationManager.error(
+        "At least one node must not be an AND or OR node.",
+        "Error"
+      );
       return;
     }
     dispatch(
       constraintsActions.addNewFlowConstraint({ name, type, nodes, edges })
     );
     dispatch(constraintFlowActions.resetConstraintFlow());
+    NotificationManager.success(
+      `Successfully ${
+        mode === "new" ? "added new" : "edited"
+      } constraint ${name}`,
+      "Success"
+    );
     navigate("/");
   };
 

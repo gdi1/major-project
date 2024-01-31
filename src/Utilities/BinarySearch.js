@@ -11,20 +11,20 @@ const positions = {
   "at-most": 6,
 };
 
-export const findInsertIndex = (arr, target) => {
-  let low = 1;
-  let high = arr.length;
-  while (low < high) {
-    let mid = Math.floor((low + high) / 2);
-    console.log(mid);
-    if (positions[arr[mid].type] < positions[target]) {
-      low = mid + 1;
-    } else {
-      high = mid;
-    }
-  }
-  return low;
-};
+// export const findInsertIndex = (arr, target) => {
+//   let low = 1;
+//   let high = arr.length;
+//   while (low < high) {
+//     let mid = Math.floor((low + high) / 2);
+//     console.log(mid);
+//     if (positions[arr[mid].type] < positions[target]) {
+//       low = mid + 1;
+//     } else {
+//       high = mid;
+//     }
+//   }
+//   return low;
+// };
 
 export const sortConstraintBlockTypes = (arr) => {
   return arr.sort((a, b) => positions[a] - positions[b]);

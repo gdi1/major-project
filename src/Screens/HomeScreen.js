@@ -4,7 +4,7 @@ import Title from "../GeneralComponents/Title";
 import styled from "styled-components";
 import margins from "../style-utils/margins";
 import SnapshotsPanel from "../HomeComponents/SnapshotsPanel/SnapshotsPanel";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SidebarComponent from "../HomeComponents/SidebarComponent";
 import GeneralButton from "../GeneralComponents/GeneralButton";
 import SetupOptionsPanel from "../HomeComponents/InitialSetupPanel/SetupOptionsPanel";
@@ -16,6 +16,9 @@ import outdated_icon from "./../icons/outdated_icon.png";
 import { encodeAllInternalData } from "../Utilities/EncodingFunctions";
 import ExportEverythingModal from "../HomeComponents/Modals/ExportEverythingModal";
 import { NotificationManager } from "react-notifications";
+import { compareInternalDatas } from "../Utilities/EncodingFunctions";
+import { TooltipText } from "../GeneralComponents/TooltipText";
+import text_styles from "../style-utils/text_styles";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -29,7 +32,11 @@ const HomeScreen = () => {
 
   const internalData = useSelector((state) => state.constraints);
   const { outdatedConstraints } = internalData;
-  const { isSolution, isOutdated } = useSelector((state) => state.solution);
+  const {
+    isSolution,
+    isOutdated,
+    internalData: solutionInternalData,
+  } = useSelector((state) => state.solution);
 
   const solveConfiguration = () => {
     if (outdatedConstraints.length > 0) {
@@ -39,12 +46,19 @@ const HomeScreen = () => {
       );
       return;
     }
-    const formattedConfiguration = encodeAllInternalData(internalData);
-    console.log(formattedConfiguration);
+    // const formattedConfiguration = encodeAllInternalData(internalData);
+    // console.log(formattedConfiguration);
 
     dispatch(solutionActions.setInternalData(internalData));
     navigate("/show-solution");
   };
+
+  useEffect(() => {
+    console.log("hello");
+    if (!compareInternalDatas(internalData, solutionInternalData))
+      dispatch(solutionActions.setOutdatedStatus(true));
+    else dispatch(solutionActions.setOutdatedStatus(false));
+  }, [internalData]);
 
   return (
     <React.Fragment>
@@ -77,7 +91,12 @@ const HomeScreen = () => {
                   <GeneralButton onClick={() => navigate("/show-solution")}>
                     View previous solution
                   </GeneralButton>
-                  {isOutdated && <Icon src={outdated_icon} />}
+                  {isOutdated && (
+                    <IconContainer>
+                      <Icon src={outdated_icon} />
+                      <TooltipText>Outdated solution</TooltipText>
+                    </IconContainer>
+                  )}
                 </RowContainer>
               )}
             </ButtonGroup>
@@ -133,6 +152,30 @@ const HomePageTitle = styled(Title)`
 const HomePageBodySection = styled(RowContainer)`
   align-items: start;
   width: 100%;
+`;
+
+const IconContainer = styled.div`
+  position: relative;
+  display: inline-block;
+
+  font-size: ${text_styles.resizbale_font.small_med};
+  font-weight: bold;
+
+  &:hover span {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  span::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+  }
 `;
 
 export default HomeScreen;

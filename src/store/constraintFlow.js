@@ -124,7 +124,9 @@ const constraintFlowSlice = createSlice({
         return;
 
       state.nodes[idx].data.types[type] =
-        type === "at-least" || type === "at-most" ? 0 : [];
+        type === "at-least" || type === "at-most"
+          ? [{ value: 0, label: 0 }]
+          : [];
     },
     removeFlowBlock(state, action) {
       if (state.selectedNode === undefined) return;

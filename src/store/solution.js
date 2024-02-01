@@ -28,6 +28,9 @@ const solutionSlice = createSlice({
     isSolution: false,
   },
   reducers: {
+    setOutdatedStatus(state, action) {
+      state.isOutdated = action.payload;
+    },
     setInternalData(state, action) {
       state.internalData = action.payload;
 

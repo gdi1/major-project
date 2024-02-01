@@ -24,7 +24,6 @@ const ConstraintFlowPanel = () => {
 
   const { nodes, edges } = useSelector((state) => state.flow);
   const { getNodes, getEdges } = useReactFlow();
-  console.log("Edges", edges);
 
   const onNodesChange = useCallback(
     (changes) => {

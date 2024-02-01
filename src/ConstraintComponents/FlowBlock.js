@@ -45,7 +45,7 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
     const sanitizedValue = e.target.value.replace(/\D/g, "");
     dispatch(
       constraintFlowActions.updateOptions({
-        selectedOptions: sanitizedValue,
+        selectedOptions: [{ value: sanitizedValue, label: sanitizedValue }],
         id,
         type,
       })
@@ -105,7 +105,7 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
             // }}
           >
             <NoOfTimesInputField
-              value={selectedOptions}
+              value={selectedOptions[0].label}
               onChange={handleInputChange}
               placeholder="Only digits allowed"
             />
@@ -126,8 +126,8 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
     // onMouseLeave={() => setShowRemoveOverlayMessage(false)}
     >
       {getContentBlock()}
-      <GeneralButton>
-        <Icon src={delete_icon} onClick={removeBlock} />
+      <GeneralButton onClick={removeBlock}>
+        <Icon src={delete_icon} />
         <TooltipText>Delete '{type}' block</TooltipText>
       </GeneralButton>
     </PreviewBlockComponent>

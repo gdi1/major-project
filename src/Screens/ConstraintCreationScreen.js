@@ -24,32 +24,15 @@ const types = [
   "not-play-against",
   "play-against",
 ];
-const verbs = ["play", "not play", "play-against", "not-play-against"];
+const verbs = ["play", "not-play", "play-against", "not-play-against"];
 
 const ConstraintCreationScreen = () => {
-  // const { constraintLists, name, mode, type } = useSelector(
-  //   (state) => state.currentConstraint
-  // );
   const { nodes, edges, name, type, mode } = useSelector((state) => state.flow);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const title = mode === "new" ? "New Constraint" : "Edit Constraint";
   const actionButtonTitle = mode === "new" ? "Add" : "Done Editing";
-
-  // const addNewConstraint = () => {
-  //   console.log("here");
-  //   dispatch(
-  //     constraintsActions.addNewConstraint({
-  //       name,
-  //       type,
-  //       constraintLists,
-  //       // constraint: new ConstraintIterator(constraintLists).parseConstraint(),
-  //     })
-  //   );
-  //   dispatch(currentConstraintActions.resetCurrentConstraint());
-  //   navigate("/");
-  // };
 
   const addNewFlowConstraint = () => {
     if (nodes.length !== edges.length + 1) {
@@ -85,6 +68,15 @@ const ConstraintCreationScreen = () => {
       return nodeTypes.some((type) => types.includes(type));
     });
 
+    const allNoOfTimesBlockIsNonnegative = nodes.every((node) => {
+      const nodeTypes = Object.keys(node.data.types);
+      return nodeTypes.every((type) =>
+        type === "at-least" || type === "at-most"
+          ? node.data.types[type][0].value >= 0
+          : true
+      );
+    });
+
     if (!allLeafNodesNonEmpty) {
       // alert("allLeafNodesNonEmpty is not right!");
       NotificationManager.error(
@@ -105,6 +97,14 @@ const ConstraintCreationScreen = () => {
       // alert("atLeastOneLeafNode is not right!");
       NotificationManager.error(
         "At least one node must not be an AND or OR node.",
+        "Error"
+      );
+      return;
+    }
+
+    if (!allNoOfTimesBlockIsNonnegative) {
+      NotificationManager.error(
+        "All 'at least' or 'at most' blocks' must have a non-negative value",
         "Error"
       );
       return;

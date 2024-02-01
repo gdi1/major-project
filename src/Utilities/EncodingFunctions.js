@@ -56,7 +56,7 @@ const formatConstraintTree = ({ nodes, edges, name = "" }) => {
 
 const createNodeMap = (nodes) => {
   const result = {};
-  nodes.forEach((node) => (result[node.id] = node));
+  nodes.forEach((node) => (result[node.id] = { ...node }));
   return result;
 };
 
@@ -97,21 +97,36 @@ const formatConstraintNode = (node, adjMatrix) => {
   return formattedNode;
 };
 
-const compareInternalDatas = (internalData, solutionInternalData) => {};
+const compareNodes = (node1, node2) => {
+  const types1 = Object.keys(node1.data.types);
+  const types2 = Object.keys(node2.data.types);
+  types1.sort();
+  types2.sort();
 
-const compareConstraints = (constraint1, constraint2) => {
-  const nodeMap1 = createNodeMap(constraint1.nodes);
-  const adjMatrix1 = createAdjacencyMatrix(constraint1.edges);
-  const root1 = getRootNode(constraint1.edges);
+  if (types1.length !== types2.length) return false;
 
-  const nodeMap2 = createNodeMap(constraint2.nodes);
-  const adjMatrix2 = createAdjacencyMatrix(constraint2.edges);
-  const root2 = getRootNode(constraint2.edges);
+  const n = types1.length;
+  for (let i = 0; i < n; i++) {
+    const type1 = types1[i];
+    const type2 = types2[i];
+    if (
+      type1 !== type2 ||
+      node1.data.types[type1].length !== node2.data.types[type2].length
+    )
+      return false;
 
-  return compareTrees(
-    { root1, adjMatrix1, nodeMap1 },
-    { root2, adjMatrix2, nodeMap2 }
-  );
+    const labels1 = node1.data.types[type1].map(({ label }) => label);
+    const labels2 = node2.data.types[type2].map(({ label }) => label);
+
+    labels1.sort();
+    labels2.sort();
+
+    const m = labels1.length;
+    for (let j = 0; j < m; j++) {
+      if (labels1[j] !== labels2[j]) return false;
+    }
+  }
+  return true;
 };
 
 const compareTrees = (
@@ -143,35 +158,90 @@ const compareTrees = (
   return true;
 };
 
-const compareNodes = (node1, node2) => {
-  const types1 = Object.keys(node1.data.types);
-  const types2 = Object.keys(node2.data.types);
-  types1.sort();
-  types2.sort();
+const compareConstraints = (constraint1, constraint2) => {
+  const nodeMap1 = createNodeMap(constraint1.nodes);
+  const adjMatrix1 = createAdjacencyMatrix(constraint1.edges);
+  const root1 = getRootNode(constraint1.edges);
 
-  if (types1.length !== types2.length) return false;
+  const nodeMap2 = createNodeMap(constraint2.nodes);
+  const adjMatrix2 = createAdjacencyMatrix(constraint2.edges);
+  const root2 = getRootNode(constraint2.edges);
 
-  const n = types1.length;
-  for (let i = 0; i < n; i++) {
-    const type1 = types1[i];
-    const type2 = types1[i];
-    if (
-      type1 !== type2 ||
-      node1.data.types[type1].length !== node2.data.types[type2]
-    )
-      return false;
+  return compareTrees(
+    { root1, adjMatrix1, nodeMap1 },
+    { root2, adjMatrix2, nodeMap2 }
+  );
+};
 
-    const labels1 = node1.data.types[type1].map(({ label }) => label);
-    const labels2 = node2.data.types[type2].map(({ label }) => label);
+const areConstraintsTheSame = (constraintsList1, constraintsList2) => {
+  const constraints1 = [...constraintsList1];
+  const constraints2 = [...constraintsList2];
 
-    labels1.sort();
-    labels2.sort();
+  if (constraints1.length !== constraints2.length) return false;
 
-    const m = labels1.length;
-
-    for (let j = 0; j < m; j++) {
-      if (labels1[j] !== labels2[j]) return false;
-    }
+  for (const constraint1 of constraints1) {
+    const constraintIndex2 = constraints2.findIndex((constraint2) =>
+      compareConstraints(constraint1, constraint2)
+    );
+    if (constraintIndex2 === -1) return false;
+    constraints2.splice(constraintIndex2, 1);
   }
   return true;
+};
+
+export const compareInternalDatas = (internalData, solutionInternalData) => {
+  const teams = internalData.teams.map(({ label }) => label).sort();
+  const locations = internalData.locations
+    .map(({ coordinates }) => JSON.stringify(coordinates))
+    .sort();
+  const periods = internalData.periods.map(({ label }) => label).sort();
+  const weeks = internalData.weeks.map(({ label }) => label).sort();
+
+  const solutionTeams = solutionInternalData.teams
+    .map(({ label }) => label)
+    .sort();
+  const solutionLocations = solutionInternalData.locations
+    .map(({ coordinates }) => JSON.stringify(coordinates))
+    .sort();
+  const solutionPeriods = solutionInternalData.periods
+    .map(({ label }) => label)
+    .sort();
+  const solutionWeeks = solutionInternalData.weeks
+    .map(({ label }) => label)
+    .sort();
+
+  const areTeamsTheSame =
+    teams.length === solutionTeams.length &&
+    teams.every((team, idx) => team === solutionTeams[idx]);
+
+  const areLocationsTheSame =
+    locations.length === solutionLocations.length &&
+    locations.every((location, idx) => location === solutionLocations[idx]);
+
+  const arePeriodsTheSame =
+    periods.length === solutionPeriods.length &&
+    periods.every((period, idx) => period === solutionPeriods[idx]);
+
+  const areWeeksTheSame =
+    weeks.length === solutionWeeks.length &&
+    weeks.every((week, idx) => week === solutionWeeks[idx]);
+
+  if (
+    !areTeamsTheSame ||
+    !areLocationsTheSame ||
+    !arePeriodsTheSame ||
+    !areWeeksTheSame
+  )
+    return false;
+
+  return (
+    areConstraintsTheSame(
+      internalData.hardConstraints,
+      solutionInternalData.hardConstraints
+    ) &&
+    areConstraintsTheSame(
+      internalData.softConstraints,
+      solutionInternalData.softConstraints
+    )
+  );
 };

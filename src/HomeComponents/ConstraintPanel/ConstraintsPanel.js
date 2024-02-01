@@ -22,6 +22,7 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
   const { hardConstraints, softConstraints, outdatedConstraints, teams } =
     useSelector((state) => state.constraints);
   const dispatch = useDispatch();
+  console.log(hardConstraints);
   const [isNewConstraintModalOpen, setIsNewConstraintModalOpen] =
     useState(false);
   const [isEditConstraintModalOpen, setIsEditConstraintModalOpen] =

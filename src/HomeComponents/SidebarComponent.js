@@ -23,6 +23,7 @@ const SidebarComponent = ({
   optionsTypes,
   setShowSaveWorkingCopyModal,
   setShowExportEverythingModal,
+  setShowGeneralImportModal,
 }) => {
   const [collapsed, setCollapsed] = useState(true);
 
@@ -80,7 +81,7 @@ const SidebarComponent = ({
           </MenuItemLabel>
         </MenuItem>
         <MenuItem>
-          <MenuItemLabel>
+          <MenuItemLabel onClick={() => setShowGeneralImportModal(true)}>
             <Icon src={import_icon} />
             {collapsed ? "" : "General Import"}
           </MenuItemLabel>

@@ -19,6 +19,7 @@ import { NotificationManager } from "react-notifications";
 import { compareInternalDatas } from "../Utilities/EncodingFunctions";
 import { TooltipText } from "../GeneralComponents/TooltipText";
 import text_styles from "../style-utils/text_styles";
+import GeneralImportModal from "../HomeComponents/Modals/GeneralImportModal";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const HomeScreen = () => {
     useState(false);
   const [showExportEverythingModal, setShowExportEverythingModal] =
     useState(false);
+  const [showGeneralImportModal, setShowGeneralImportModal] = useState(false);
 
   const internalData = useSelector((state) => state.constraints);
   const { outdatedConstraints } = internalData;
@@ -55,9 +57,11 @@ const HomeScreen = () => {
 
   useEffect(() => {
     console.log("hello");
-    if (!compareInternalDatas(internalData, solutionInternalData))
-      dispatch(solutionActions.setOutdatedStatus(true));
-    else dispatch(solutionActions.setOutdatedStatus(false));
+    if (isSolution) {
+      if (!compareInternalDatas(internalData, solutionInternalData))
+        dispatch(solutionActions.setOutdatedStatus(true));
+      else dispatch(solutionActions.setOutdatedStatus(false));
+    }
   }, [internalData]);
 
   return (
@@ -71,6 +75,10 @@ const HomeScreen = () => {
           setIsModalOpen={setShowExportEverythingModal}
           isModalOpen={showExportEverythingModal}
         />
+        <GeneralImportModal
+          setIsModalOpen={setShowGeneralImportModal}
+          isModalOpen={showGeneralImportModal}
+        />
         <SidebarComponent
           show={show}
           setShow={setShow}
@@ -78,6 +86,7 @@ const HomeScreen = () => {
           optionsTypes={optionsTypes}
           setShowSaveWorkingCopyModal={setShowSaveWorkingCopyModal}
           setShowExportEverythingModal={setShowExportEverythingModal}
+          setShowGeneralImportModal={setShowGeneralImportModal}
         />
         <HomePage>
           <Header>

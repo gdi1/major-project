@@ -98,6 +98,7 @@ const formatConstraintNode = (node, adjMatrix) => {
 };
 
 const compareNodes = (node1, node2) => {
+  console.log(node1, node2);
   const types1 = Object.keys(node1.data.types);
   const types2 = Object.keys(node2.data.types);
   types1.sort();
@@ -161,11 +162,11 @@ const compareTrees = (
 const compareConstraints = (constraint1, constraint2) => {
   const nodeMap1 = createNodeMap(constraint1.nodes);
   const adjMatrix1 = createAdjacencyMatrix(constraint1.edges);
-  const root1 = getRootNode(constraint1.edges);
+  const root1 = getRootNode(constraint1.edges) || constraint1.nodes[0].id;
 
   const nodeMap2 = createNodeMap(constraint2.nodes);
   const adjMatrix2 = createAdjacencyMatrix(constraint2.edges);
-  const root2 = getRootNode(constraint2.edges);
+  const root2 = getRootNode(constraint2.edges) || constraint2.nodes[0].id;
 
   return compareTrees(
     { root1, adjMatrix1, nodeMap1 },
@@ -173,7 +174,7 @@ const compareConstraints = (constraint1, constraint2) => {
   );
 };
 
-const areConstraintsTheSame = (constraintsList1, constraintsList2) => {
+const areConstraintListsTheSame = (constraintsList1, constraintsList2) => {
   const constraints1 = [...constraintsList1];
   const constraints2 = [...constraintsList2];
 
@@ -235,11 +236,11 @@ export const compareInternalDatas = (internalData, solutionInternalData) => {
     return false;
 
   return (
-    areConstraintsTheSame(
+    areConstraintListsTheSame(
       internalData.hardConstraints,
       solutionInternalData.hardConstraints
     ) &&
-    areConstraintsTheSame(
+    areConstraintListsTheSame(
       internalData.softConstraints,
       solutionInternalData.softConstraints
     )

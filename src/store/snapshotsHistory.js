@@ -17,6 +17,9 @@ const snapshotsHistorySlice = createSlice({
     removeAllSnapshots(state, _) {
       state.snapshots = [];
     },
+    setSnapshots(state, action) {
+      state.snapshots = action.payload;
+    },
   },
 });
 

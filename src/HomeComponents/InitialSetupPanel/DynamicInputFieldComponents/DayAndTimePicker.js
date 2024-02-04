@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GeneralButton from "../../../GeneralComponents/GeneralButton";
 import { constraintsActions } from "../../../store/constraints";
 import { useState, useRef, useEffect } from "react";
@@ -8,8 +8,10 @@ import {
   generateTimeArray,
 } from "../../../Utilities/PeriodsFunctions";
 import styled from "styled-components";
+import { NotificationManager } from "react-notifications";
 
 const DayAndTimePicker = () => {
+  const { periods } = useSelector((state) => state.constraints);
   const timesOfDay = generateTimeArray();
   const daySelectRef = useRef();
   const dispatch = useDispatch();
@@ -26,7 +28,15 @@ const DayAndTimePicker = () => {
   };
 
   const addNewPeriod = () => {
-    dispatch(constraintsActions.addPeriod(`${selectedDay} ${selectedTime}`));
+    const newPeriod = `${selectedDay} ${selectedTime}`;
+    if (periods.some((period) => period.label === newPeriod)) {
+      NotificationManager.error(
+        "This period has already been selected.",
+        "Error"
+      );
+      return;
+    }
+    dispatch(constraintsActions.addPeriod(newPeriod));
   };
 
   const handleKeyPress = (e) => {

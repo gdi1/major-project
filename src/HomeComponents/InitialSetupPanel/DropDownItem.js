@@ -7,6 +7,7 @@ import { constraintsActions } from "../../store/constraints";
 import { RowContainer } from "../../GeneralComponents/Containers";
 import styled from "styled-components";
 import edit_icon from "./../../icons/edit_icon.png";
+import { NotificationManager } from "react-notifications";
 
 const DropDownItem = ({ id, option, type }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -20,6 +21,7 @@ const DropDownItem = ({ id, option, type }) => {
   const updateOption = () => {
     const updatedOption = optionInputRef.current.value;
     if (!updatedOption) {
+      NotificationManager.error("The option must not empty!");
       alert("Option must not be empty!");
       return;
     }
@@ -35,10 +37,14 @@ const DropDownItem = ({ id, option, type }) => {
       {!isEdit && (
         <React.Fragment>
           <Option>{option.label}</Option>
-          <OptionButton onClick={editAttributeOption}>
-            <Icon src={edit_icon} />
-          </OptionButton>
-          <OptionButton onClick={handleDeleteOption}>X</OptionButton>
+          {(type === "teams" || type === "locations") && (
+            <OptionButton onClick={editAttributeOption}>
+              <Icon src={edit_icon} />
+            </OptionButton>
+          )}
+          {type !== "weeks" && (
+            <OptionButton onClick={handleDeleteOption}>X</OptionButton>
+          )}
         </React.Fragment>
       )}
       {isEdit && (

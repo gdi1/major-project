@@ -11,8 +11,8 @@ import GeneralButton from "../../GeneralComponents/GeneralButton";
 import React, { useState } from "react";
 import Title from "../../GeneralComponents/Title";
 import DropDownItem from "./DropDownItem";
-
 import DynamicInputField from "./DynamicInputFieldComponents/DynamicInputField";
+import NoOfWeeksOptions from "./NoOfWeeksOptions";
 
 const types = ["teams", "locations", "periods", "weeks"];
 const titles = {
@@ -45,7 +45,7 @@ const SetupOptionsPanel = ({ optionsTypes = types }) => {
               {showTypes.includes(type) ? "Close" : "Show"}
             </GeneralButton>
           </OptionHeader>
-          {showTypes.includes(type) && (
+          {showTypes.includes(type) && type !== "weeks" && (
             <OptionsGridContainer>
               <DynamicInputField type={type} />
               {options[type].map((option, idx) => (
@@ -58,6 +58,7 @@ const SetupOptionsPanel = ({ optionsTypes = types }) => {
               ))}
             </OptionsGridContainer>
           )}
+          {showTypes.includes(type) && type === "weeks" && <NoOfWeeksOptions />}
         </OptionSection>
       ))}
     </SetupOptionsBody>

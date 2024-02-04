@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import { modal_content } from "../../../../style-utils/modalContent";
 import Map from "./Map";
 import "leaflet/dist/leaflet.css";
+import { CenteredModalLabel } from "../../../ConstraintPanel/ConstraintModals/ConstraintModalComponents";
 
 const AddLocationModal = ({ isModalOpen, setIsModalOpen }) => {
   const { content, overlay } = modal_content;
@@ -23,6 +24,10 @@ const AddLocationModal = ({ isModalOpen, setIsModalOpen }) => {
       style={{ content: { ...content, width: "80%", height: "80%" }, overlay }}
     >
       <Title style={{ alignSelf: "center" }}>Choose location</Title>
+      <CenteredModalLabel>
+        Use the search bar to look up locations or click on the map to place a
+        marker.
+      </CenteredModalLabel>
       <Map />
       <GeneralButton onClick={() => setIsModalOpen(false)}>Close</GeneralButton>
     </Modal>

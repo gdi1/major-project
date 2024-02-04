@@ -3,7 +3,13 @@ import { useMap } from "react-leaflet";
 import { useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 
-const SearchComponent = ({ onLocationChange }) => {
+const SearchComponent = ({
+  onLocationChange,
+  setAddedSuccessfully,
+  markerRef,
+  setShowChangeNameInput,
+  setIsClickMarker,
+}) => {
   const map = useMap();
 
   useEffect(() => {
@@ -24,6 +30,11 @@ const SearchComponent = ({ onLocationChange }) => {
       const { x, y, label } = event.location;
       console.log(x, y, label);
       onLocationChange({ coordinates: [y, x], label });
+      setAddedSuccessfully(false);
+      setShowChangeNameInput(false);
+      setIsClickMarker(false);
+
+      if (markerRef.current) markerRef.current.openPopup();
     });
 
     const searchControlContainer = searchControl.getContainer();

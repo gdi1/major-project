@@ -3,10 +3,11 @@ import DayAndTimePicker from "./DayAndTimePicker";
 import AddLocationModal from "./LocationSetup/AddLocationModal";
 import InputField from "../../../GeneralComponents/InputField";
 import { constraintsActions } from "../../../store/constraints";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RowContainer } from "../../../GeneralComponents/Containers";
 import GeneralButton from "../../../GeneralComponents/GeneralButton";
 import styled from "styled-components";
+import { NotificationManager } from "react-notifications";
 
 const updateFunctionMap = {
   teams: constraintsActions.addTeam,
@@ -16,6 +17,7 @@ const updateFunctionMap = {
 };
 
 const DynamicInputField = ({ type }) => {
+  const { teams } = useSelector((state) => state.constraints);
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
   const inputRef = useRef();
@@ -27,6 +29,16 @@ const DynamicInputField = ({ type }) => {
 
   const handleInputKeyDown = (e) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
+      if (
+        type === "teams" &&
+        teams.some((team) => team.label === inputValue.trim())
+      ) {
+        NotificationManager.error(
+          "There is already a team with this name!",
+          "Error"
+        );
+        return;
+      }
       dispatch(updateFunctionMap[type](inputValue));
       setInputValue("");
     }

@@ -37,7 +37,6 @@ const formatConstraintTree = ({ nodes, edges, name = "" }) => {
   const nodeMap = createNodeMap(nodes);
   const adjMatrix = createAdjacencyMatrix(edges);
   const root = getRootNode(edges);
-
   const result = [];
   let bfs = [root];
   while (bfs.length > 0) {
@@ -91,14 +90,15 @@ const formatConstraintNode = (node, adjMatrix) => {
       formattedNode[type] = data.types[type].map(({ value }) => value);
   else {
     formattedNode.children = [];
-    for (const child in adjMatrix[id]) formattedNode.children.push(child);
+    for (const child of adjMatrix[id]) {
+      formattedNode.children.push(child);
+    }
   }
-
   return formattedNode;
 };
 
 const compareNodes = (node1, node2) => {
-  console.log(node1, node2);
+  // console.log(node1, node2);
   const types1 = Object.keys(node1.data.types);
   const types2 = Object.keys(node2.data.types);
   types1.sort();

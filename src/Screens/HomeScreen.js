@@ -48,8 +48,8 @@ const HomeScreen = () => {
       );
       return;
     }
-    // const formattedConfiguration = encodeAllInternalData(internalData);
-    // console.log(formattedConfiguration);
+    const formattedConfiguration = encodeAllInternalData(internalData);
+    console.log("formatted", formattedConfiguration);
 
     dispatch(solutionActions.setInternalData(internalData));
     navigate("/show-solution");

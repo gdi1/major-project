@@ -15,6 +15,8 @@ import { NotificationManager } from "react-notifications";
 import styled from "styled-components";
 import InputField from "../../../../GeneralComponents/InputField";
 import OnClickMarker from "./OnClickMarker";
+import gaps from "../../../../style-utils/gaps";
+import text_styles from "../../../../style-utils/text_styles";
 
 const Map = () => {
   const { locations } = useSelector((state) => state.constraints);
@@ -93,7 +95,16 @@ const Map = () => {
           >
             <Popup>
               <PopUpDetails>
-                {!showChangeNameInput && <div>{searchedLocation.label}</div>}
+                {!showChangeNameInput && (
+                  <div
+                    style={{
+                      fontSize: `${text_styles.fonts.xsmall}`,
+                      textAlign: "center",
+                    }}
+                  >
+                    {searchedLocation.label}
+                  </div>
+                )}
                 {showChangeNameInput && (
                   <InputField
                     onChange={onChangeName}
@@ -102,7 +113,7 @@ const Map = () => {
                   />
                 )}
                 {!addedSuccessfully && (
-                  <RowContainer style={{ gap: "10px" }}>
+                  <RowContainer style={{ gap: `${gaps.xsmall}` }}>
                     <GeneralButton
                       onClick={() => {
                         if (searchedLocation.label.trim() === "") {
@@ -114,13 +125,13 @@ const Map = () => {
                         }
                         setShowChangeNameInput((prev) => !prev);
                       }}
-                      style={{ fontSize: "small" }}
+                      style={{ fontSize: `${text_styles.fonts.xsmall}` }}
                     >
                       {showChangeNameInput ? "Save" : "Change name"}
                     </GeneralButton>
                     <GeneralButton
                       onClick={addNewLocation}
-                      style={{ fontSize: "small" }}
+                      style={{ fontSize: `${text_styles.fonts.xsmall}` }}
                     >
                       Add
                     </GeneralButton>
@@ -151,6 +162,7 @@ const Map = () => {
 
 const PopUpDetails = styled(ColumnContainer)`
   height: auto;
+  gap: ${gaps.xsmall};
 `;
 
 export default Map;

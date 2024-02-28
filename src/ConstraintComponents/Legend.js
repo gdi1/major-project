@@ -1,15 +1,18 @@
 import styled from "styled-components";
 import { RowContainer } from "../GeneralComponents/Containers";
+import gaps from "../style-utils/gaps";
+import paddings from "../style-utils/paddings";
+import text_styles from "../style-utils/text_styles";
 
 const Legend = () => {
   return (
     <div>
       <Container>
-        <div>Source handle: </div>
+        <Text>Source handle: </Text>
         <OrangeDot />
       </Container>
       <Container>
-        <div>Target handle: </div> <GreenDot />
+        <Text>Target handle: </Text> <GreenDot />
       </Container>
     </div>
   );
@@ -17,9 +20,13 @@ const Legend = () => {
 
 export default Legend;
 
+const Text = styled.div`
+  font-size: ${text_styles.fonts.xsmall};
+  font-family: ${text_styles.styles.fontFamily};
+`;
 const Dot = styled.div`
-  height: 20px;
-  width: 20px;
+  height: 1vw;
+  width: 1vw;
   border-radius: 50%;
 `;
 
@@ -35,6 +42,6 @@ const Container = styled(RowContainer)`
   width: auto;
   height: auto;
   justify-content: start;
-  gap: 10px;
-  padding: 10px;
+  gap: ${gaps.xsmall};
+  padding: ${paddings.xxsmall};
 `;

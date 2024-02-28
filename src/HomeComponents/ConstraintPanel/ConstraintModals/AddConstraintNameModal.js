@@ -11,7 +11,7 @@ import {
   ModalTitle,
   ModalButtonGroup,
   NameInputField,
-} from "./ConstraintModalComponents";
+} from "../../../GeneralComponents/ModalComponents";
 import { constraintFlowActions } from "../../../store/constraintFlow";
 import { NotificationManager } from "react-notifications";
 

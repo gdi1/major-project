@@ -1,9 +1,11 @@
 import text_styles from "../style-utils/text_styles";
 import styled from "styled-components";
+import colors from "../style-utils/colors";
 
 const InputField = styled.input`
-  color: #${text_styles.colors.black};
-  font-size: ${text_styles.resizbale_font.small_minus};
+  color: #${colors.black};
+  font-size: ${text_styles.fonts.xsmall};
+  font-family: ${text_styles.styles.fontFamily};
   font-weight: bold;
   height: 100%;
 `;

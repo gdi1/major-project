@@ -8,6 +8,11 @@ import { RowContainer } from "../../GeneralComponents/Containers";
 import styled from "styled-components";
 import edit_icon from "./../../icons/edit_icon.png";
 import { NotificationManager } from "react-notifications";
+import gaps from "../../style-utils/gaps";
+import check_icon from "../../icons/check_icon.png";
+import delete_icon from "../../icons/delete_icon.png";
+import { SmallIcon } from "../../GeneralComponents/Icons";
+import text_styles from "../../style-utils/text_styles";
 
 const DropDownItem = ({ id, option, type }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -43,7 +48,9 @@ const DropDownItem = ({ id, option, type }) => {
             </OptionButton>
           )}
           {type !== "weeks" && (
-            <OptionButton onClick={handleDeleteOption}>X</OptionButton>
+            <OptionButton onClick={handleDeleteOption}>
+              <SmallIcon src={delete_icon} />
+            </OptionButton>
           )}
         </React.Fragment>
       )}
@@ -54,7 +61,9 @@ const DropDownItem = ({ id, option, type }) => {
             defaultValue={option.label}
             ref={optionInputRef}
           />
-          <OptionButton onClick={updateOption}>✅</OptionButton>
+          <OptionButton onClick={updateOption}>
+            <SmallIcon src={check_icon} />
+          </OptionButton>
         </React.Fragment>
       )}
     </OptionBundle>
@@ -62,23 +71,21 @@ const DropDownItem = ({ id, option, type }) => {
 };
 
 const Icon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 1vw;
+  height: 1vw;
 `;
 
 const OptionBundle = styled(RowContainer)`
-  gap: 10px;
-  justify-content: end;
+  gap: ${gaps.xsmall};
   box-sizing: border-box;
 `;
+//justify-content: end;
 
 const OptionButton = styled(GeneralButton)``;
 
 const Option = styled(DropdownItem)`
-  cursor: ${(props) =>
-    props.type === "teams" || props.type === "locations"
-      ? "pointer"
-      : "default"};
+  font-size: ${text_styles.fonts.xsmall};
+  font-family: ${text_styles.styles.fontFamily};
 `;
 
 export default DropDownItem;

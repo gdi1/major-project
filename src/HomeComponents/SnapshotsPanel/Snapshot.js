@@ -13,6 +13,12 @@ import { exportJSON } from "../../Utilities/ExportingFunction";
 import { NotificationManager } from "react-notifications";
 import text_styles from "../../style-utils/text_styles";
 import { TooltipText } from "../../GeneralComponents/TooltipText";
+import {
+  LargeIcon,
+  SmallIcon,
+  IconContainer,
+} from "../../GeneralComponents/Icons";
+import gaps from "../../style-utils/gaps";
 
 const Snapshot = ({ snapshot, setSnapshotToLoadBack, setSnapshotToDelete }) => {
   const { name, date } = snapshot;
@@ -46,15 +52,15 @@ const Snapshot = ({ snapshot, setSnapshotToLoadBack, setSnapshotToDelete }) => {
       </SnapshotDetails>
       <SnapshotActionsGroup>
         <GeneralButton onClick={() => setSnapshotToLoadBack(name)}>
-          <Icon src={load_back_icon} />
+          <ActionIcon src={load_back_icon} />
           <TooltipText>Load snapshot back</TooltipText>
         </GeneralButton>
         <GeneralButton onClick={exportSnapshot}>
-          <Icon src={export_icon} />
+          <ActionIcon src={export_icon} />
           <TooltipText>Export</TooltipText>
         </GeneralButton>
         <GeneralButton onClick={() => setSnapshotToDelete(name)}>
-          <Icon src={delete_icon} />
+          <ActionIcon src={delete_icon} />
           <TooltipText>Delete</TooltipText>
         </GeneralButton>
       </SnapshotActionsGroup>
@@ -65,20 +71,20 @@ const Snapshot = ({ snapshot, setSnapshotToLoadBack, setSnapshotToDelete }) => {
 const Name = styled(Label)`
   width: 60%;
 `;
-
-const SolutionStatusIcon = styled.img`
-  width: 40px;
-  height: 40px;
-`;
+const SolutionStatusIcon = styled(LargeIcon)``;
+const ActionIcon = styled(SmallIcon)``;
 
 const DateAndSolutionStatusContainer = styled(RowContainer)`
   justify-content: start;
   width: auto;
   height: auto;
-  gap: 10px;
+  gap: ${gaps.xsmall};
 `;
 
-const Date = styled.div``;
+const Date = styled.div`
+  font-size: ${text_styles.fonts.xsmall};
+  font-family: ${text_styles.styles.fontFamily};
+`;
 
 const SnapshotBody = styled(RowContainer)`
   height: auto;
@@ -93,36 +99,7 @@ const SnapshotDetails = styled(RowContainer)`
 const SnapshotActionsGroup = styled(RowContainer)`
   width: auto;
   height: auto;
-  gap: 10px;
-`;
-
-const Icon = styled.img`
-  width: 20px;
-  height: 20px;
-`;
-
-const IconContainer = styled.div`
-  position: relative;
-  display: inline-block;
-
-  font-size: ${text_styles.resizbale_font.small_med};
-  font-weight: bold;
-
-  &:hover span {
-    visibility: visible;
-    opacity: 1;
-  }
-
-  span::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent black transparent;
-  }
+  gap: ${gaps.small};
 `;
 
 export default Snapshot;

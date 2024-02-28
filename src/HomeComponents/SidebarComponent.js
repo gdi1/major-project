@@ -12,6 +12,10 @@ import import_icon from "./../icons/import_icon.png";
 import export_icon from "./../icons/export_icon.png";
 import styled from "styled-components";
 import React from "react";
+import { SmallIcon, LargeIcon } from "../GeneralComponents/Icons";
+import { small_icon } from "../style-utils/icons";
+import colors from "../style-utils/colors";
+import text_styles from "../style-utils/text_styles";
 
 const constraint_types = ["hard", "soft"];
 const options_types = ["teams", "locations", "periods", "weeks"];
@@ -28,9 +32,13 @@ const SidebarComponent = ({
   const [collapsed, setCollapsed] = useState(true);
 
   const selectedStyle = (type) => ({
-    backgroundColor: optionsTypes.includes(type) ? "blue" : "",
+    backgroundColor: optionsTypes.includes(type) ? `${colors.mustard}` : "",
   });
 
+  const style_sidebar = {
+    fontFamily: `${text_styles.styles.fontFamily}`,
+  };
+  //backgroundColor: `${colors.mustard}`,
   const addNewType = (type) => {
     if (type === "all-constraints") {
       setShow("constraints");
@@ -65,31 +73,40 @@ const SidebarComponent = ({
   };
 
   return (
-    <Sidebar collapsed={collapsed} style={{ height: "100%" }}>
+    <Sidebar
+      collapsed={collapsed}
+      style={{
+        height: "100%",
+        width: "3vw",
+      }}
+    >
       <Menu>
-        <MenuItem onClick={() => setCollapsed((prev) => !prev)}>
+        <MenuItem
+          onClick={() => setCollapsed((prev) => !prev)}
+          style={{ minHeight: "3vw", ...style_sidebar }}
+        >
           {collapsed ? (
-            <FiArrowRightCircle style={{ height: "20px", width: "20px" }} />
+            <FiArrowRightCircle style={small_icon} />
           ) : (
-            <FiArrowLeftCircle style={{ height: "20px", width: "20px" }} />
+            <FiArrowLeftCircle style={small_icon} />
           )}
         </MenuItem>
-        <MenuItem>
+        <MenuItem style={{ minHeight: "3vw", ...style_sidebar }}>
           <MenuItemLabel onClick={() => setShowSaveWorkingCopyModal(true)}>
-            <Icon src={save_icon} />
+            <SmallIcon src={save_icon} />
             {collapsed ? "" : "Save working copy"}
           </MenuItemLabel>
         </MenuItem>
-        <MenuItem>
+        <MenuItem style={{ minHeight: "3vw", ...style_sidebar }}>
           <MenuItemLabel onClick={() => setShowGeneralImportModal(true)}>
-            <Icon src={import_icon} />
-            {collapsed ? "" : "General Import"}
+            <SmallIcon src={import_icon} />
+            {collapsed ? "" : "Import"}
           </MenuItemLabel>
         </MenuItem>
-        <MenuItem>
+        <MenuItem style={{ minHeight: "3vw", ...style_sidebar }}>
           <MenuItemLabel onClick={() => setShowExportEverythingModal(true)}>
-            <Icon src={export_icon} />
-            {collapsed ? "" : "Export everything"}
+            <SmallIcon src={export_icon} />
+            {collapsed ? "" : "Export project"}
           </MenuItemLabel>
         </MenuItem>
         <MenuItem
@@ -97,72 +114,86 @@ const SidebarComponent = ({
             setShow("home");
             setOptionsTypes([]);
           }}
+          style={{ minHeight: "3vw", ...style_sidebar }}
         >
           <MenuItemLabel>
-            <Icon src={home_icon} />
+            <SmallIcon src={home_icon} />
             {collapsed ? "" : "Home Page"}
           </MenuItemLabel>
         </MenuItem>
         {!collapsed && (
           <React.Fragment>
             <SubMenu
-              label={"General Settings"}
-              icon={<Icon src={settings_icon} />}
+              label={"Configurations"}
+              icon={<SmallIcon src={settings_icon} />}
+              style={style_sidebar}
             >
-              <SubMenu label="Options" icon={<Icon src={options_icon} />}>
+              <SubMenu
+                label="Options"
+                style={style_sidebar}
+                icon={<SmallIcon src={options_icon} />}
+              >
                 <MenuItem onClick={() => addNewType("all-options")}>
-                  All
+                  <ItemName>All</ItemName>
                 </MenuItem>
                 <MenuItem
                   onClick={() => addNewType("teams")}
                   style={selectedStyle("teams")}
                 >
-                  Teams
+                  <ItemName>Teams</ItemName>
                 </MenuItem>
                 <MenuItem
                   onClick={() => addNewType("locations")}
                   style={selectedStyle("locations")}
                 >
-                  Locations
+                  <ItemName>Locations</ItemName>
                 </MenuItem>
                 <MenuItem
                   onClick={() => addNewType("periods")}
                   style={selectedStyle("periods")}
                 >
-                  Periods
+                  <ItemName>Periods</ItemName>
                 </MenuItem>
                 <MenuItem
                   onClick={() => addNewType("weeks")}
                   style={selectedStyle("weeks")}
                 >
-                  Weeks
+                  <ItemName>Weeks</ItemName>
                 </MenuItem>
               </SubMenu>
-              <SubMenu label="Constraints" icon={<Icon src={history_icon} />}>
+              <SubMenu
+                label="Constraints"
+                style={style_sidebar}
+                icon={<SmallIcon src={history_icon} />}
+              >
                 <MenuItem onClick={() => addNewType("all-constraints")}>
-                  All
+                  <ItemName>All</ItemName>
                 </MenuItem>
                 <MenuItem
                   onClick={() => addNewType("hard")}
                   style={selectedStyle("hard")}
                 >
-                  Hard
+                  <ItemName>Hard</ItemName>
                 </MenuItem>
                 <MenuItem
                   onClick={() => addNewType("soft")}
                   style={selectedStyle("soft")}
                 >
-                  Soft
+                  <ItemName>Soft</ItemName>
                 </MenuItem>
               </SubMenu>
             </SubMenu>
             <SubMenu
-              label={"Snapshots Settings"}
-              icon={<Icon src={snapshot_icon} />}
+              label="Snapshots"
+              icon={<SmallIcon src={snapshot_icon} />}
+              style={style_sidebar}
             >
-              <MenuItem onClick={() => setShow("snapshots")}>
+              <MenuItem
+                onClick={() => setShow("snapshots")}
+                style={style_sidebar}
+              >
                 <MenuItemLabel>
-                  <Icon src={history_icon} />
+                  <SmallIcon src={history_icon} />
                   History
                 </MenuItemLabel>
               </MenuItem>
@@ -174,14 +205,15 @@ const SidebarComponent = ({
   );
 };
 
-const Icon = styled.img`
-  width: 20px;
-  height: 20px;
-`;
-
 const MenuItemLabel = styled.div`
   display: flex;
   gap: 10px;
+  font-family: ${text_styles.styles.fontFamily};
+  font-size: ${text_styles.fonts.xsmall};
+`;
+
+const ItemName = styled.div`
+  font-family: ${text_styles.styles.fontFamily};
 `;
 
 export default SidebarComponent;

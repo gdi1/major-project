@@ -18,8 +18,11 @@ import ExportEverythingModal from "../HomeComponents/Modals/ExportEverythingModa
 import { NotificationManager } from "react-notifications";
 import { compareInternalDatas } from "../Utilities/EncodingFunctions";
 import { TooltipText } from "../GeneralComponents/TooltipText";
-import text_styles from "../style-utils/text_styles";
 import GeneralImportModal from "../HomeComponents/Modals/GeneralImportModal";
+import gaps from "../style-utils/gaps";
+import paddings from "../style-utils/paddings";
+import { LargeIcon, IconContainer } from "../GeneralComponents/Icons";
+import colors from "../style-utils/colors";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -48,10 +51,25 @@ const HomeScreen = () => {
       );
       return;
     }
-    const formattedConfiguration = encodeAllInternalData(internalData);
+    const {
+      encodedAllInternalData: formattedConfiguration,
+      teamsMap,
+      locationsMap,
+      weeksMap,
+      periodsMap,
+    } = encodeAllInternalData(internalData);
     console.log("formatted", formattedConfiguration);
-
-    dispatch(solutionActions.setInternalData(internalData));
+    console.log(teamsMap, locationsMap, periodsMap, weeksMap);
+    console.log(internalData);
+    dispatch(
+      solutionActions.setInternalData({
+        internalData,
+        teamsMap,
+        locationsMap,
+        weeksMap,
+        periodsMap,
+      })
+    );
     navigate("/show-solution");
   };
 
@@ -66,7 +84,7 @@ const HomeScreen = () => {
 
   return (
     <React.Fragment>
-      <RowContainer style={{ height: "100vh", alignItems: "start" }}>
+      <HomeScreenPage>
         <SaveWorkingCopyModal
           setIsModalOpen={setShowSaveWorkingCopyModal}
           isModalOpen={showSaveWorkingCopyModal}
@@ -96,13 +114,13 @@ const HomeScreen = () => {
                 Generate new solution
               </GeneralButton>
               {isSolution && (
-                <RowContainer style={{ width: "auto", gap: "5px" }}>
+                <RowContainer style={{ width: "auto", gap: `${gaps.small}` }}>
                   <GeneralButton onClick={() => navigate("/show-solution")}>
                     View previous solution
                   </GeneralButton>
                   {isOutdated && (
                     <IconContainer>
-                      <Icon src={outdated_icon} />
+                      <LargeIcon src={outdated_icon} />
                       <TooltipText>Outdated solution</TooltipText>
                     </IconContainer>
                   )}
@@ -122,83 +140,42 @@ const HomeScreen = () => {
           )}
           {(show === "home" || show === "snapshots") && <SnapshotsPanel />}
         </HomePage>
-      </RowContainer>
+      </HomeScreenPage>
     </React.Fragment>
   );
 };
 
-const Icon = styled.img`
-  width: 40px;
-  height: 40px;
+const HomeScreenPage = styled(RowContainer)`
+  height: 100vh;
+  align-items: start;
+  background-color: ${colors.beige};
 `;
 
 const ButtonGroup = styled(RowContainer)`
-  margin-bottom: 20px;
-  gap: 40px;
+  margin-bottom: ${margins.med};
+  gap: ${gaps.med};
 `;
 
 const Header = styled(ColumnContainer)`
-  height: 150px;
-  padding: 20px;
+  height: 10vw;
+  padding: ${paddings.small};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: white;
+  background-color: ${colors.beige};
 `;
 
 const HomePage = styled(ColumnContainer)`
   overflow-y: scroll;
   overflow-x: hidden;
   justify-content: start;
-  gap: 20px;
+  gap: ${gaps.med};
 `;
 
 const HomePageTitle = styled(Title)`
   margin-bottom: ${margins.lrg};
   width: auto;
 `;
-const HomePageBodySection = styled(RowContainer)`
-  align-items: start;
-  width: 100%;
-`;
-
-const IconContainer = styled.div`
-  position: relative;
-  display: inline-block;
-
-  font-size: ${text_styles.resizbale_font.small_med};
-  font-weight: bold;
-
-  &:hover span {
-    visibility: visible;
-    opacity: 1;
-  }
-
-  span::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent black transparent;
-  }
-`;
 
 export default HomeScreen;
-
-// align-items: start;
-//   justify-content: start;
-// overflow-y: scroll;
-
-// {/* <HomePageBodySection> */}
-//           {/* <SetupPanel /> */}
-//           {/* <div style={{ paddingTop: "150px" }}></div> */}
-
-// {/* </HomePageBodySection> */}
-//           {/* <HomePageBodySection>
-//             <SnapshotsPanel />
-//             <WorkingCopy />
-//           </HomePageBodySection> */}

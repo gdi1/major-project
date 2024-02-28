@@ -20,6 +20,8 @@ import LocationMarker from "./MapComponents/LocationMarker";
 import MapMovingMarker from "./MapComponents/MapMovingMarker";
 import FlyToOnMap from "./MapComponents/FlyToOnMap";
 import ButtonControl from "./MapComponents/ButtonControl";
+import gaps from "../../style-utils/gaps";
+import paddings from "../../style-utils/paddings";
 
 const controlButtonTypes = ["increase", "decrease", "start", "pause", "stop"];
 
@@ -113,22 +115,22 @@ const JourneyView = () => {
 };
 
 const JourneyBody = styled(RowContainer)`
-  gap: 10px;
   justify-content: space-between;
+  height: 82vh;
 `;
 
 const JourneyMapBody = styled(RowContainer)`
-  height: 85vh;
+  height: 80vh;
   width: 70%;
 `;
 
 const JourneyDetailedItinerary = styled(ColumnContainer)`
   width: 25%;
   justify-content: start;
-  height: 83vh;
-  gap: 5px;
+  height: 80vh;
+  gap: ${gaps.xxsmall};
   border: ${borders.small};
-  padding: 10px;
+  padding: ${paddings.xsmall};
 `;
 
 export default JourneyView;

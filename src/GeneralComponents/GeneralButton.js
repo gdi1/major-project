@@ -1,11 +1,15 @@
 import text_styles from "../style-utils/text_styles";
 import styled from "styled-components";
+import colors from "../style-utils/colors";
 
 const GeneralButton = styled.button`
-  color: #${text_styles.colors.black};
-  font-size: ${text_styles.resizbale_font.small_med};
+  color: #${colors.black};
+  font-size: ${text_styles.fonts.small_med};
   font-weight: bold;
   cursor: pointer;
+  background-color: ${colors.olive};
+  font-family: ${text_styles.styles.fontFamily};
+  border-radius: 0.3vw;
 
   position: relative;
   display: inline-block;

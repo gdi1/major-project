@@ -6,10 +6,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Block from "./Block";
 import InputField from "../GeneralComponents/InputField";
-import colors from "../style-utils/colors";
 import delete_icon from "./../icons/delete_icon.png";
 import GeneralButton from "../GeneralComponents/GeneralButton";
 import { TooltipText } from "../GeneralComponents/TooltipText";
+import { SmallIcon } from "../GeneralComponents/Icons";
+import text_styles from "../style-utils/text_styles";
+import colors from "../style-utils/colors";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -68,9 +70,9 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
     if (multiselect_types.includes(type)) {
       return (
         <React.Fragment>
-          {blockNames[type]}
+          <Name>{blockNames[type]}</Name>
           <div
-            style={{ width: "60%" }}
+            style={{ width: "8vw" }}
             // onMouseEnter={() => {
             //   setShowRemoveOverlayMessage(false);
             // }}
@@ -95,7 +97,7 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
     } else if (type === "at-least" || type === "at-most") {
       return (
         <React.Fragment>
-          {blockNames[type][0]}
+          <Name>{blockNames[type][0]}</Name>
           <div
             // onMouseEnter={() => setShowRemoveOverlayMessage(false)}
             // onMouseLeave={() => setShowRemoveOverlayMessage(true)}
@@ -110,11 +112,11 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
               placeholder="Only digits allowed"
             />
           </div>
-          {blockNames[type][1]}
+          <Name>{blockNames[type][1]}</Name>
         </React.Fragment>
       );
     } else {
-      return <React.Fragment>{blockNames[type]}</React.Fragment>;
+      return <Name>{blockNames[type]}</Name>;
     }
   };
 
@@ -127,25 +129,26 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
     >
       {getContentBlock()}
       <GeneralButton onClick={removeBlock}>
-        <Icon src={delete_icon} />
+        <SmallIcon src={delete_icon} />
         <TooltipText>Delete '{type}' block</TooltipText>
       </GeneralButton>
     </PreviewBlockComponent>
   );
 };
 
-const PreviewBlockComponent = styled(Block)`
-  width: 300px;
+const Name = styled.div`
+  font-size: ${text_styles.fonts.xsmall};
+  font-family: ${text_styles.styles.fontFamily};
 `;
+
+const PreviewBlockComponent = styled(Block)`
+  width: 20vw;
+`;
+//width: 300px;
 
 const NoOfTimesInputField = styled(InputField)`
   width: 100%;
   box-sizing: border-box;
-`;
-
-const Icon = styled.img`
-  width: 20px;
-  height: 20px;
 `;
 
 export default FlowBlock;

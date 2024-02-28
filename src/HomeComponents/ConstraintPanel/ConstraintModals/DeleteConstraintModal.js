@@ -4,7 +4,7 @@ import {
   ModalBody,
   ModalButtonGroup,
   CenteredModalLabel,
-} from "./ConstraintModalComponents";
+} from "../../../GeneralComponents/ModalComponents";
 import { modal_content } from "../../../style-utils/modalContent";
 import Modal from "react-modal";
 import { useRef } from "react";
@@ -46,7 +46,7 @@ const DeleteConstraintModal = ({
         </CenteredModalLabel>
         <ModalButtonGroup>
           <ModalButton onClick={closeModal}>Close</ModalButton>
-          <ModalButton onClick={deleteConstraint}>Continue</ModalButton>
+          <ModalButton onClick={deleteConstraint}>Delete</ModalButton>
         </ModalButtonGroup>
       </ModalBody>
     </Modal>

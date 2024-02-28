@@ -1,41 +1,43 @@
-import { Label } from "../../../GeneralComponents/Labels";
-import Title from "../../../GeneralComponents/Title";
-import {
-  RowContainer,
-  ColumnContainer,
-} from "../../../GeneralComponents/Containers";
-import borders from "../../../style-utils/borders";
-import GeneralButton from "../../../GeneralComponents/GeneralButton";
-import styled from "styled-components";
-import InputField from "../../../GeneralComponents/InputField";
+// import { Label } from "../../../GeneralComponents/Labels";
+// import Title from "../../../GeneralComponents/Title";
+// import {
+//   RowContainer,
+//   ColumnContainer,
+// } from "../../../GeneralComponents/Containers";
+// import borders from "../../../style-utils/borders";
+// import GeneralButton from "../../../GeneralComponents/GeneralButton";
+// import styled from "styled-components";
+// import InputField from "../../../GeneralComponents/InputField";
+// import text_styles from "../../../style-utils/text_styles";
+// import gaps from "../../../style-utils/gaps";
 
-export const ModalLabel = styled(Label)`
-  align-self: start;
-`;
+// export const ModalLabel = styled(Label)`
+//   align-self: start;
+// `;
 
-export const CenteredModalLabel = styled(Label)`
-  align-self: start;
-  text-align: center;
-`;
+// export const CenteredModalLabel = styled(Label)`
+//   align-self: start;
+//   text-align: center;
+// `;
 
-export const ModalTitle = styled(Title)`
-  border-bottom: ${borders.small};
-`;
+// export const ModalTitle = styled(Title)`
+//   border-bottom: ${borders.small};
+// `;
 
-export const NameInputField = styled(InputField)`
-  width: 100%;
-  height: 40px;
-  font-size: 20px;
-`;
+// export const NameInputField = styled(InputField)`
+//   width: 100%;
+//   height: 2.5vw;
+//   font-size: ${text_styles.small};
+// `;
 
-export const ModalButtonGroup = styled(RowContainer)`
-  justify-content: space-evenly;
-`;
+// export const ModalButtonGroup = styled(RowContainer)`
+//   justify-content: space-evenly;
+// `;
 
-export const ModalButton = styled(GeneralButton)`
-  width: 45%;
-`;
+// export const ModalButton = styled(GeneralButton)`
+//   width: 45%;
+// `;
 
-export const ModalBody = styled(ColumnContainer)`
-  gap: 10px;
-`;
+// export const ModalBody = styled(ColumnContainer)`
+//   gap: ${gaps.small};
+// `;

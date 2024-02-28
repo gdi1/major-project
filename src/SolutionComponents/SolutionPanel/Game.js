@@ -6,6 +6,9 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import borders from "../../style-utils/borders";
 import { TextWithEllipsis } from "../../GeneralComponents/TextWithEllipsis";
+import gaps from "../../style-utils/gaps";
+import colors from "../../style-utils/colors";
+import text_styles from "../../style-utils/text_styles";
 
 const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
   // console.log(game);
@@ -23,7 +26,14 @@ const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
     <GameDescriptionBody focused={focused} onClick={goToAddNewConstraint}>
       <TeamsDescription focused={focused}>
         <LeftTeam>{teamA.label}</LeftTeam>
-        <div>vs</div>
+        <div
+          style={{
+            fontFamily: `${text_styles.styles.fontFamily}`,
+            fontSize: `${text_styles.fonts.xsmall}`,
+          }}
+        >
+          vs
+        </div>
         <RightTeam>{teamB.label}</RightTeam>
       </TeamsDescription>
       <Location>Location: {location.label}</Location>
@@ -33,16 +43,16 @@ const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
 
 const GameDescriptionBody = styled(ColumnContainer)`
   border: ${borders.small};
+  border-radius: 0.2vw;
   cursor: pointer;
-  box-sizing: border-box;
   height: 8vh;
-  background-color: ${(props) => (props.focused ? "blue" : "white")};
+  background-color: ${(props) => (props.focused ? `${colors.brick}` : "white")};
 `;
 
 const TeamsDescription = styled(RowContainer)`
-  gap: 10px;
+  gap: ${gaps.xsmall};
   height: auto;
-  background-color: ${(props) => (props.focused ? "blue" : "white")};
+  background-color: ${(props) => (props.focused ? `${colors.brick}` : "white")};
 `;
 
 const Location = styled(TextWithEllipsis)`

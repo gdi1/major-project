@@ -10,6 +10,10 @@ import "react-notifications-component/dist/theme.css";
 import "reactflow/dist/style.css";
 import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
+import styled from "styled-components";
+import colors from "./style-utils/colors";
+import text_styles from "./style-utils/text_styles";
+import paddings from "./style-utils/paddings";
 
 const App = () => {
   const navigate = useNavigate();
@@ -17,7 +21,7 @@ const App = () => {
   //   if (localStorage.getItem("firstLoadDone") !== null) navigate("/");
   // }, []);
   return (
-    <React.Fragment>
+    <FullView>
       <NotificationContainer />
       <ReactNotifications />
       <Routes>
@@ -29,8 +33,16 @@ const App = () => {
         <Route path="/show-solution" element={<SolutionScreen />} />
         <Route path="/*" element={<Navigate replace to="/" />} />
       </Routes>
-    </React.Fragment>
+    </FullView>
   );
 };
+
+const FullView = styled.div`
+  width: 100vw;
+  height: 100vh;
+  padding: ${paddings.xxsmall};
+  box-sizing: border-box;
+  background-color: ${colors.beige};
+`;
 
 export default App;

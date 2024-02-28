@@ -9,6 +9,7 @@ import {
 } from "../../../Utilities/PeriodsFunctions";
 import styled from "styled-components";
 import { NotificationManager } from "react-notifications";
+import text_styles from "../../../style-utils/text_styles";
 
 const DayAndTimePicker = () => {
   const { periods } = useSelector((state) => state.constraints);
@@ -80,6 +81,8 @@ const DayAndTimePicker = () => {
 const DateSelect = styled.select`
   height: 100%;
   width: 50%;
+  font-size: ${text_styles.fonts.xxsmall};
+  font-family: ${text_styles.styles.fontFamily};
 `;
 
 const DateSelectionBody = styled(RowContainer)`

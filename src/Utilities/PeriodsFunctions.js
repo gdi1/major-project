@@ -19,8 +19,8 @@ const mapDayToIndex = {
   Sun: "7",
 };
 
-const sortPeriodsPair = ({ label: p1 }, { label: p2 }) => {
-  console.log(p1, p2);
+export const sortPeriodsPair = ({ label: p1 }, { label: p2 }) => {
+  // console.log(p1, p2);
   p1 = mapDayToIndex[p1.substring(0, 3)] + p1.substring(4, 6) + p1.substring(7);
   p2 = mapDayToIndex[p2.substring(0, 3)] + p2.substring(4, 6) + p2.substring(7);
   return p1 - p2;

@@ -1,20 +1,51 @@
+import { sortPeriodsPair } from "./PeriodsFunctions";
+
 const operators = ["and", "or"];
 
-export const encodeAllInternalData = (internalData) => {
-  const { hardConstraints, softConstraints, teams, weeks, periods, locations } =
-    internalData;
+const sortByLabels = (option1, option2) => {
+  return option1.label < option2.label ? -1 : 1;
+};
 
-  const result = {
-    teams: teams.map(({ value }) => value),
-    locations: locations.map(({ value }) => value),
-    weeks: weeks.map(({ value }) => value),
-    periods: periods.map(({ value }) => value),
+const sortByCoordinates = (loc1, loc2) => {
+  if (loc1.coordinates[0] !== loc2.coordinates[0])
+    return loc1.coordinates[0] < loc2.coordinates[0] ? -1 : 1;
+  return loc1.coordinates[1] < loc2.coordinates[1] ? -1 : 1;
+};
+
+export const encodeAllInternalData = (internalData) => {
+  const { hardConstraints, softConstraints } = internalData;
+
+  const teams = [...internalData.teams];
+  const locations = [...internalData.locations];
+  const periods = [...internalData.periods];
+  const weeks = [...internalData.weeks];
+
+  const teamsMap = {};
+  const locationsMap = {};
+  const periodsMap = {};
+  const weeksMap = {};
+
+  teams.sort(sortByLabels);
+  locations.sort(sortByCoordinates);
+  weeks.sort(sortByLabels);
+  periods.sort(sortPeriodsPair);
+
+  teams.forEach((team, idx) => (teamsMap[idx + 1] = team));
+  locations.forEach((location, idx) => (locationsMap[idx + 1] = location));
+  weeks.forEach((week, idx) => (weeksMap[idx + 1] = week));
+  periods.forEach((period, idx) => (periodsMap[idx + 1] = period));
+
+  const encodedAllInternalData = {
+    teams: teams.map((_, idx) => idx + 1),
+    locations: locations.map((_, idx) => idx + 1),
+    weeks: weeks.map((_, idx) => idx + 1),
+    periods: periods.map((_, idx) => idx + 1),
     constraints: [],
   };
 
   for (const { nodes, edges, name } of hardConstraints) {
     const formattedConstraint = formatConstraintTree({ nodes, edges, name });
-    result.constraints.push({
+    encodedAllInternalData.constraints.push({
       name,
       type: "hard",
       constraint: formattedConstraint,
@@ -23,14 +54,20 @@ export const encodeAllInternalData = (internalData) => {
 
   for (const { nodes, edges, name } of softConstraints) {
     const formattedConstraint = formatConstraintTree({ nodes, edges, name });
-    result.constraints.push({
+    encodedAllInternalData.constraints.push({
       name,
       type: "soft",
       constraint: formattedConstraint,
     });
   }
 
-  return result;
+  return {
+    encodedAllInternalData,
+    teamsMap,
+    locationsMap,
+    weeksMap,
+    periodsMap,
+  };
 };
 
 const formatConstraintTree = ({ nodes, edges, name = "" }) => {

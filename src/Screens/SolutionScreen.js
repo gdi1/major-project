@@ -7,6 +7,7 @@ import GeneralButton from "../GeneralComponents/GeneralButton";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import borders from "../style-utils/borders";
+import gaps from "../style-utils/gaps";
 
 const SolutionScreen = () => {
   const navigate = useNavigate();
@@ -31,15 +32,16 @@ const SolutionScreen = () => {
 
 const SolutionPageHeader = styled(RowContainer)`
   justify-content: space-between;
+  height: 10vh;
 `;
 const SolutionPageBody = styled(RowContainer)`
-  box-sizing: border-box;
   border: ${borders.small};
   align-items: start;
   justify-content: space-between;
+  height: 88vh;
 `;
 const ButtonGroup = styled(RowContainer)`
   width: auto;
-  gap: 5px;
+  gap: ${gaps.xsmall};
 `;
 export default SolutionScreen;

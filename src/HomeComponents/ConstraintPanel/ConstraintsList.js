@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import delete_icon from "./../../icons/delete_icon.png";
 import { constraintsActions } from "../../store/constraints";
+import text_styles from "../../style-utils/text_styles";
 
 const ConstraintsList = ({
   type,
@@ -27,7 +28,11 @@ const ConstraintsList = ({
         width: "100%",
       }}
     >
-      {constraints.length === 0 && <RowContainer>No constraints.</RowContainer>}
+      {constraints.length === 0 && (
+        <RowContainer>
+          <NoConstraintsMessage>No constraints.</NoConstraintsMessage>
+        </RowContainer>
+      )}
       {constraints.length > 0 &&
         constraints.map((constraint, index) => {
           return (
@@ -67,9 +72,14 @@ const ConstraintName = styled.div`
 
 const Icon = styled.img`
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 2vw;
+  height: 2vw;
   justify-self: end;
+`;
+
+const NoConstraintsMessage = styled.div`
+  font-size: ${text_styles.fonts.small};
+  font-family: ${text_styles.styles.fontFamily};
 `;
 
 export default ConstraintsList;

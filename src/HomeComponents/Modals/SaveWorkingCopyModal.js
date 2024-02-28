@@ -5,7 +5,7 @@ import {
   ModalBody,
   ModalButtonGroup,
   NameInputField,
-} from "../ConstraintPanel/ConstraintModals/ConstraintModalComponents";
+} from "../../GeneralComponents/ModalComponents";
 import { modal_content } from "../../style-utils/modalContent";
 import Modal from "react-modal";
 import { useRef } from "react";

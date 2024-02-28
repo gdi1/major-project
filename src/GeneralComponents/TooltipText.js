@@ -1,11 +1,13 @@
 import styled from "styled-components";
+import text_styles from "../style-utils/text_styles";
 
 export const TooltipText = styled.span`
   visibility: hidden;
   background-color: black;
   color: #fff;
   border-radius: 3px;
-  font-size: 15px;
+  font-size: ${text_styles.fonts.xxsmall};
+  font-family: ${text_styles.styles.fontFamily};
   text-align: center;
   padding: 5px;
   position: absolute;

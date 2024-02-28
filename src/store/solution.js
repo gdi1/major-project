@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  mock_solution,
-  mock_teamsMap,
-  mock_locationsMap,
-  mock_periodsMap,
-  mock_weeksMap,
-} from "../Utilities/MockSolution";
+import { mock_solution } from "../Utilities/MockSolution";
 
 const solutionSlice = createSlice({
   name: "solutionSlice",
@@ -32,29 +26,39 @@ const solutionSlice = createSlice({
       state.isOutdated = action.payload;
     },
     setInternalData(state, action) {
-      state.internalData = action.payload;
+      const { internalData, teamsMap, periodsMap, locationsMap, weeksMap } =
+        action.payload;
 
-      const { teams, locations, periods, weeks } = action.payload;
-      console.log(teams, locations, periods, weeks);
-      teams.forEach((team) => (state.teamsMap[team.value] = team));
-      locations.forEach(
-        (location) => (state.locationsMap[location.value] = location)
-      );
-      periods.forEach((period) => (state.periodsMap[period.value] = period));
-      weeks.forEach((week) => (state.weeksMap[week.value] = week));
+      state.internalData = internalData;
+      state.teamsMap = teamsMap;
+      state.locationsMap = locationsMap;
+      state.periodsMap = periodsMap;
+      state.weeksMap = weeksMap;
 
-      state.solution = mock_solution; // action.payload;
-      state.schedule = state.solution.map(({ week, weekSchedule }) => ({
-        week: state.weeksMap[week],
-        weekSchedule: weekSchedule.map(({ period, games }) => ({
-          period: state.periodsMap[period],
-          games: games.map(({ teamA, teamB, location }) => ({
-            teamA: state.teamsMap[teamA],
-            teamB: state.teamsMap[teamB],
-            location: state.locationsMap[location],
+      // const { teams, locations, periods, weeks } = action.payload;
+      // console.log(teams, locations, periods, weeks);
+      // teams.forEach((team) => (state.teamsMap[team.value] = team));
+      // locations.forEach(
+      //   (location) => (state.locationsMap[location.value] = location)
+      // );
+      // periods.forEach((period) => (state.periodsMap[period.value] = period));
+      // weeks.forEach((week) => (state.weeksMap[week.value] = week));
+
+      state.solution = mock_solution;
+      state.schedule = mock_solution.map(({ week, weekSchedule }) => {
+        console.log(week);
+        return {
+          week: state.weeksMap[week],
+          weekSchedule: weekSchedule.map(({ period, games }) => ({
+            period: state.periodsMap[period],
+            games: games.map(({ teamA, teamB, location }) => ({
+              teamA: state.teamsMap[teamA],
+              teamB: state.teamsMap[teamB],
+              location: state.locationsMap[location],
+            })),
           })),
-        })),
-      }));
+        };
+      });
       state.isSolution = true;
     },
     setSpeed(state, action) {

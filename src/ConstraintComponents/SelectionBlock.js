@@ -7,6 +7,7 @@ import InputField from "../GeneralComponents/InputField";
 import styled from "styled-components";
 import colors from "../style-utils/colors";
 import { constraintFlowActions } from "../store/constraintFlow";
+import text_styles from "../style-utils/text_styles";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -40,20 +41,20 @@ const ConstraintBlock = ({ type }) => {
     if (multiselect_types.includes(type)) {
       return (
         <React.Fragment>
-          {blockNames[type]}
+          <Name>{blockNames[type]}</Name>
           <MultiSelect options={[]} disabled={true} labelledBy="Select" />
         </React.Fragment>
       );
     } else if (type === "at-least" || type === "at-most") {
       return (
         <React.Fragment>
-          {blockNames[type][0]}
+          <Name>{blockNames[type][0]}</Name>
           <NoOfTimesInputField type="number" disabled={true} />
-          {blockNames[type][1]}
+          <Name>{blockNames[type][1]}</Name>
         </React.Fragment>
       );
     } else {
-      return <React.Fragment>{blockNames[type]}</React.Fragment>;
+      return <Name>{blockNames[type]}</Name>;
     }
   };
 
@@ -79,9 +80,13 @@ const ConstraintBlock = ({ type }) => {
   );
 };
 
+const Name = styled.div`
+  font-size: ${text_styles.fonts.xsmall};
+`;
+
 const SelectionBlock = styled(Block)`
   &:hover {
-    background-color: ${colors.creme};
+    background-color: ${colors.mustard};
   }
 `;
 

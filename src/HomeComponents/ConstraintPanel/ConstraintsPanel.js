@@ -15,6 +15,8 @@ import { CenteredLabel } from "../../GeneralComponents/Labels";
 import Title from "../../GeneralComponents/Title";
 import borders from "../../style-utils/borders";
 import DeleteConstraintModal from "./ConstraintModals/DeleteConstraintModal";
+import margins from "../../style-utils/margins";
+import gaps from "../../style-utils/gaps";
 
 const constraints_types = ["hard", "soft"];
 
@@ -144,18 +146,18 @@ const ConstraintHeader = styled(RowContainer)`
   height: auto;
   border-bottom: ${borders.small};
   justify-content: space-between;
-  margin-bottom: 40px;
+  margin-bottom: ${margins.small};
 `;
 
 const ButtonGroup = styled(RowContainer)`
   justify-content: space-evenly;
-  margin-bottom: 20px;
+  margin-bottom: ${margins.small};
 `;
 const ConstraintsGroup = styled(RowContainer)`
   justify-content: space-evenly;
   align-items: start;
   height: auto;
-  gap: 20px;
+  gap: ${gaps.small};
 `;
 
 const HomePageConstraintsSection = styled(ColumnContainer)`

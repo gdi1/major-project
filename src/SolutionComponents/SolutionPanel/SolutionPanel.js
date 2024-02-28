@@ -6,6 +6,7 @@ import ScheduleView from "./ScheduleView";
 import JourneyView from "./JourneyView";
 import styled from "styled-components";
 import paddings from "../../style-utils/paddings";
+import borders from "../../style-utils/borders";
 
 const SolutionPanel = () => {
   const [view, setView] = useState("schedule");
@@ -37,8 +38,10 @@ const SolutionPanel = () => {
 };
 
 const SolutionBody = styled(ColumnContainer)`
-  width: 85%;
-  padding: ${paddings.small};
+  padding: ${paddings.xsmall};
+  border-left: ${borders.small};
+  box-sizing: border-box;
+  width: 85vw;
 `;
 const SwitchButton = styled(GeneralButton)`
   align-self: end;

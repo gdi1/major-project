@@ -6,6 +6,7 @@ const types = ["teams", "locations", "periods", "weeks"];
 const getNextId = (arr) => {
   return Math.max(...arr.map(({ value }) => value), 0) + 1;
 };
+
 const constraintsSlice = createSlice({
   name: "constraintsSlice",
   initialState: {
@@ -99,21 +100,27 @@ const constraintsSlice = createSlice({
     },
     addTeam(state, action) {
       state.teams.push({
-        value: getNextId(state.teams),
+        // value: getNextId(state.teams),
+        value: action.payload,
         label: action.payload,
       });
+
+      // state.teams.sort(sortByLabels);
+      // for (let i = 0; i < state.teams.length; i++) state.teams[i].value = i;
     },
     addLocation(state, action) {
       const { coordinates, label } = action.payload;
       state.locations.push({
-        value: getNextId(state.locations),
+        // value: getNextId(state.locations),
+        value: label,
         coordinates,
         label,
       });
     },
     addPeriod(state, action) {
       state.periods.push({
-        value: getNextId(state.periods),
+        // value: getNextId(state.periods),
+        value: action.payload,
         label: action.payload,
       });
       state.periods = sortPeriods(
@@ -122,9 +129,32 @@ const constraintsSlice = createSlice({
     },
 
     addWeeks(state, action) {
+      const oldNoOfweeks = state.weeks.length;
       state.weeks = [];
       for (let i = 1; i <= action.payload; i++)
         state.weeks.push({ value: i, label: `Week ${i}` });
+
+      const constraint_lists_types = ["hardConstraints", "softConstraints"];
+      for (let i = action.payload; i < oldNoOfweeks; i++) {
+        const value = i;
+        const type = "weeks";
+        constraint_lists_types.forEach((constraints_list_type) => {
+          state[constraints_list_type].forEach((constraint) => {
+            constraint.nodes.forEach((node) => {
+              if (node.data.types[type]) {
+                node.data.types[type] = node.data.types[type].filter(
+                  (el) => el.value !== value
+                );
+                if (
+                  node.data.types[type].length === 0 &&
+                  !state.outdatedConstraints.includes(constraint.name)
+                )
+                  state.outdatedConstraints.push(constraint.name);
+              }
+            });
+          });
+        });
+      }
     },
     addConstraint(state, action) {
       const { constraint, index, type } = action.payload;
@@ -158,12 +188,18 @@ const constraintsSlice = createSlice({
       state.softConstraints = state.softConstraints.filter(
         (c) => c.name !== action.payload
       );
+      state.outdatedConstraints = state.outdatedConstraints.filter(
+        (n) => n !== action.payload
+      );
     },
 
     updateOption(state, action) {
       const { id, updatedOption, type } = action.payload;
-      state[type][id].label = updatedOption;
       const value = state[type][id].value;
+
+      state[type][id].label = updatedOption;
+      state[type][id].value = updatedOption;
+
       const constraint_lists_types = ["hardConstraints", "softConstraints"];
 
       constraint_lists_types.forEach((constraints_list_type) => {
@@ -171,7 +207,9 @@ const constraintsSlice = createSlice({
           constraint.nodes.forEach((node) => {
             if (node.data.types[type]) {
               node.data.types[type] = node.data.types[type].map((el) =>
-                el.value === value ? { ...el, label: updatedOption } : el
+                el.value === value
+                  ? { /*...el,*/ value: updatedOption, label: updatedOption }
+                  : el
               );
               if (type === "teams") {
                 const additional_types = ["play-against", "not-play-against"];
@@ -180,7 +218,10 @@ const constraintsSlice = createSlice({
                     node.data.types[add_type] = node.data.types[add_type].map(
                       (el) =>
                         el.value === value
-                          ? { ...el, label: updatedOption }
+                          ? {
+                              /*...el,*/ value: updatedOption,
+                              label: updatedOption,
+                            }
                           : el
                     );
                   }

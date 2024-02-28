@@ -9,6 +9,8 @@ import { CenteredLabel } from "../../GeneralComponents/Labels";
 import LoadBackSnapshotModal from "../Modals/LoadBackSnapshotModal";
 import { useEffect, useState } from "react";
 import DeleteSnapshotModal from "../Modals/DeleteSnapshotModal";
+import margins from "../../style-utils/margins";
+import gaps from "../../style-utils/gaps";
 
 const SnapshotsPanel = () => {
   const { snapshots } = useSelector((state) => state.snapshotsHistory);
@@ -70,18 +72,18 @@ const SnapshotsPanel = () => {
 const SnapshotsBody = styled(ColumnContainer)`
   height: auto;
   width: 80%;
-  margin-bottom: 40px;
+  margin-bottom: ${margins.small};
 `;
 
 const SectionHeader = styled(RowContainer)`
   height: auto;
   border-bottom: ${borders.small};
-  margin-bottom: 40px;
+  margin-bottom: ${margins.small};
   justify-content: start;
 `;
 
 const SnapshotsList = styled(ColumnContainer)`
   width: 90%;
-  gap: 20px;
+  gap: ${gaps.xsmall};
 `;
 export default SnapshotsPanel;

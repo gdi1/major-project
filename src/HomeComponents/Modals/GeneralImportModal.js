@@ -4,7 +4,7 @@ import {
   ModalBody,
   ModalButtonGroup,
   CenteredModalLabel,
-} from "../ConstraintPanel/ConstraintModals/ConstraintModalComponents";
+} from "../../GeneralComponents/ModalComponents";
 import { modal_content } from "../../style-utils/modalContent";
 import Modal from "react-modal";
 import { useRef, useState } from "react";

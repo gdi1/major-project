@@ -101,8 +101,12 @@ export default ConstraintFlowPanel;
 
 const ConstraintFlow = styled(RowContainer)`
   border: ${borders.small};
-  height: 87vh;
+  box-sizing: border-box;
+  height: 85vh;
 `;
+
+// height: 6vh;
+// height: 87vh;
 
 // const initialNodes = [
 //   {

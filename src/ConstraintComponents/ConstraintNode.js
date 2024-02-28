@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 import { sortConstraintBlockTypes } from "../Utilities/BinarySearch";
 import borders from "../style-utils/borders";
 import styled from "styled-components";
-import delete_icon from "./../icons/delete_icon.png";
+import paddings from "../style-utils/paddings";
+import colors from "../style-utils/colors";
 
 const operators = ["and", "or"];
 
@@ -37,13 +38,10 @@ const ConstraintNode = ({ id, data }) => {
 };
 
 const ConstraintNodeBody = styled.div`
-  padding: 20px;
+  padding: ${paddings.xsmall};
   border: ${borders.small};
-  background-color: ${(props) => (props.focused ? "blue" : "white")};
-`;
-const Icon = styled.img`
-  width: 20px;
-  height: 20px;
+  background-color: ${(props) =>
+    props.focused ? `${colors.brick}` : `${colors.mustard}`};
 `;
 
 export default ConstraintNode;

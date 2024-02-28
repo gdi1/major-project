@@ -1,5 +1,6 @@
 let paddings = {
-  xsmall: "5px",
-  small: "10px",
+  xxsmall: "0.5vw",
+  xsmall: "1vw",
+  small: "2vw",
 };
 export default paddings;

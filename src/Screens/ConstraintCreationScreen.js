@@ -14,6 +14,14 @@ import ConstraintFlowPanel from "../ConstraintComponents/ConstraintFlowPanel";
 import { ReactFlowProvider } from "reactflow";
 import { constraintFlowActions } from "../store/constraintFlow";
 import { NotificationManager } from "react-notifications";
+import gaps from "../style-utils/gaps";
+import margins from "../style-utils/margins";
+import colors from "../style-utils/colors";
+import text_styles from "../style-utils/text_styles";
+import {
+  NotificationMessage,
+  NotificationTitle,
+} from "../GeneralComponents/NotificationComponents";
 
 const operators = ["and", "or"];
 const types = [
@@ -96,8 +104,12 @@ const ConstraintCreationScreen = () => {
     if (!atLeastOneLeafNode) {
       // alert("atLeastOneLeafNode is not right!");
       NotificationManager.error(
-        "At least one node must not be an AND or OR node.",
-        "Error"
+        <NotificationMessage
+          style={{ fontFamily: `${text_styles.styles.fontFamily}` }}
+        >
+          At least one node must not be an AND or OR node.
+        </NotificationMessage>,
+        <NotificationTitle>Error</NotificationTitle>
       );
       return;
     }
@@ -147,14 +159,20 @@ const ConstraintCreationScreen = () => {
         </ButtonGroup>
       </PageHeader>
       <PageSubHeader>
-        <ConstraintName> Name: {name}</ConstraintName>
+        <ConstraintName>
+          Name:
+          <span style={{ fontSize: `${text_styles.fonts.small}` }}>{name}</span>
+        </ConstraintName>
         {mode === "new" && (
           <TypeSelection>
             <Label>Type: </Label>
-            <select value={type} onChange={handleConstraintTypeChange}>
+            <TypeSelectComponent
+              value={type}
+              onChange={handleConstraintTypeChange}
+            >
               <option value="hard">Hard</option>
               <option value="soft">Soft</option>
-            </select>
+            </TypeSelectComponent>
           </TypeSelection>
         )}
       </PageSubHeader>
@@ -174,19 +192,30 @@ const ConstraintCreationScreen = () => {
 //   navigate("/");
 // }
 
+const TypeSelectComponent = styled.select`
+  background-color: ${colors.beige};
+  font-size: ${text_styles.fonts.small};
+  font-family: ${text_styles.styles.fontFamily};
+  font-weight: bold;
+  border-radius: 0.2vw;
+`;
+
 const PageHeader = styled(RowContainer)`
   justify-content: space-between;
 `;
 
 const PageSubHeader = styled(RowContainer)`
   justify-content: start;
-  align-items: start;
+
   width: 100%;
-  gap: 20px;
+  gap: ${gaps.small_med};
+  margin-bottom: ${margins.xxsmall};
 `;
 
 const PageBody = styled(RowContainer)`
   justify-content: start;
+  gap: ${gaps.small};
+  height: 85vh;
 `;
 
 const TypeSelection = styled(RowContainer)`
@@ -199,10 +228,14 @@ const ConstraintName = styled(Label)`
   width: auto;
 `;
 
-const ConstraintCreationPage = styled(ColumnContainer)``;
+const ConstraintCreationPage = styled(ColumnContainer)`
+  background-color: ${colors.beige};
+  height: 98vh;
+`;
 
 const ButtonGroup = styled(RowContainer)`
   width: auto;
+  gap: ${gaps.small};
 `;
 
 export default ConstraintCreationScreen;

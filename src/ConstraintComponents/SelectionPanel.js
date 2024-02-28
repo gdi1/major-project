@@ -3,11 +3,11 @@ import SelectionBlock from "./SelectionBlock";
 import paddings from "../style-utils/paddings";
 import styled from "styled-components";
 import borders from "../style-utils/borders";
+import gaps from "../style-utils/gaps";
 
 const SelectionPanel = () => {
   const block_types = [
-    ["teams"],
-    ["weeks", "periods", "locations"],
+    ["teams", "weeks", "periods", "locations"],
     ["at-least", "at-most"],
     ["and", "or"],
     ["play", "not-play", "play-against", "not-play-against"],
@@ -27,14 +27,17 @@ const SelectionPanel = () => {
 
 const SelectionBlocksGroup = styled(ColumnContainer)`
   height: auto;
-  gap: 5px;
+  gap: ${gaps.xxsmall};
 `;
 
 const SelectionBlocks = styled(ColumnContainer)`
-  width: 15%;
-  justify-content: space-between;
-  height: 85vh;
+  align-items: start;
+  justify-content: start;
+  gap: ${gaps.small};
+  width: 20vw;
   border: ${borders.small};
-  padding: ${paddings.small};
+  padding: ${paddings.xsmall};
+  box-sizing: border-box;
+  height: 85vh;
 `;
 export default SelectionPanel;

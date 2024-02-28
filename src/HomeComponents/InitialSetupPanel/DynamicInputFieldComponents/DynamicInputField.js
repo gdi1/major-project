@@ -8,6 +8,9 @@ import { RowContainer } from "../../../GeneralComponents/Containers";
 import GeneralButton from "../../../GeneralComponents/GeneralButton";
 import styled from "styled-components";
 import { NotificationManager } from "react-notifications";
+import gaps from "../../../style-utils/gaps";
+import { SmallIcon } from "../../../GeneralComponents/Icons";
+import check_icon from "../../../icons/check_icon.png";
 
 const updateFunctionMap = {
   teams: constraintsActions.addTeam,
@@ -27,27 +30,29 @@ const DynamicInputField = ({ type }) => {
     setInputValue(e.target.value);
   };
 
-  const handleInputKeyDown = (e) => {
-    if (e.key === "Enter" && inputValue.trim() !== "") {
-      if (
-        type === "teams" &&
-        teams.some((team) => team.label === inputValue.trim())
-      ) {
-        NotificationManager.error(
-          "There is already a team with this name!",
-          "Error"
-        );
-        return;
-      }
-      dispatch(updateFunctionMap[type](inputValue));
-      setInputValue("");
+  const addNewOption = () => {
+    if (
+      type === "teams" &&
+      teams.some((team) => team.label === inputValue.trim())
+    ) {
+      NotificationManager.error(
+        "There is already a team with this name!",
+        "Error"
+      );
+      return;
     }
+    dispatch(updateFunctionMap[type](inputValue));
+    setInputValue("");
+  };
+
+  const handleInputKeyDown = (e) => {
+    if (e.key === "Enter" && inputValue.trim() !== "") addNewOption();
   };
 
   const toggleShowInputField = () => setShowInputField((prev) => !prev);
 
   return (
-    <InputFieldBody>
+    <InputFieldBody showInputField={showInputField}>
       {!showInputField && (
         <GeneralButton onClick={toggleShowInputField} style={{ width: "100%" }}>
           +
@@ -65,6 +70,9 @@ const DynamicInputField = ({ type }) => {
                 style={{ width: "70%", height: "100%" }}
                 ref={inputRef}
               />
+              <GeneralButton onClick={addNewOption}>
+                <SmallIcon src={check_icon} />
+              </GeneralButton>
               <GeneralButton onClick={toggleShowInputField}>X</GeneralButton>
             </React.Fragment>
           )}
@@ -86,7 +94,7 @@ const DynamicInputField = ({ type }) => {
                 onChange={handleInputChange}
                 onKeyDown={handleInputKeyDown}
                 ref={inputRef}
-                style={{ width: "70%", height: "100%" }}
+                style={{ width: "50%", height: "100%" }}
                 type="number"
                 placeholder="Enter no. of weeks"
               />
@@ -100,7 +108,8 @@ const DynamicInputField = ({ type }) => {
 };
 
 const InputFieldBody = styled(RowContainer)`
-  gap: 10px;
+  gap: ${gaps.small};
+  width: ${(props) => (props.showInputField ? "15vw" : "10vw")};
 `;
 
 export default DynamicInputField;

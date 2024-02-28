@@ -8,6 +8,7 @@ import { Label } from "../../GeneralComponents/Labels";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { constraintsActions } from "../../store/constraints";
+import text_styles from "../../style-utils/text_styles";
 
 const NoOfWeeksOptions = () => {
   const { weeks } = useSelector((state) => state.constraints);
@@ -20,16 +21,17 @@ const NoOfWeeksOptions = () => {
   };
   return (
     <WeeksDetailsBody>
-      <Label style={{ width: "auto" }}>Number of weeks:</Label>
+      <SmallerLabel>Number of weeks:</SmallerLabel>
       {isEdit && (
         <InputField
           defaultValue={weeks.length}
           type="number"
           value={noOFWeeks}
           onChange={handleChange}
+          style={{ width: "5vw" }}
         />
       )}
-      {!isEdit && <Label style={{ width: "auto" }}>{weeks.length}</Label>}
+      {!isEdit && <SmallerLabel>{weeks.length}</SmallerLabel>}
       <GeneralButton
         onClick={() => {
           if (!isEdit) setIsEdit(true);
@@ -41,7 +43,7 @@ const NoOfWeeksOptions = () => {
       >
         <Icon src={isEdit ? check_icon : edit_icon} />
       </GeneralButton>
-      {isEdit && (
+      {/* {isEdit && (
         <GeneralButton
           onClick={() => {
             setIsEdit(false);
@@ -50,7 +52,7 @@ const NoOfWeeksOptions = () => {
         >
           X
         </GeneralButton>
-      )}
+      )} */}
     </WeeksDetailsBody>
   );
 };
@@ -64,14 +66,19 @@ const fadeIn = keyframes`
   }
 `;
 
+const SmallerLabel = styled(Label)`
+  width: auto;
+  fontsize: ${text_styles.fonts.small};
+`;
+
 const WeeksDetailsBody = styled(RowContainer)`
   animation: ${fadeIn} 0.3s ease-in-out;
   justify-content: start;
-  gap: 20px;
+  gap: 1vw;
 `;
 
 const Icon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 1vw;
+  height: 1vw;
 `;
 export default NoOfWeeksOptions;

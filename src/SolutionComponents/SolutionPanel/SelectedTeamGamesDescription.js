@@ -8,6 +8,8 @@ import { TextWithEllipsis } from "../../GeneralComponents/TextWithEllipsis";
 import borders from "../../style-utils/borders";
 import colors from "../../style-utils/colors";
 import { solutionActions } from "../../store/solution";
+import gaps from "../../style-utils/gaps";
+import text_styles from "../../style-utils/text_styles";
 
 const SelectedTeamGamesDescription = ({ pulsatingGames }) => {
   const { selectedTeamGames, focusedGame, selectedTeam } = useSelector(
@@ -34,13 +36,13 @@ const SelectedTeamGamesDescription = ({ pulsatingGames }) => {
           key={`${selectedTeam}-${idx}`}
         >
           <GameDetailsSection style={{ justifyContent: "space-between" }}>
-            <div>Week: {week.label}</div>
-            <div style={{ fontWeight: "bold" }}>Game {idx + 1}</div>
-            <div> Period: {period.label}</div>
+            <Details>{week.label}</Details>
+            <Details style={{ fontWeight: "bold" }}>Game {idx + 1}</Details>
+            <Details>{period.label}</Details>
           </GameDetailsSection>
           <GameDetailsSection>
             <LeftTeam>{game.teamA.label}</LeftTeam>
-            <div>vs</div>
+            <Details>vs</Details>
             <RightTeam>{game.teamB.label}</RightTeam>
           </GameDetailsSection>
           <GameDetailsSection>
@@ -53,25 +55,32 @@ const SelectedTeamGamesDescription = ({ pulsatingGames }) => {
 };
 export default SelectedTeamGamesDescription;
 
+const Details = styled.div`
+  font-size: ${text_styles.fonts.xsmall};
+  font-family: ${text_styles.styles.fontFamily};
+`;
+
 const pulseAnimation = keyframes`
   0%, 100% {
-    background-color: white;
+    background-color: ${colors.beige};
   }
   50% {
-    background-color: #9e42b0;
+    background-color: ${colors.brick};
   }
 `;
+//#9e42b0
 
 const GamesDescription = styled(ColumnContainer)`
   justify-content: start;
   height: 85vh;
-  gap: 5px;
+  gap: ${gaps.xxsmall};
   overflow: scroll;
 `;
 
 const Location = styled(TextWithEllipsis)`
   width: 60%;
   text-align: center;
+  font-size: ${text_styles.fonts.xsmall};
 `;
 
 const LeftTeam = styled(TextWithEllipsis)`
@@ -87,10 +96,12 @@ const RightTeam = styled(TextWithEllipsis)`
 const GameCard = styled(ColumnContainer)`
   border: ${borders.small};
   cursor: pointer;
-  height: 80px;
-  min-height: 80px;
+  gap: ${gaps.xxsmall};
+  height: 10vh;
+
   justify-content: space-between;
-  background-color: ${(props) => (props.focused ? `${colors.creme}` : "")};
+  background-color: ${(props) =>
+    props.focused ? `${colors.brick}` : `${colors.beige}`};
   ${(props) =>
     props.pulsating
       ? css`
@@ -98,9 +109,10 @@ const GameCard = styled(ColumnContainer)`
         `
       : "animation: none;"}
   &: hover {
-    background-color: ${colors.creme};
+    background-color: ${(props) =>
+      !props.focused ? `${colors.mustard}` : `${colors.brick}`};
   }
 `;
 const GameDetailsSection = styled(RowContainer)`
-  gap: 10px;
+  gap: ${gaps.xsmall};
 `;

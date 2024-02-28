@@ -75,9 +75,10 @@ const SidebarComponent = ({
   return (
     <Sidebar
       collapsed={collapsed}
+      width="15vw"
+      collapsedWidth="4vw"
       style={{
-        height: "100%",
-        width: "3vw",
+        height: "100vh",
       }}
     >
       <Menu>
@@ -189,12 +190,15 @@ const SidebarComponent = ({
               style={style_sidebar}
             >
               <MenuItem
-                onClick={() => setShow("snapshots")}
-                style={style_sidebar}
+                onClick={() => {
+                  setShow("snapshots");
+                  setOptionsTypes([]);
+                }}
+                style={selectedStyle("snapshots")}
               >
                 <MenuItemLabel>
                   <SmallIcon src={history_icon} />
-                  History
+                  <ItemName>History</ItemName>
                 </MenuItemLabel>
               </MenuItem>
             </SubMenu>
@@ -217,18 +221,3 @@ const ItemName = styled.div`
 `;
 
 export default SidebarComponent;
-
-// {
-//   /* <MenuItem onClick={() => setShow("options")}>
-//                 <MenuItemLabel>
-//                   <Icon src={options_icon} />
-//                   Options
-//                 </MenuItemLabel>
-//               </MenuItem>
-//               <MenuItem onClick={() => setShow("constraints")}>
-//                 <MenuItemLabel>
-//                   <Icon src={history_icon} />
-//                   Constraints
-//                 </MenuItemLabel>
-//               </MenuItem> */
-// }

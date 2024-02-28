@@ -11,6 +11,7 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { snapshotsHistoryActions } from "../../store/snapshotsHistory";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../Utilities/NotificationWrapper";
 
 const DeleteSnapshotModal = ({
   isModalOpen,
@@ -24,8 +25,10 @@ const DeleteSnapshotModal = ({
   const deleteSnapshot = () => {
     dispatch(snapshotsHistoryActions.removeSnapshot(snapshotToDelete));
     NotificationManager.success(
-      `Successfully deleted snapshot ${snapshotToDelete}!`,
-      "Success"
+      ...formatNtf(
+        `Successfully deleted snapshot ${snapshotToDelete}!`,
+        "Success"
+      )
     );
     closeModal();
   };

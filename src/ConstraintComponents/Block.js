@@ -18,7 +18,7 @@ const Block = styled.div`
   display: flex;
   gap: ${gaps.xxsmall};
   width: 16vw;
-  min-height: 3vw;
+  height: 5.5vh;
   padding: ${paddings.xxsmall};
   align-items: center;
   justify-content: space-between;

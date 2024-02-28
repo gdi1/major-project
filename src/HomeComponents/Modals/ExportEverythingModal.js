@@ -11,6 +11,7 @@ import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { exportJSON } from "../../Utilities/ExportingFunction";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../Utilities/NotificationWrapper";
 
 const ExportEverythingModal = ({ isModalOpen, setIsModalOpen }) => {
   const modalRef = useRef();
@@ -22,7 +23,9 @@ const ExportEverythingModal = ({ isModalOpen, setIsModalOpen }) => {
 
   const exportEverything = () => {
     exportJSON({ internalState, snapshots, solution });
-    NotificationManager.success(`Successfully exported everthing!`, "Success");
+    NotificationManager.success(
+      ...formatNtf(`Successfully exported everthing!`, "Success")
+    );
     closeModal();
   };
 

@@ -7,6 +7,7 @@ import JourneyView from "./JourneyView";
 import styled from "styled-components";
 import paddings from "../../style-utils/paddings";
 import borders from "../../style-utils/borders";
+import gaps from "../../style-utils/gaps";
 
 const SolutionPanel = () => {
   const [view, setView] = useState("schedule");

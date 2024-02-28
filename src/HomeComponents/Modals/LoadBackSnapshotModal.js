@@ -15,6 +15,7 @@ import { snapshotsHistoryActions } from "../../store/snapshotsHistory";
 import { constraintsActions } from "../../store/constraints";
 import { solutionActions } from "../../store/solution";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../Utilities/NotificationWrapper";
 
 const LoadBackSnapshotModal = ({
   isModalOpen,
@@ -35,11 +36,15 @@ const LoadBackSnapshotModal = ({
   const saveCurrentWorkingCopy = () => {
     const name = nameRef.current.value;
     if (!name || name.trim() === "") {
-      alert("Mush give a name to the snapshot");
+      NotificationManager.error(
+        ...formatNtf("Mush give a name to the snapshot", "Error")
+      );
       return false;
     }
     if (snapshots.map((snapshot) => snapshot.name).includes(name)) {
-      alert("This name already exists");
+      NotificationManager.error(
+        ...formatNtf("This name already exists", "Error")
+      );
       return false;
     }
     dispatch(
@@ -63,8 +68,10 @@ const LoadBackSnapshotModal = ({
     dispatch(solutionActions.setState(snapshotToLoad.solution));
     console.log("name: ", snapshotName);
     NotificationManager.success(
-      `Successfully loaded back snapshot ${snapshotName}!`,
-      "Success"
+      ...formatNtf(
+        `Successfully loaded back snapshot ${snapshotName}!`,
+        "Success"
+      )
     );
     closeModal();
   };

@@ -16,6 +16,7 @@ import outdated_icon from "./../icons/outdated_icon.png";
 import { encodeAllInternalData } from "../Utilities/EncodingFunctions";
 import ExportEverythingModal from "../HomeComponents/Modals/ExportEverythingModal";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../Utilities/NotificationWrapper";
 import { compareInternalDatas } from "../Utilities/EncodingFunctions";
 import { TooltipText } from "../GeneralComponents/TooltipText";
 import GeneralImportModal from "../HomeComponents/Modals/GeneralImportModal";
@@ -46,8 +47,10 @@ const HomeScreen = () => {
   const solveConfiguration = () => {
     if (outdatedConstraints.length > 0) {
       NotificationManager.error(
-        "Constraints are inconsistent! Please resolve them before generating a solution.",
-        "Error"
+        ...formatNtf(
+          "Constraints are inconsistent! Please resolve them before generating a solution.",
+          "Error"
+        )
       );
       return;
     }
@@ -157,7 +160,7 @@ const ButtonGroup = styled(RowContainer)`
 `;
 
 const Header = styled(ColumnContainer)`
-  height: 10vw;
+  height: 12vh;
   padding: ${paddings.small};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
@@ -174,7 +177,7 @@ const HomePage = styled(ColumnContainer)`
 `;
 
 const HomePageTitle = styled(Title)`
-  margin-bottom: ${margins.lrg};
+  margin-bottom: ${margins.small};
   width: auto;
 `;
 

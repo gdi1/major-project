@@ -11,6 +11,7 @@ import incomplete_icon from "../../icons/incomplete_icon.png";
 import load_back_icon from "../../icons/load_back_icon.png";
 import { exportJSON } from "../../Utilities/ExportingFunction";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../Utilities/NotificationWrapper";
 import text_styles from "../../style-utils/text_styles";
 import { TooltipText } from "../../GeneralComponents/TooltipText";
 import {
@@ -27,7 +28,9 @@ const Snapshot = ({ snapshot, setSnapshotToLoadBack, setSnapshotToDelete }) => {
 
   const exportSnapshot = () => {
     exportJSON({ snapshot });
-    NotificationManager.success(`Successfully exported snapshot ${name}`);
+    NotificationManager.success(
+      ...formatNtf(`Successfully exported snapshot ${name}`)
+    );
   };
 
   return (

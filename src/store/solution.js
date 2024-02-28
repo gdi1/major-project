@@ -45,20 +45,17 @@ const solutionSlice = createSlice({
       // weeks.forEach((week) => (state.weeksMap[week.value] = week));
 
       state.solution = mock_solution;
-      state.schedule = mock_solution.map(({ week, weekSchedule }) => {
-        console.log(week);
-        return {
-          week: state.weeksMap[week],
-          weekSchedule: weekSchedule.map(({ period, games }) => ({
-            period: state.periodsMap[period],
-            games: games.map(({ teamA, teamB, location }) => ({
-              teamA: state.teamsMap[teamA],
-              teamB: state.teamsMap[teamB],
-              location: state.locationsMap[location],
-            })),
+      state.schedule = state.solution.map(({ week, weekSchedule }) => ({
+        week: state.weeksMap[week],
+        weekSchedule: weekSchedule.map(({ period, games }) => ({
+          period: state.periodsMap[period],
+          games: games.map(({ teamA, teamB, location }) => ({
+            teamA: state.teamsMap[teamA],
+            teamB: state.teamsMap[teamB],
+            location: state.locationsMap[location],
           })),
-        };
-      });
+        })),
+      }));
       state.isSolution = true;
     },
     setSpeed(state, action) {
@@ -77,10 +74,12 @@ const solutionSlice = createSlice({
         .map(({ week, weekSchedule }) =>
           weekSchedule.map(({ period, games }) =>
             games
-              .filter((game) =>
-                game.teamA === action.payload || game.teamB === action.payload
-                  ? { game, period, week }
-                  : undefined
+              .filter(
+                (game) =>
+                  state.teamsMap[game.teamA].value === action.payload ||
+                  state.teamsMap[game.teamB].value === action.payload
+                // ? { game, period, week }
+                // : undefined
               )
               .map(({ teamA, teamB, location }) => ({
                 game: {

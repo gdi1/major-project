@@ -12,6 +12,7 @@ import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { snapshotsHistoryActions } from "../../store/snapshotsHistory";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../Utilities/NotificationWrapper";
 
 const SaveWorkingCopyModal = ({ isModalOpen, setIsModalOpen }) => {
   const modalRef = useRef();
@@ -26,11 +27,15 @@ const SaveWorkingCopyModal = ({ isModalOpen, setIsModalOpen }) => {
   const saveWorkingCopy = () => {
     const name = nameRef.current.value;
     if (!name || name.trim() === "") {
-      NotificationManager.error("Mush give a name to the snapshot!", "Error");
+      NotificationManager.error(
+        ...formatNtf("Mush give a name to the snapshot!", "Error")
+      );
       return;
     }
     if (snapshots.map((snapshot) => snapshot.name).includes(name)) {
-      NotificationManager.error("This name already exists!", "Error");
+      NotificationManager.error(
+        ...formatNtf("This name already exists!", "Error")
+      );
       return;
     }
     dispatch(
@@ -42,8 +47,10 @@ const SaveWorkingCopyModal = ({ isModalOpen, setIsModalOpen }) => {
       })
     );
     NotificationManager.success(
-      `Successfully took snapshot ${name} of the working copy!`,
-      "Success"
+      ...formatNtf(
+        `Successfully took snapshot ${name} of the working copy!`,
+        "Success"
+      )
     );
     closeModal();
   };

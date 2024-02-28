@@ -3,7 +3,6 @@ import SelectionBlock from "./SelectionBlock";
 import paddings from "../style-utils/paddings";
 import styled from "styled-components";
 import borders from "../style-utils/borders";
-import gaps from "../style-utils/gaps";
 
 const SelectionPanel = () => {
   const block_types = [
@@ -27,13 +26,13 @@ const SelectionPanel = () => {
 
 const SelectionBlocksGroup = styled(ColumnContainer)`
   height: auto;
-  gap: ${gaps.xxsmall};
+  gap: 1vh;
 `;
 
 const SelectionBlocks = styled(ColumnContainer)`
   align-items: start;
   justify-content: start;
-  gap: ${gaps.small};
+  gap: 2vh;
   width: 20vw;
   border: ${borders.small};
   padding: ${paddings.xsmall};

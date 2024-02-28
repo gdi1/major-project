@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import delete_icon from "./../../icons/delete_icon.png";
 import { constraintsActions } from "../../store/constraints";
 import text_styles from "../../style-utils/text_styles";
+import { LargeIcon } from "../../GeneralComponents/Icons";
 
 const ConstraintsList = ({
   type,
@@ -49,7 +50,7 @@ const ConstraintsList = ({
                 outdated={outdatedConstraints.includes(constraint.name)}
               >
                 <ConstraintName>{constraint.name}</ConstraintName>
-                <Icon
+                <DeleteIcon
                   src={delete_icon}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -70,10 +71,8 @@ const ConstraintName = styled.div`
   text-align: center;
 `;
 
-const Icon = styled.img`
+const DeleteIcon = styled(LargeIcon)`
   cursor: pointer;
-  width: 2vw;
-  height: 2vw;
   justify-self: end;
 `;
 

@@ -15,8 +15,7 @@ const ScheduleView = () => {
   const { schedule } = useSelector((state) => state.solution);
   const [isModalOpened, setModalOpened] = useState(false);
   const [newConstraint, setNewConstraint] = useState(undefined);
-  const { teamsMap, locationsMap, periodsMap, weeksMap, solution } =
-    useSelector((state) => state.solution);
+  const { solution } = useSelector((state) => state.solution);
   console.log("schedule ", schedule, solution);
 
   return (
@@ -61,16 +60,19 @@ const TournamentSchedule = styled(ColumnContainer)`
   justify-content: start;
   align-items: start;
   overflow: scroll;
-  height: 80vh;
+  height: 82vh;
 `;
 
 const WeekLabel = styled(CenteredLabel)`
   border-bottom: ${borders.small};
 `;
 
-const WeekSchedule = styled(ColumnContainer)``;
+const WeekSchedule = styled(ColumnContainer)`
+  height: auto;
+`;
 const PeriodSchedule = styled(ColumnContainer)`
   margin: ${margins.xsmall} 0;
+  height: auto;
 `;
 
 export default ScheduleView;

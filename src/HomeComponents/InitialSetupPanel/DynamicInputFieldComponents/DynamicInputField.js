@@ -8,6 +8,7 @@ import { RowContainer } from "../../../GeneralComponents/Containers";
 import GeneralButton from "../../../GeneralComponents/GeneralButton";
 import styled from "styled-components";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../../Utilities/NotificationWrapper";
 import gaps from "../../../style-utils/gaps";
 import { SmallIcon } from "../../../GeneralComponents/Icons";
 import check_icon from "../../../icons/check_icon.png";
@@ -36,8 +37,13 @@ const DynamicInputField = ({ type }) => {
       teams.some((team) => team.label === inputValue.trim())
     ) {
       NotificationManager.error(
-        "There is already a team with this name!",
-        "Error"
+        ...formatNtf("There is already a team with this name!", "Error")
+      );
+      return;
+    }
+    if (!inputValue.trim()) {
+      NotificationManager.error(
+        ...formatNtf("Teams must have a name!", "Error")
       );
       return;
     }

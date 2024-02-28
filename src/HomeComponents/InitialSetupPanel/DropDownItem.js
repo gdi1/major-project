@@ -13,6 +13,7 @@ import check_icon from "../../icons/check_icon.png";
 import delete_icon from "../../icons/delete_icon.png";
 import { SmallIcon } from "../../GeneralComponents/Icons";
 import text_styles from "../../style-utils/text_styles";
+import { formatNtf } from "../../Utilities/NotificationWrapper";
 
 const DropDownItem = ({ id, option, type }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -26,7 +27,7 @@ const DropDownItem = ({ id, option, type }) => {
   const updateOption = () => {
     const updatedOption = optionInputRef.current.value;
     if (!updatedOption) {
-      NotificationManager.error("The option must not empty!");
+      NotificationManager.error(...formatNtf("The option must not empty!"));
       alert("Option must not be empty!");
       return;
     }
@@ -44,7 +45,7 @@ const DropDownItem = ({ id, option, type }) => {
           <Option>{option.label}</Option>
           {(type === "teams" || type === "locations") && (
             <OptionButton onClick={editAttributeOption}>
-              <Icon src={edit_icon} />
+              <SmallIcon src={edit_icon} />
             </OptionButton>
           )}
           {type !== "weeks" && (
@@ -69,11 +70,6 @@ const DropDownItem = ({ id, option, type }) => {
     </OptionBundle>
   );
 };
-
-const Icon = styled.img`
-  width: 1vw;
-  height: 1vw;
-`;
 
 const OptionBundle = styled(RowContainer)`
   gap: ${gaps.xsmall};

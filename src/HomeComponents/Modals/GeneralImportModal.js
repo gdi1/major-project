@@ -9,6 +9,7 @@ import { modal_content } from "../../style-utils/modalContent";
 import Modal from "react-modal";
 import { useRef, useState } from "react";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../Utilities/NotificationWrapper";
 import InputField from "../../GeneralComponents/InputField";
 import { solutionActions } from "../../store/solution";
 import { constraintsActions } from "../../store/constraints";
@@ -25,7 +26,9 @@ const GeneralImportModal = ({ isModalOpen, setIsModalOpen }) => {
   const importFile = () => {
     console.log(jsonFile);
     if (jsonFile === undefined) {
-      NotificationManager.error("Must upload a file first!", "Error");
+      NotificationManager.error(
+        ...formatNtf("Must upload a file first!", "Error")
+      );
       return;
     }
     const isEverythingExport = jsonFile.snapshots ? true : false;
@@ -40,12 +43,14 @@ const GeneralImportModal = ({ isModalOpen, setIsModalOpen }) => {
       dispatch(solutionActions.setState(solution));
     }
     NotificationManager.success(
-      `Successfully imported ${
-        isEverythingExport
-          ? "everything"
-          : `external snapshot ${jsonFile.snapshot.name}`
-      }!`,
-      "Success"
+      ...formatNtf(
+        `Successfully imported ${
+          isEverythingExport
+            ? "everything"
+            : `external snapshot ${jsonFile.snapshot.name}`
+        }!`,
+        "Success"
+      )
     );
     closeModal();
   };
@@ -59,8 +64,10 @@ const GeneralImportModal = ({ isModalOpen, setIsModalOpen }) => {
         setJsonFile(data);
       } catch (error) {
         NotificationManager.error(
-          "Error uploading file. Make sure it is a properly formatted JSON file.",
-          "Error"
+          ...formatNtf(
+            "Error uploading file. Make sure it is a properly formatted JSON file.",
+            "Error"
+          )
         );
       }
     };

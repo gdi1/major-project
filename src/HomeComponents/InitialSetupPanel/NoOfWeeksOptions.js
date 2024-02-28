@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { constraintsActions } from "../../store/constraints";
 import text_styles from "../../style-utils/text_styles";
+import { SmallIcon } from "../../GeneralComponents/Icons";
 
 const NoOfWeeksOptions = () => {
   const { weeks } = useSelector((state) => state.constraints);
@@ -41,7 +42,7 @@ const NoOfWeeksOptions = () => {
           }
         }}
       >
-        <Icon src={isEdit ? check_icon : edit_icon} />
+        <SmallIcon src={isEdit ? check_icon : edit_icon} />
       </GeneralButton>
       {/* {isEdit && (
         <GeneralButton
@@ -77,8 +78,4 @@ const WeeksDetailsBody = styled(RowContainer)`
   gap: 1vw;
 `;
 
-const Icon = styled.img`
-  width: 1vw;
-  height: 1vw;
-`;
 export default NoOfWeeksOptions;

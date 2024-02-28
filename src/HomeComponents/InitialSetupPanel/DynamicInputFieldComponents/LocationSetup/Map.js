@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { constraintsActions } from "../../../../store/constraints";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../../../Utilities/NotificationWrapper";
 import styled from "styled-components";
 import InputField from "../../../../GeneralComponents/InputField";
 import OnClickMarker from "./OnClickMarker";
@@ -32,8 +33,7 @@ const Map = () => {
   const addNewLocation = (e) => {
     if (showChangeNameInput) {
       NotificationManager.error(
-        "The location must have a non empty name",
-        "Error"
+        ...formatNtf("The location must have a non empty name", "Error")
       );
       return;
     }
@@ -46,8 +46,10 @@ const Map = () => {
       )
     ) {
       NotificationManager.error(
-        "This location already exists as part of the location options!",
-        "Error"
+        ...formatNtf(
+          "This location already exists as part of the location options!",
+          "Error"
+        )
       );
       return;
     }
@@ -118,8 +120,10 @@ const Map = () => {
                       onClick={() => {
                         if (searchedLocation.label.trim() === "") {
                           NotificationManager.error(
-                            "The location must have a name",
-                            "Error"
+                            ...formatNtf(
+                              "The location must have a name",
+                              "Error"
+                            )
                           );
                           return;
                         }

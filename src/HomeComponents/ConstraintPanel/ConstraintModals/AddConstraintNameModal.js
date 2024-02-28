@@ -14,6 +14,7 @@ import {
 } from "../../../GeneralComponents/ModalComponents";
 import { constraintFlowActions } from "../../../store/constraintFlow";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../../Utilities/NotificationWrapper";
 
 const AddConstraintNameModal = ({
   isModalOpen,
@@ -39,8 +40,7 @@ const AddConstraintNameModal = ({
     const name = newConstraintNameRef.current.value;
     if (!name) {
       NotificationManager.error(
-        "Constraint must have a name to continue!",
-        "Error"
+        ...formatNtf("Constraint must have a name to continue!", "Error")
       );
       return;
     }
@@ -48,7 +48,7 @@ const AddConstraintNameModal = ({
       hardConstraints.some((c) => c.name === name) ||
       softConstraints.some((c) => c.name === name);
     if (isAlready) {
-      NotificationManager.error("Name already exists!", "Error");
+      NotificationManager.error(...formatNtf("Name already exists!", "Error"));
       return;
     }
     dispatch(constraintFlowActions.setName(name));

@@ -9,7 +9,11 @@ import {
 } from "../../../Utilities/PeriodsFunctions";
 import styled from "styled-components";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../../Utilities/NotificationWrapper";
 import text_styles from "../../../style-utils/text_styles";
+import { SmallIcon } from "../../../GeneralComponents/Icons";
+import check_icon from "../../../icons/check_icon.png";
+import React from "react";
 
 const DayAndTimePicker = () => {
   const { periods } = useSelector((state) => state.constraints);
@@ -32,8 +36,7 @@ const DayAndTimePicker = () => {
     const newPeriod = `${selectedDay} ${selectedTime}`;
     if (periods.some((period) => period.label === newPeriod)) {
       NotificationManager.error(
-        "This period has already been selected.",
-        "Error"
+        ...formatNtf("This period has already been selected.", "Error")
       );
       return;
     }
@@ -48,33 +51,38 @@ const DayAndTimePicker = () => {
     if (daySelectRef.current) daySelectRef.current.focus();
   }, []);
   return (
-    <DateSelectionBody>
-      <Container>
-        <DateSelect
-          value={selectedDay}
-          onChange={handleDayChange}
-          onKeyDown={handleKeyPress}
-          ref={daySelectRef}
-        >
-          {daysOfWeek.map((day) => (
-            <option key={day} value={day}>
-              {day}
-            </option>
-          ))}
-        </DateSelect>
-        <DateSelect
-          value={selectedTime}
-          onChange={handleTimeChange}
-          onKeyDown={handleKeyPress}
-        >
-          {timesOfDay.map((time) => (
-            <option key={time} value={time}>
-              {time}
-            </option>
-          ))}
-        </DateSelect>
-      </Container>
-    </DateSelectionBody>
+    <React.Fragment>
+      <DateSelectionBody>
+        <Container>
+          <DateSelect
+            value={selectedDay}
+            onChange={handleDayChange}
+            onKeyDown={handleKeyPress}
+            ref={daySelectRef}
+          >
+            {daysOfWeek.map((day) => (
+              <option key={day} value={day}>
+                {day}
+              </option>
+            ))}
+          </DateSelect>
+          <DateSelect
+            value={selectedTime}
+            onChange={handleTimeChange}
+            onKeyDown={handleKeyPress}
+          >
+            {timesOfDay.map((time) => (
+              <option key={time} value={time}>
+                {time}
+              </option>
+            ))}
+          </DateSelect>
+        </Container>
+      </DateSelectionBody>
+      <GeneralButton onClick={addNewPeriod}>
+        <SmallIcon src={check_icon} />
+      </GeneralButton>
+    </React.Fragment>
   );
 };
 

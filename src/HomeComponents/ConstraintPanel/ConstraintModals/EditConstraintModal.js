@@ -14,6 +14,7 @@ import {
 } from "../../../GeneralComponents/ModalComponents";
 import { constraintFlowActions } from "../../../store/constraintFlow";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../../Utilities/NotificationWrapper";
 
 const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   const dispatch = useDispatch();
@@ -31,10 +32,11 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   const editConstraintNameRef = useRef();
 
   const changeName = () => {
-    const name = editConstraintNameRef.current.value;
+    const name = editConstraintNameRef.current.value.trim();
     if (!name) {
-      // alert("New name mustn't be empty!");
-      NotificationManager.error("New name mustn't be empty!", "Error");
+      NotificationManager.error(
+        ...formatNtf("New name mustn't be empty!", "Error")
+      );
       return false;
     }
     const isAlready =
@@ -43,10 +45,14 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
         softConstraints.some((c) => c.name === name));
     if (isAlready) {
       // alert("Name already exists!");
-      NotificationManager.error("Name already exists!", "Error");
+      NotificationManager.error(...formatNtf("Name already exists!", "Error"));
       return false;
     }
+    if (constraint.name === name) return true;
     dispatch(constraintsActions.changeName({ index, type, name }));
+    NotificationManager.success(
+      ...formatNtf("Successfully changed name", "Success")
+    );
     return true;
   };
 
@@ -59,19 +65,13 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
         type,
       })
     );
-    // dispatch(
-    //   currentConstraintActions.setCurrentConstraint({
-    //     ...constraint,
-    //     name: editConstraintNameRef.current.value,
-    //   })
-    // );
     navigate("/new-constraint");
   };
 
-  const removeConstraint = () => {
-    dispatch(constraintsActions.removeConstraint({ index, type }));
-    closeModal();
-  };
+  // const removeConstraint = () => {
+  //   dispatch(constraintsActions.removeConstraint({ index, type }));
+  //   closeModal();
+  // };
 
   return (
     <Modal
@@ -91,13 +91,7 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
         <ModalButtonGroup>
           <ModalButton
             onClick={() => {
-              if (changeName()) {
-                NotificationManager.success(
-                  "Successfully changed name",
-                  "Success"
-                );
-                closeModal();
-              }
+              if (changeName()) closeModal();
             }}
           >
             OK

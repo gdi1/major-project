@@ -11,6 +11,7 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { constraintsActions } from "../../../store/constraints";
 import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../../Utilities/NotificationWrapper";
 
 const DeleteConstraintModal = ({
   isModalOpen,
@@ -24,8 +25,10 @@ const DeleteConstraintModal = ({
   const deleteConstraint = () => {
     dispatch(constraintsActions.removeConstraintByName(constraintToDelete));
     NotificationManager.success(
-      `Successfully removed constraint ${constraintToDelete}`,
-      "Success"
+      ...formatNtf(
+        `Successfully removed constraint ${constraintToDelete}`,
+        "Success"
+      )
     );
     closeModal();
   };

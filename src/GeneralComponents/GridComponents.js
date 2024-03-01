@@ -10,15 +10,13 @@ export const GridContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const GridItem = styled.div`
-  /* Optional: add styling to the grid items */
-  border: 1px solid #ccc;
-  text-align: center;
-`;
+// export const GridItem = styled.div`
+//   /* Optional: add styling to the grid items */
+//   border: 1px solid #ccc;
+//   text-align: center;
+// `;
 
 // Style the middle column to occupy the full width
-export const AutoColumn = styled(GridItem)`
-  grid-column: 2 / span 1;
-`;
-
-// export default GridContainer;
+// export const AutoColumn = styled(GridItem)`
+//   grid-column: 2 / span 1;
+// `;

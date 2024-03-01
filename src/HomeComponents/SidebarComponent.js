@@ -6,13 +6,13 @@ import settings_icon from "./../icons/settings_icon.png";
 import snapshot_icon from "./../icons/snapshot_icon.png";
 import history_icon from "./../icons/history_icon.png";
 import home_icon from "./../icons/home_icon.png";
-import go_back_icon from "./../icons/go_back_icon.png";
 import save_icon from "./../icons/save_icon.png";
 import import_icon from "./../icons/import_icon.png";
 import export_icon from "./../icons/export_icon.png";
+import blocks_icon from "./../icons/blocks_icon.png";
 import styled from "styled-components";
 import React from "react";
-import { SmallIcon, LargeIcon } from "../GeneralComponents/Icons";
+import { SmallIcon } from "../GeneralComponents/Icons";
 import { small_icon } from "../style-utils/icons";
 import colors from "../style-utils/colors";
 import text_styles from "../style-utils/text_styles";
@@ -38,7 +38,6 @@ const SidebarComponent = ({
   const style_sidebar = {
     fontFamily: `${text_styles.styles.fontFamily}`,
   };
-  //backgroundColor: `${colors.mustard}`,
   const addNewType = (type) => {
     if (type === "all-constraints") {
       setShow("constraints");
@@ -165,7 +164,7 @@ const SidebarComponent = ({
               <SubMenu
                 label="Constraints"
                 style={style_sidebar}
-                icon={<SmallIcon src={history_icon} />}
+                icon={<SmallIcon src={blocks_icon} />}
               >
                 <MenuItem onClick={() => addNewType("all-constraints")}>
                   <ItemName>All</ItemName>

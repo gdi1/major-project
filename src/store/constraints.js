@@ -11,31 +11,67 @@ const constraintsSlice = createSlice({
   name: "constraintsSlice",
   initialState: {
     teams: [
-      { value: 1, label: "Option 1" },
-      { value: 2, label: "Option 2" },
-      { value: 3, label: "Option 3" },
-      { value: 4, label: "Option 4" },
-      { value: 5, label: "Option 5" },
-      { value: 6, label: "Option 6" },
+      {
+        value: "team1",
+        label: "team1",
+      },
+      {
+        value: "team4",
+        label: "team4",
+      },
+      {
+        value: "team2",
+        label: "team2",
+      },
+      {
+        value: "team3",
+        label: "team3",
+      },
     ],
     weeks: [
-      { value: 1, label: "Week 1" },
-      { value: 2, label: "Week 2" },
-      { value: 3, label: "Week 3" },
+      {
+        value: 1,
+        label: "Week 1",
+      },
+      {
+        value: 2,
+        label: "Week 2",
+      },
     ],
     periods: [
-      { value: 1, label: "Option 1" },
-      { value: 2, label: "Option 2" },
-      { value: 3, label: "Option 3" },
+      {
+        value: "Mon 12:00",
+        label: "Mon 12:00",
+      },
+      {
+        value: "Mon 12:30",
+        label: "Mon 12:30",
+      },
+      {
+        value: "Mon 15:30",
+        label: "Mon 15:30",
+      },
+      {
+        value: "Mon 20:00",
+        label: "Mon 20:00",
+      },
     ],
     locations: [
       {
-        value: 1,
-        label: "Cluj-Napoca, Cluj Metropolitan Area, Cluj, Romania",
-        coordinates: [50, 20],
+        value: "Cluj Napoca",
+        coordinates: [46.769379, 23.5899542],
+        label: "Cluj Napoca",
       },
-      { value: 2, label: "Option 2", coordinates: [51, 20] },
-      { value: 3, label: "Option 3", coordinates: [50, 21] },
+      {
+        value: "Turda",
+        coordinates: [46.5685214, 23.7853643],
+        label: "Turda",
+      },
+      {
+        value: "Mures",
+        coordinates: [46.60646055, 24.62467862914629],
+        label: "Mures",
+      },
     ],
     hardConstraints: [],
     softConstraints: [],

@@ -24,6 +24,8 @@ import gaps from "../style-utils/gaps";
 import paddings from "../style-utils/paddings";
 import { LargeIcon, IconContainer } from "../GeneralComponents/Icons";
 import colors from "../style-utils/colors";
+import ResetSolutionModal from "../HomeComponents/Modals/ResetSolutionModal";
+import GenerateNewSolutionModal from "../HomeComponents/Modals/GenerateNewSolutionModal";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -35,6 +37,9 @@ const HomeScreen = () => {
   const [showExportEverythingModal, setShowExportEverythingModal] =
     useState(false);
   const [showGeneralImportModal, setShowGeneralImportModal] = useState(false);
+  const [showResetSolutionModal, setShowResetSolutionModal] = useState(false);
+  const [showGenerateNewSolutionModal, setShowGenerateNewSolutionModal] =
+    useState(false);
 
   const internalData = useSelector((state) => state.constraints);
   const { outdatedConstraints } = internalData;
@@ -43,6 +48,8 @@ const HomeScreen = () => {
     isOutdated,
     internalData: solutionInternalData,
   } = useSelector((state) => state.solution);
+
+  console.log(internalData);
 
   const solveConfiguration = () => {
     if (outdatedConstraints.length > 0) {
@@ -88,6 +95,11 @@ const HomeScreen = () => {
   return (
     <React.Fragment>
       <HomeScreenPage>
+        <GenerateNewSolutionModal
+          setIsModalOpen={setShowGenerateNewSolutionModal}
+          isModalOpen={showGenerateNewSolutionModal}
+          solveConfiguration={solveConfiguration}
+        />
         <SaveWorkingCopyModal
           setIsModalOpen={setShowSaveWorkingCopyModal}
           isModalOpen={showSaveWorkingCopyModal}
@@ -99,6 +111,10 @@ const HomeScreen = () => {
         <GeneralImportModal
           setIsModalOpen={setShowGeneralImportModal}
           isModalOpen={showGeneralImportModal}
+        />
+        <ResetSolutionModal
+          setIsModalOpen={setShowResetSolutionModal}
+          isModalOpen={showResetSolutionModal}
         />
         <SidebarComponent
           show={show}
@@ -113,13 +129,24 @@ const HomeScreen = () => {
           <Header>
             <HomePageTitle>Sport Tournament Scheduling</HomePageTitle>
             <ButtonGroup>
-              <GeneralButton onClick={solveConfiguration}>
+              <GeneralButton
+                onClick={
+                  isSolution
+                    ? setShowGenerateNewSolutionModal
+                    : solveConfiguration
+                }
+              >
                 Generate new solution
               </GeneralButton>
               {isSolution && (
                 <RowContainer style={{ width: "auto", gap: `${gaps.small}` }}>
                   <GeneralButton onClick={() => navigate("/show-solution")}>
-                    View previous solution
+                    View last solution
+                  </GeneralButton>
+                  <GeneralButton
+                    onClick={() => setShowResetSolutionModal(true)}
+                  >
+                    Reset solution
                   </GeneralButton>
                   {isOutdated && (
                     <IconContainer>

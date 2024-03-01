@@ -169,10 +169,11 @@ const constraintFlowSlice = createSlice({
         position: { x: 0, y: 0 },
         data: {
           types: {
-            teams: [game.teamA],
-            "play-against": [game.teamB],
-            weeks: [week],
-            periods: [period],
+            teams: !game.teamA ? [] : [game.teamA],
+            "play-against": !game.teamB ? [] : [game.teamB],
+            locations: !game.location ? [] : [game.location],
+            weeks: !week ? [] : [week],
+            periods: !period ? [] : [period],
           },
         },
         selected: true,

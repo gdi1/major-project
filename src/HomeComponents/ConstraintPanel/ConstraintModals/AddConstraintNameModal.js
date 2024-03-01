@@ -1,4 +1,3 @@
-import { currentConstraintActions } from "../../../store/currentConstraint";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
@@ -22,6 +21,9 @@ const AddConstraintNameModal = ({
   newConstraint = undefined,
   isSoft = false,
 }) => {
+  const { teams, periods, weeks, locations } = useSelector(
+    (state) => state.constraints
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -54,9 +56,46 @@ const AddConstraintNameModal = ({
     dispatch(constraintFlowActions.setName(name));
     if (isSoft) dispatch(constraintFlowActions.setType("soft"));
     if (newConstraint)
-      dispatch(constraintFlowActions.setNewConstraint(newConstraint));
+      dispatch(
+        constraintFlowActions.setNewConstraint(
+          makeConstraintUpToDate(newConstraint)
+        )
+      );
     navigate("/new-constraint");
   };
+
+  const makeConstraintUpToDate = (newConstraint) => {
+    const { game, period, week } = newConstraint;
+    const { teamA, teamB, location } = game;
+    const teamACurrent = teams.find(
+      (team) => team.value === teamA.value && team.label === teamA.label
+    );
+    const teamBCurrent = teams.find(
+      (team) => team.value === teamB.value && team.label === teamB.label
+    );
+    const periodCurrent = periods.find(
+      (p) => p.value === period.value && p.label === period.label
+    );
+    const weekCurrent = weeks.find(
+      (w) => w.value === week.value && w.label === week.label
+    );
+    const locationCurrent = locations.find(
+      (l) =>
+        l.coordinates[0] === location.coordinates[0] &&
+        l.coordinates[1] === location.coordinates[1]
+    );
+
+    return {
+      game: {
+        teamA: teamACurrent || undefined,
+        teamB: teamBCurrent || undefined,
+        location: locationCurrent || undefined,
+      },
+      period: periodCurrent || undefined,
+      week: weekCurrent || undefined,
+    };
+  };
+
   return (
     <Modal
       ariaHideApp={false}

@@ -4,6 +4,7 @@ let text_styles = {
     xsmall: "1vw",
     small: "1.2vw",
     small_med: "1.5vw",
+    med_minus: "1.8vw",
     med: "2vw",
   },
   colors: {},

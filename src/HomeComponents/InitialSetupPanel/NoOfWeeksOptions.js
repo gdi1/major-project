@@ -5,7 +5,7 @@ import edit_icon from "./../../icons/edit_icon.png";
 import check_icon from "./../../icons/check_icon.png";
 import { RowContainer } from "../../GeneralComponents/Containers";
 import { Label } from "../../GeneralComponents/Labels";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { constraintsActions } from "../../store/constraints";
 import text_styles from "../../style-utils/text_styles";
@@ -15,11 +15,24 @@ const NoOfWeeksOptions = () => {
   const { weeks } = useSelector((state) => state.constraints);
   const [isEdit, setIsEdit] = useState(weeks.length === 0);
   const [noOFWeeks, setNoOfWeeks] = useState(weeks.length);
+  const noOfWeeksRef = useRef();
   const dispatch = useDispatch();
   const handleChange = (e) => {
     if (e.target.value < 0) return;
     setNoOfWeeks(e.target.value);
   };
+
+  const handleInputKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setIsEdit(false);
+      dispatch(constraintsActions.addWeeks(noOFWeeks));
+    }
+  };
+
+  useEffect(() => {
+    if (isEdit) noOfWeeksRef.current.focus();
+  }, [isEdit]);
+
   return (
     <WeeksDetailsBody>
       <SmallerLabel>Number of weeks:</SmallerLabel>
@@ -28,6 +41,8 @@ const NoOfWeeksOptions = () => {
           defaultValue={weeks.length}
           type="number"
           value={noOFWeeks}
+          ref={noOfWeeksRef}
+          onKeyDown={handleInputKeyDown}
           onChange={handleChange}
           style={{ width: "5vw" }}
         />

@@ -1,6 +1,6 @@
 import { DropdownItem } from "./DropDownComponents";
 import InputField from "../../GeneralComponents/InputField";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
 import { useDispatch } from "react-redux";
 import { constraintsActions } from "../../store/constraints";
@@ -25,10 +25,9 @@ const DropDownItem = ({ id, option, type }) => {
   };
 
   const updateOption = () => {
-    const updatedOption = optionInputRef.current.value;
+    const updatedOption = optionInputRef.current.value.trim();
     if (!updatedOption) {
       NotificationManager.error(...formatNtf("The option must not empty!"));
-      alert("Option must not be empty!");
       return;
     }
     dispatch(constraintsActions.updateOption({ type, updatedOption, id }));
@@ -38,6 +37,15 @@ const DropDownItem = ({ id, option, type }) => {
   const editAttributeOption = () => {
     if (type === "teams" || type === "locations") setIsEdit(true);
   };
+
+  useEffect(() => {
+    if (isEdit) optionInputRef.current.focus();
+  }, [isEdit]);
+
+  const handleInputKeyDown = (e) => {
+    if (e.key === "Enter") updateOption();
+  };
+
   return (
     <OptionBundle>
       {!isEdit && (
@@ -61,6 +69,7 @@ const DropDownItem = ({ id, option, type }) => {
             style={{ boxSizing: "border-box", height: "100%" }}
             defaultValue={option.label}
             ref={optionInputRef}
+            onKeyDown={handleInputKeyDown}
           />
           <OptionButton onClick={updateOption}>
             <SmallIcon src={check_icon} />

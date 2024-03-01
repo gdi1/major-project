@@ -10,13 +10,15 @@ import styled from "styled-components";
 import borders from "../../style-utils/borders";
 import margins from "../../style-utils/margins";
 import colors from "../../style-utils/colors";
+import Constraint from "../../HomeComponents/ConstraintPanel/Constraint";
+import text_styles from "../../style-utils/text_styles";
 
 const ScheduleView = () => {
-  const { schedule } = useSelector((state) => state.solution);
+  const { schedule, violatedSoftConstraints } = useSelector(
+    (state) => state.solution
+  );
   const [isModalOpened, setModalOpened] = useState(false);
   const [newConstraint, setNewConstraint] = useState(undefined);
-  const { solution } = useSelector((state) => state.solution);
-  console.log("schedule ", schedule, solution);
 
   return (
     <TournamentSchedule>
@@ -25,6 +27,23 @@ const ScheduleView = () => {
         setIsModalOpen={setModalOpened}
         newConstraint={newConstraint}
       />
+      {violatedSoftConstraints.length > 0 && (
+        <React.Fragment>
+          <SubTitle>Violated Constraints</SubTitle>
+          <ViolatedSoftConstraints>
+            <Constraint>
+              <ConstraintName>ttt</ConstraintName>
+            </Constraint>
+            <Constraint>
+              <ConstraintName>ttt</ConstraintName>
+            </Constraint>
+            <Constraint>
+              <ConstraintName>ttt</ConstraintName>
+            </Constraint>
+          </ViolatedSoftConstraints>
+        </React.Fragment>
+      )}
+      <SubTitle>Schedule</SubTitle>
       {schedule.map(({ week, weekSchedule }) => (
         <WeekSchedule key={week.label}>
           <WeekLabel>{week.label}</WeekLabel>
@@ -51,6 +70,22 @@ const ScheduleView = () => {
   );
 };
 
+const SubTitle = styled(CenteredLabel)`
+  border-bottom: ${borders.small};
+  margin: ${margins.small} 0;
+  font-size: ${text_styles.fonts.med_minus};
+`;
+
+const ConstraintName = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
+const ViolatedSoftConstraints = styled(GridContainer)`
+  grid-template-columns: repeat(3, 30%);
+  background-color: ${colors.beige};
+`;
+
 const GamesGrid = styled(GridContainer)`
   margin: ${margins.xsmall} 0;
   background-color: ${colors.beige};
@@ -64,7 +99,7 @@ const TournamentSchedule = styled(ColumnContainer)`
 `;
 
 const WeekLabel = styled(CenteredLabel)`
-  border-bottom: ${borders.small};
+  text-decoration: underline;
 `;
 
 const WeekSchedule = styled(ColumnContainer)`

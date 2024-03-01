@@ -35,15 +35,6 @@ const solutionSlice = createSlice({
       state.periodsMap = periodsMap;
       state.weeksMap = weeksMap;
 
-      // const { teams, locations, periods, weeks } = action.payload;
-      // console.log(teams, locations, periods, weeks);
-      // teams.forEach((team) => (state.teamsMap[team.value] = team));
-      // locations.forEach(
-      //   (location) => (state.locationsMap[location.value] = location)
-      // );
-      // periods.forEach((period) => (state.periodsMap[period.value] = period));
-      // weeks.forEach((week) => (state.weeksMap[week.value] = week));
-
       state.solution = mock_solution;
       state.schedule = state.solution.map(({ week, weekSchedule }) => ({
         week: state.weeksMap[week],
@@ -109,12 +100,7 @@ const solutionSlice = createSlice({
     resetFocusedGame(state, _) {
       state.focusedGame = undefined;
     },
-
     setSolution(state, _) {
-      // state.teamsMap = mock_teamsMap;
-      // state.locationsMap = mock_locationsMap;
-      // state.periodsMap = mock_periodsMap;
-      // state.weeksMap = mock_weeksMap;
       state.solution = mock_solution; // action.payload;
       state.schedule = state.solution.map(({ week, weekSchedule }) => ({
         week: state.weeksMap[week],
@@ -164,6 +150,25 @@ const solutionSlice = createSlice({
       state.internalData = internalData;
       state.isSolution = isSolution;
     },
+
+    resetSolution(state, _) {
+      state.selectedTeam = undefined;
+      state.selectedTeamJourney = [];
+      state.selectedTeamGames = [];
+      state.focusedGame = undefined;
+      state.violatedSoftConstraints = [];
+      state.schedule = [];
+      state.curvedPaths = [];
+      state.speed = 5000;
+      state.teamsMap = {};
+      state.locationsMap = {};
+      state.periodsMap = {};
+      state.weeksMap = {};
+      state.solution = [];
+      state.isOutdated = false;
+      state.internalData = undefined;
+      state.isSolution = false;
+    },
   },
 });
 
@@ -197,3 +202,12 @@ export default solutionSlice;
 //   )
 //   .flat(Infinity)
 //   .filter((location) => location);
+
+// const { teams, locations, periods, weeks } = action.payload;
+// console.log(teams, locations, periods, weeks);
+// teams.forEach((team) => (state.teamsMap[team.value] = team));
+// locations.forEach(
+//   (location) => (state.locationsMap[location.value] = location)
+// );
+// periods.forEach((period) => (state.periodsMap[period.value] = period));
+// weeks.forEach((week) => (state.weeksMap[week.value] = week));

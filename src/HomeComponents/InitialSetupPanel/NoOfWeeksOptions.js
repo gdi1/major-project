@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { constraintsActions } from "../../store/constraints";
 import text_styles from "../../style-utils/text_styles";
 import { SmallIcon } from "../../GeneralComponents/Icons";
+import { TooltipText } from "../../GeneralComponents/TooltipText";
 
 const NoOfWeeksOptions = () => {
   const { weeks } = useSelector((state) => state.constraints);
@@ -58,6 +59,7 @@ const NoOfWeeksOptions = () => {
         }}
       >
         <SmallIcon src={isEdit ? check_icon : edit_icon} />
+        <TooltipText>{isEdit ? "Save" : "Edit"}</TooltipText>
       </GeneralButton>
       {/* {isEdit && (
         <GeneralButton

@@ -2,7 +2,7 @@ import { DropdownItem } from "./DropDownComponents";
 import InputField from "../../GeneralComponents/InputField";
 import React, { useEffect, useRef, useState } from "react";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { constraintsActions } from "../../store/constraints";
 import { RowContainer } from "../../GeneralComponents/Containers";
 import styled from "styled-components";
@@ -14,11 +14,13 @@ import delete_icon from "../../icons/delete_icon.png";
 import { SmallIcon } from "../../GeneralComponents/Icons";
 import text_styles from "../../style-utils/text_styles";
 import { formatNtf } from "../../Utilities/NotificationWrapper";
+import { TooltipText } from "../../GeneralComponents/TooltipText";
 
 const DropDownItem = ({ id, option, type }) => {
   const [isEdit, setIsEdit] = useState(false);
   const optionInputRef = useRef();
   const dispatch = useDispatch();
+  const options = useSelector((state) => state.constraints[type]);
 
   const handleDeleteOption = () => {
     dispatch(constraintsActions.removeOption({ type, id }));
@@ -27,7 +29,25 @@ const DropDownItem = ({ id, option, type }) => {
   const updateOption = () => {
     const updatedOption = optionInputRef.current.value.trim();
     if (!updatedOption) {
-      NotificationManager.error(...formatNtf("The option must not empty!"));
+      NotificationManager.error(
+        ...formatNtf("The option must not empty!", "Error")
+      );
+      return;
+    }
+    if (
+      options.some(
+        (op) => op.label === updatedOption && op.label !== option.label
+      )
+    ) {
+      NotificationManager.error(
+        ...formatNtf(
+          `There is already a ${type.substring(
+            0,
+            type.length - 1
+          )} with this name!`,
+          "Error"
+        )
+      );
       return;
     }
     dispatch(constraintsActions.updateOption({ type, updatedOption, id }));
@@ -54,11 +74,13 @@ const DropDownItem = ({ id, option, type }) => {
           {(type === "teams" || type === "locations") && (
             <OptionButton onClick={editAttributeOption}>
               <SmallIcon src={edit_icon} />
+              <TooltipText>Edit</TooltipText>
             </OptionButton>
           )}
           {type !== "weeks" && (
             <OptionButton onClick={handleDeleteOption}>
               <SmallIcon src={delete_icon} />
+              <TooltipText>Delete</TooltipText>
             </OptionButton>
           )}
         </React.Fragment>
@@ -73,6 +95,7 @@ const DropDownItem = ({ id, option, type }) => {
           />
           <OptionButton onClick={updateOption}>
             <SmallIcon src={check_icon} />
+            <TooltipText>Save</TooltipText>
           </OptionButton>
         </React.Fragment>
       )}

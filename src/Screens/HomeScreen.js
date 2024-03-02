@@ -49,8 +49,6 @@ const HomeScreen = () => {
     internalData: solutionInternalData,
   } = useSelector((state) => state.solution);
 
-  console.log(internalData);
-
   const solveConfiguration = () => {
     if (outdatedConstraints.length > 0) {
       NotificationManager.error(

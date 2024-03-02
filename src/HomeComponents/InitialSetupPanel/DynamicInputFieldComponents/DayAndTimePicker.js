@@ -14,6 +14,7 @@ import text_styles from "../../../style-utils/text_styles";
 import { SmallIcon } from "../../../GeneralComponents/Icons";
 import check_icon from "../../../icons/check_icon.png";
 import React from "react";
+import { TooltipText } from "../../../GeneralComponents/TooltipText";
 
 const DayAndTimePicker = () => {
   const { periods } = useSelector((state) => state.constraints);
@@ -81,6 +82,7 @@ const DayAndTimePicker = () => {
       </DateSelectionBody>
       <GeneralButton onClick={addNewPeriod}>
         <SmallIcon src={check_icon} />
+        <TooltipText>Save</TooltipText>
       </GeneralButton>
     </React.Fragment>
   );

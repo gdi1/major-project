@@ -39,7 +39,7 @@ const AddConstraintNameModal = ({
   const newConstraintNameRef = useRef();
 
   const goToNewConstraintCreation = () => {
-    const name = newConstraintNameRef.current.value;
+    const name = newConstraintNameRef.current.value.trim();
     if (!name) {
       NotificationManager.error(
         ...formatNtf("Constraint must have a name to continue!", "Error")
@@ -103,6 +103,7 @@ const AddConstraintNameModal = ({
       isOpen={isModalOpen}
       onRequestClose={closeModal}
       style={modal_content}
+      onAfterOpen={() => newConstraintNameRef.current.focus()}
     >
       <ModalBody>
         <ModalTitle>Add Constraint</ModalTitle>

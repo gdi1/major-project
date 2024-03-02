@@ -44,7 +44,6 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
       (hardConstraints.some((c) => c.name === name) ||
         softConstraints.some((c) => c.name === name));
     if (isAlready) {
-      // alert("Name already exists!");
       NotificationManager.error(...formatNtf("Name already exists!", "Error"));
       return false;
     }
@@ -80,6 +79,7 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
       isOpen={isModalOpen}
       onRequestClose={closeModal}
       style={modal_content}
+      onAfterOpen={() => editConstraintNameRef.current.focus()}
     >
       <ModalBody>
         <ModalTitle>Edit Constraint</ModalTitle>

@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import { Icon } from "leaflet";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import React from "react";
 import SearchComponent from "./SearchComponent";
 import GeneralButton from "../../../../GeneralComponents/GeneralButton";
@@ -28,16 +28,17 @@ const Map = () => {
 
   const markerRef = useRef(null);
   const dispatch = useDispatch();
+  const changeNameRef = useRef();
   console.log(searchedLocation);
 
   const addNewLocation = (e) => {
-    if (showChangeNameInput) {
+    if (!searchedLocation.label.trim()) {
       NotificationManager.error(
         ...formatNtf("The location must have a non empty name", "Error")
       );
       return;
     }
-    e.stopPropagation();
+    // e.stopPropagation();
     if (
       locations.some(
         (l) =>
@@ -53,6 +54,12 @@ const Map = () => {
       );
       return;
     }
+    if (locations.some((l) => l.label == searchedLocation.label)) {
+      NotificationManager.error(
+        ...formatNtf("There is already a location that has this name!", "Error")
+      );
+      return;
+    }
     dispatch(constraintsActions.addLocation(searchedLocation));
     setShowChangeNameInput(false);
     setAddedSuccessfully(true);
@@ -61,6 +68,20 @@ const Map = () => {
   const onChangeName = (e) => {
     setSearchedLocation((prev) => ({ ...prev, label: e.target.value }));
   };
+
+  const handleAddNewLocation = (e) => {
+    console.log("bla");
+    if (e.key === "Enter" && showChangeNameInput) addNewLocation();
+  };
+
+  useEffect(() => {
+    setAddedSuccessfully(false);
+  }, [searchedLocation]);
+
+  useEffect(() => {
+    console.log("Here", changeNameRef.current);
+    if (changeNameRef.current) changeNameRef.current.focus();
+  }, [searchedLocation]);
 
   return (
     <React.Fragment>
@@ -110,29 +131,37 @@ const Map = () => {
                 {showChangeNameInput && (
                   <InputField
                     onChange={onChangeName}
+                    onKeyDown={handleAddNewLocation}
                     value={searchedLocation.label}
                     placeholder={isClickMarker ? "Enter name" : ""}
+                    ref={changeNameRef}
+                    autoFocus={true}
                   />
                 )}
                 {!addedSuccessfully && (
                   <RowContainer style={{ gap: `${gaps.xsmall}` }}>
-                    <GeneralButton
-                      onClick={() => {
-                        if (searchedLocation.label.trim() === "") {
-                          NotificationManager.error(
-                            ...formatNtf(
-                              "The location must have a name",
-                              "Error"
-                            )
-                          );
-                          return;
-                        }
-                        setShowChangeNameInput((prev) => !prev);
-                      }}
-                      style={{ fontSize: `${text_styles.fonts.xsmall}` }}
-                    >
-                      {showChangeNameInput ? "Save" : "Change name"}
-                    </GeneralButton>
+                    {!isClickMarker && (
+                      <GeneralButton
+                        onClick={() => {
+                          if (
+                            showChangeNameInput &&
+                            searchedLocation.label.trim() === ""
+                          ) {
+                            NotificationManager.error(
+                              ...formatNtf(
+                                "The location must have a name",
+                                "Error"
+                              )
+                            );
+                            return;
+                          }
+                          setShowChangeNameInput((prev) => !prev);
+                        }}
+                        style={{ fontSize: `${text_styles.fonts.xsmall}` }}
+                      >
+                        {showChangeNameInput ? "Save" : "Change name"}
+                      </GeneralButton>
+                    )}
                     <GeneralButton
                       onClick={addNewLocation}
                       style={{ fontSize: `${text_styles.fonts.xsmall}` }}
@@ -158,6 +187,7 @@ const Map = () => {
           markerRef={markerRef}
           setShowChangeNameInput={setShowChangeNameInput}
           setIsClickMarker={setIsClickMarker}
+          changeNameRef={changeNameRef}
         />
       </MapContainer>
     </React.Fragment>

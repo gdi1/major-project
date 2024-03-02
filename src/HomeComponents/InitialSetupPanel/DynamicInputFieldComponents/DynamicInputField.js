@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import DayAndTimePicker from "./DayAndTimePicker";
 import AddLocationModal from "./LocationSetup/AddLocationModal";
 import InputField from "../../../GeneralComponents/InputField";
@@ -12,6 +12,7 @@ import { formatNtf } from "../../../Utilities/NotificationWrapper";
 import gaps from "../../../style-utils/gaps";
 import { SmallIcon } from "../../../GeneralComponents/Icons";
 import check_icon from "../../../icons/check_icon.png";
+import { TooltipText } from "../../../GeneralComponents/TooltipText";
 
 const updateFunctionMap = {
   teams: constraintsActions.addTeam,
@@ -57,11 +58,18 @@ const DynamicInputField = ({ type }) => {
 
   const toggleShowInputField = () => setShowInputField((prev) => !prev);
 
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.focus();
+  }, [showInputField]);
+
   return (
     <InputFieldBody showInputField={showInputField}>
       {!showInputField && (
         <GeneralButton onClick={toggleShowInputField} style={{ width: "100%" }}>
           +
+          <TooltipText>
+            Add new {type.substring(0, type.length - 1)}
+          </TooltipText>
         </GeneralButton>
       )}
       {showInputField && (
@@ -78,8 +86,11 @@ const DynamicInputField = ({ type }) => {
               />
               <GeneralButton onClick={addNewOption}>
                 <SmallIcon src={check_icon} />
+                <TooltipText>Save</TooltipText>
               </GeneralButton>
-              <GeneralButton onClick={toggleShowInputField}>X</GeneralButton>
+              <GeneralButton onClick={toggleShowInputField}>
+                X<TooltipText>Close</TooltipText>
+              </GeneralButton>
             </React.Fragment>
           )}
           {type === "locations" && (
@@ -91,7 +102,9 @@ const DynamicInputField = ({ type }) => {
           {type === "periods" && (
             <React.Fragment>
               <DayAndTimePicker setFieldVisible={setShowInputField} />
-              <GeneralButton onClick={toggleShowInputField}>X</GeneralButton>
+              <GeneralButton onClick={toggleShowInputField}>
+                X<TooltipText>Close</TooltipText>
+              </GeneralButton>
             </React.Fragment>
           )}
           {type === "weeks" && (
@@ -104,7 +117,9 @@ const DynamicInputField = ({ type }) => {
                 type="number"
                 placeholder="Enter no. of weeks"
               />
-              <GeneralButton onClick={toggleShowInputField}>X</GeneralButton>
+              <GeneralButton onClick={toggleShowInputField}>
+                X<TooltipText>Close</TooltipText>
+              </GeneralButton>
             </React.Fragment>
           )}
         </React.Fragment>

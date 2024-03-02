@@ -17,6 +17,16 @@ import borders from "../../style-utils/borders";
 import DeleteConstraintModal from "./ConstraintModals/DeleteConstraintModal";
 import margins from "../../style-utils/margins";
 import gaps from "../../style-utils/gaps";
+import {
+  IconContainer,
+  LargeIcon,
+  SmallIcon,
+} from "../../GeneralComponents/Icons";
+import info_icon from "../../icons/info_icon.png";
+import delete_icon from "../../icons/delete_icon.png";
+import colors from "../../style-utils/colors";
+import { TooltipText } from "../../GeneralComponents/TooltipText";
+import ConstraintsInfoCardModal from "./ConstraintModals/ConstraintsInfoCardModal";
 
 const constraints_types = ["hard", "soft"];
 
@@ -24,7 +34,7 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
   const { hardConstraints, softConstraints, outdatedConstraints, teams } =
     useSelector((state) => state.constraints);
   const dispatch = useDispatch();
-  console.log(hardConstraints);
+  const [isInfoCardModalOpen, setIsInfoCardModalOpen] = useState(false);
   const [isNewConstraintModalOpen, setIsNewConstraintModalOpen] =
     useState(false);
   const [isEditConstraintModalOpen, setIsEditConstraintModalOpen] =
@@ -103,8 +113,18 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
         setIsModalOpen={setShowConstraintDeleteModal}
         constraintToDelete={constraintToDelete}
       />
+      <ConstraintsInfoCardModal
+        isModalOpen={isInfoCardModalOpen}
+        setIsModalOpen={setIsInfoCardModalOpen}
+      />
       <ConstraintHeader>
-        <Title>Constraints</Title>
+        <Title>
+          Constraints
+          <InfoIcon
+            src={info_icon}
+            onClick={() => setIsInfoCardModalOpen(true)}
+          />
+        </Title>
         <GeneralButton onClick={addNewConstraint}>Add constraint</GeneralButton>
       </ConstraintHeader>
       <ConstraintsGroup>
@@ -168,6 +188,11 @@ const HomePageConstraintsSection = styled(ColumnContainer)`
 const ConstraintListContainer = styled(ColumnContainer)`
   width: 40%;
   height: auto;
+`;
+
+const InfoIcon = styled(LargeIcon)`
+  cursor: pointer;
+  margin-left: ${margins.xsmall};
 `;
 export default ConstraintsPanel;
 

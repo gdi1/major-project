@@ -5,9 +5,12 @@ import Constraint from "./Constraint";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import delete_icon from "./../../icons/delete_icon.png";
+import edit_icon from "./../../icons/edit_icon.png";
 import { constraintsActions } from "../../store/constraints";
 import text_styles from "../../style-utils/text_styles";
-import { LargeIcon } from "../../GeneralComponents/Icons";
+import { IconContainer, LargeIcon } from "../../GeneralComponents/Icons";
+import GeneralButton from "../../GeneralComponents/GeneralButton";
+import { TooltipText } from "../../GeneralComponents/TooltipText";
 
 const ConstraintsList = ({
   type,
@@ -50,14 +53,17 @@ const ConstraintsList = ({
                 outdated={outdatedConstraints.includes(constraint.name)}
               >
                 <ConstraintName>{constraint.name}</ConstraintName>
-                <DeleteIcon
-                  src={delete_icon}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    // removeConstraint(index);
-                    setConstraintToDelete(constraint.name);
-                  }}
-                />
+                <IconContainer>
+                  <DeleteIcon
+                    src={delete_icon}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      // removeConstraint(index);
+                      setConstraintToDelete(constraint.name);
+                    }}
+                  />
+                  <TooltipText>Delete</TooltipText>
+                </IconContainer>
               </Constraint>
             </Drag>
           );

@@ -44,6 +44,7 @@ export const encodeAllInternalData = (internalData) => {
   };
 
   for (const { nodes, edges, name } of hardConstraints) {
+    console.log("h", nodes, edges, name);
     const formattedConstraint = formatConstraintTree({ nodes, edges, name });
     encodedAllInternalData.constraints.push({
       name,
@@ -73,7 +74,8 @@ export const encodeAllInternalData = (internalData) => {
 const formatConstraintTree = ({ nodes, edges, name = "" }) => {
   const nodeMap = createNodeMap(nodes);
   const adjMatrix = createAdjacencyMatrix(edges);
-  const root = getRootNode(edges);
+  const root = getRootNode(edges, nodes);
+  console.log("nodemap", nodeMap, root);
   const result = [];
   let bfs = [root];
   while (bfs.length > 0) {
@@ -88,6 +90,10 @@ const formatConstraintTree = ({ nodes, edges, name = "" }) => {
   }
   result.reverse();
   return result;
+};
+
+const getNodesIds = (nodes) => {
+  return nodes.map(({ id }) => id);
 };
 
 const createNodeMap = (nodes) => {
@@ -105,14 +111,15 @@ const createAdjacencyMatrix = (edges) => {
   return adjMatrix;
 };
 
-const getRootNode = (edges) => {
-  const sources = [];
+const getRootNode = (edges, nodes) => {
+  // const sources = [];
   const targets = [];
+  const nodesIds = getNodesIds(nodes);
   for (const { source, target } of edges) {
-    sources.push(source);
+    // sources.push(source);
     targets.push(target);
   }
-  return sources.filter((node) => !targets.includes(node))[0];
+  return nodesIds.filter((node) => !targets.includes(node))[0];
 };
 
 const formatConstraintNode = (node, adjMatrix) => {
@@ -199,11 +206,11 @@ const compareTrees = (
 const compareConstraints = (constraint1, constraint2) => {
   const nodeMap1 = createNodeMap(constraint1.nodes);
   const adjMatrix1 = createAdjacencyMatrix(constraint1.edges);
-  const root1 = getRootNode(constraint1.edges) || constraint1.nodes[0].id;
+  const root1 = getRootNode(constraint1.edges, constraint1.nodes); // || constraint1.nodes[0].id;
 
   const nodeMap2 = createNodeMap(constraint2.nodes);
   const adjMatrix2 = createAdjacencyMatrix(constraint2.edges);
-  const root2 = getRootNode(constraint2.edges) || constraint2.nodes[0].id;
+  const root2 = getRootNode(constraint2.edges, constraint1.nodes); // || constraint2.nodes[0].id;
 
   return compareTrees(
     { root1, adjMatrix1, nodeMap1 },

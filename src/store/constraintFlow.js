@@ -42,10 +42,14 @@ const constraintFlowSlice = createSlice({
         }),
         { x: 0, y: 0 }
       );
+
       const n = state.nodes.length;
       if (n === 0) {
         const data = { types: {} };
-        data.types[type] = type === "at-least" || type === "at-most" ? 0 : [];
+        data.types[type] =
+          type === "at-least" || type === "at-most"
+            ? [{ value: 0, label: 0 }]
+            : [];
         state.nodes.push({
           id: "1",
           type: "ConstraintNode",
@@ -60,7 +64,10 @@ const constraintFlowSlice = createSlice({
       const id = String(parseInt(state.nodes[state.nodes.length - 1].id) + 1);
 
       const data = { types: {} };
-      data.types[type] = type === "at-least" || type === "at-most" ? 0 : [];
+      data.types[type] =
+        type === "at-least" || type === "at-most"
+          ? [{ value: 0, label: 0 }]
+          : [];
 
       state.nodes.forEach((node) => (node.selected = false));
       state.nodes.push({

@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { constraintFlowActions } from "../store/constraintFlow";
 import { useDispatch } from "react-redux";
 import { MultiSelect } from "react-multi-select-component";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Block from "./Block";
 import InputField from "../GeneralComponents/InputField";
@@ -11,7 +11,7 @@ import GeneralButton from "../GeneralComponents/GeneralButton";
 import { TooltipText } from "../GeneralComponents/TooltipText";
 import { SmallIcon } from "../GeneralComponents/Icons";
 import text_styles from "../style-utils/text_styles";
-import colors from "../style-utils/colors";
+import { useEffect } from "react";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -31,7 +31,6 @@ const blockNames = {
 const FlowBlock = ({ id, type, selectedOptions }) => {
   const dispatch = useDispatch();
   const global_state = useSelector((state) => state.constraints);
-  //   console.log(id, type, selectedOptions);
 
   const removeBlock = () => {
     dispatch(constraintFlowActions.removeFlowBlock(type));
@@ -44,7 +43,7 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
   };
 
   const handleInputChange = (e) => {
-    const sanitizedValue = e.target.value.replace(/\D/g, "");
+    let sanitizedValue = e.target.value.replace(/\D/g, "");
     dispatch(
       constraintFlowActions.updateOptions({
         selectedOptions: [{ value: sanitizedValue, label: sanitizedValue }],
@@ -53,9 +52,6 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
       })
     );
   };
-
-  const [showRemoveOverlayMessage, setShowRemoveOverlayMessage] =
-    useState(false);
 
   const getContentBlock = () => {
     const multiselect_types = [
@@ -71,16 +67,7 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
       return (
         <React.Fragment>
           <Name>{blockNames[type]}</Name>
-          <div
-            style={{ width: "8vw" }}
-            // onMouseEnter={() => {
-            //   setShowRemoveOverlayMessage(false);
-            // }}
-            // onClick={(e) => {
-            //   e.stopPropagation();
-            // }}
-            // onMouseLeave={() => setShowRemoveOverlayMessage(true)}
-          >
+          <div style={{ width: "8vw" }}>
             <MultiSelect
               options={
                 derived_multiselect_types.includes(type)
@@ -98,14 +85,7 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
       return (
         <React.Fragment>
           <Name>{blockNames[type][0]}</Name>
-          <div
-            // onMouseEnter={() => setShowRemoveOverlayMessage(false)}
-            // onMouseLeave={() => setShowRemoveOverlayMessage(true)}
-            style={{ width: "30%" }}
-            // onClick={(e) => {
-            //   e.stopPropagation();
-            // }}
-          >
+          <div style={{ width: "30%" }}>
             <NoOfTimesInputField
               value={selectedOptions[0].label}
               onChange={handleInputChange}
@@ -120,13 +100,15 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
     }
   };
 
+  useEffect(() => {
+    const elements = document.querySelectorAll(".rmsc");
+    elements.forEach((element) => {
+      element.style.setProperty("--rmsc-h", "4vh");
+    });
+  }, []);
+
   return (
-    <PreviewBlockComponent
-    // onClick={removeBlock}
-    // showX={showRemoveOverlayMessage}
-    // onMouseEnter={() => setShowRemoveOverlayMessage(true)}
-    // onMouseLeave={() => setShowRemoveOverlayMessage(false)}
-    >
+    <PreviewBlockComponent>
       {getContentBlock()}
       <GeneralButton onClick={removeBlock}>
         <SmallIcon src={delete_icon} />
@@ -143,8 +125,8 @@ const Name = styled.div`
 
 const PreviewBlockComponent = styled(Block)`
   width: 20vw;
+  box-sizing: border-box;
 `;
-//width: 300px;
 
 const NoOfTimesInputField = styled(InputField)`
   width: 100%;

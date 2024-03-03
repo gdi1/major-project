@@ -1,13 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import SelectionPanel from "../ConstraintComponents/SelectionPanel";
-import PreviewPanel from "../ConstraintComponents/PreviewPanel";
 import { ColumnContainer, RowContainer } from "../GeneralComponents/Containers";
 import Title from "../GeneralComponents/Title";
 import GeneralButton from "../GeneralComponents/GeneralButton";
 import { constraintsActions } from "../store/constraints";
-import ConstraintIterator from "../Utilities/ConstraintIterator";
 import { useNavigate } from "react-router-dom";
-import { currentConstraintActions } from "../store/currentConstraint";
 import styled from "styled-components";
 import { Label } from "../GeneralComponents/Labels";
 import ConstraintFlowPanel from "../ConstraintComponents/ConstraintFlowPanel";
@@ -19,10 +16,6 @@ import gaps from "../style-utils/gaps";
 import margins from "../style-utils/margins";
 import colors from "../style-utils/colors";
 import text_styles from "../style-utils/text_styles";
-import {
-  NotificationMessage,
-  NotificationTitle,
-} from "../GeneralComponents/NotificationComponents";
 
 const operators = ["and", "or"];
 const types = [
@@ -73,6 +66,14 @@ const ConstraintCreationScreen = () => {
           nodeTypes.some((type) => verbs.includes(type)))
       );
     });
+
+    const eachNonLeafNodesWithAtLeastTwoChildren = nodes.every((node) => {
+      const nodeTypes = Object.keys(node.data.types);
+      if (nodeTypes.some((type) => operators.includes(type)))
+        return edges.filter((edge) => edge.source === node.id).length >= 2;
+      return true;
+    });
+
     const atLeastOneLeafNode = nodes.some((node) => {
       const nodeTypes = Object.keys(node.data.types);
       return nodeTypes.some((type) => types.includes(type));
@@ -82,13 +83,13 @@ const ConstraintCreationScreen = () => {
       const nodeTypes = Object.keys(node.data.types);
       return nodeTypes.every((type) =>
         type === "at-least" || type === "at-most"
-          ? node.data.types[type][0].value >= 0
+          ? node.data.types[type][0].value !== "" &&
+            node.data.types[type][0].value > 0
           : true
       );
     });
 
     if (!allLeafNodesNonEmpty) {
-      // alert("allLeafNodesNonEmpty is not right!");
       NotificationManager.error(
         ...formatNtf(
           "You must select at least one option for each multi select block!",
@@ -98,7 +99,6 @@ const ConstraintCreationScreen = () => {
       return;
     }
     if (!allNodesEitherNonLeafOrLeafWithTeamsAndVerb) {
-      // alert("allNodesEitherNonLeafOrLeafWithTeamsAndVerb is not right!");
       NotificationManager.error(
         ...formatNtf(
           "Non leaf nodes must be either AND or OR, leaf nodes must contain 'Teams' and a verb at least.",
@@ -108,7 +108,6 @@ const ConstraintCreationScreen = () => {
       return;
     }
     if (!atLeastOneLeafNode) {
-      // alert("atLeastOneLeafNode is not right!");
       NotificationManager.error(
         ...formatNtf(
           "At least one node must not be an AND or OR node.",
@@ -127,6 +126,17 @@ const ConstraintCreationScreen = () => {
       );
       return;
     }
+
+    if (!eachNonLeafNodesWithAtLeastTwoChildren) {
+      NotificationManager.error(
+        ...formatNtf(
+          "Each non-leaf node must have at least two children.",
+          "Error"
+        )
+      );
+      return;
+    }
+
     dispatch(
       constraintsActions.addNewFlowConstraint({ name, type, nodes, edges })
     );

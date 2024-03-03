@@ -21,6 +21,7 @@ const DropDownItem = ({ id, option, type }) => {
   const optionInputRef = useRef();
   const dispatch = useDispatch();
   const options = useSelector((state) => state.constraints[type]);
+  // const { outdatedConstraints } = useSelector((state) => state.constraints);
 
   const handleDeleteOption = () => {
     dispatch(constraintsActions.removeOption({ type, id }));

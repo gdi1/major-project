@@ -142,7 +142,6 @@ const formatConstraintNode = (node, adjMatrix) => {
 };
 
 const compareNodes = (node1, node2) => {
-  // console.log(node1, node2);
   const types1 = Object.keys(node1.data.types);
   const types2 = Object.keys(node2.data.types);
   types1.sort();
@@ -210,8 +209,7 @@ const compareConstraints = (constraint1, constraint2) => {
 
   const nodeMap2 = createNodeMap(constraint2.nodes);
   const adjMatrix2 = createAdjacencyMatrix(constraint2.edges);
-  const root2 = getRootNode(constraint2.edges, constraint1.nodes); // || constraint2.nodes[0].id;
-
+  const root2 = getRootNode(constraint2.edges, constraint2.nodes); // || constraint2.nodes[0].id;
   return compareTrees(
     { root1, adjMatrix1, nodeMap1 },
     { root2, adjMatrix2, nodeMap2 }

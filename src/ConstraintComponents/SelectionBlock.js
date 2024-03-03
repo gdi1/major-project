@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MultiSelect } from "react-multi-select-component";
-import { currentConstraintActions } from "../store/currentConstraint";
 import Block from "./Block";
 import InputField from "../GeneralComponents/InputField";
 import styled from "styled-components";
@@ -42,7 +41,9 @@ const ConstraintBlock = ({ type }) => {
       return (
         <React.Fragment>
           <Name>{blockNames[type]}</Name>
-          <MultiSelect options={[]} disabled={true} labelledBy="Select" />
+          <div style={{ width: "8vw" }}>
+            <MultiSelect options={[]} disabled={true} labelledBy="Select" />
+          </div>
         </React.Fragment>
       );
     } else if (type === "at-least" || type === "at-most") {
@@ -58,21 +59,11 @@ const ConstraintBlock = ({ type }) => {
     }
   };
 
-  const addConstraintBlock = (type) => {
-    dispatch(currentConstraintActions.addNewConstraintBlock(type));
-  };
-
   const addFlowBlock = () => {
     console.log("hello", selectedNode);
     if (selectedNode !== undefined)
       dispatch(constraintFlowActions.addFlowBlock(type));
     else dispatch(constraintFlowActions.addNewNode(type));
-  };
-
-  const addNewNode = () => {};
-
-  const removeBlock = () => {
-    dispatch(constraintFlowActions.removeFlowBlock(type));
   };
 
   return (

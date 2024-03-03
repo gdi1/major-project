@@ -20,7 +20,6 @@ const ConstraintsList = ({
   setConstraintToDelete,
 }) => {
   const { outdatedConstraints } = useSelector((state) => state.constraints);
-  const dispatch = useDispatch();
 
   // const removeConstraint = (index) => {
   //   dispatch(constraintsActions.removeConstraint({ index, type }));

@@ -66,7 +66,11 @@ const SaveWorkingCopyModal = ({ isModalOpen, setIsModalOpen }) => {
       <ModalBody>
         <ModalTitle>Save working copy</ModalTitle>
         <ModalLabel>Name</ModalLabel>
-        <NameInputField placeholder="Enter name" ref={nameRef} />
+        <NameInputField
+          placeholder="Enter name"
+          ref={nameRef}
+          autoFocus={true}
+        />
         <ModalButtonGroup>
           <ModalButton onClick={closeModal}>Close</ModalButton>
           <ModalButton onClick={saveWorkingCopy}>Save</ModalButton>

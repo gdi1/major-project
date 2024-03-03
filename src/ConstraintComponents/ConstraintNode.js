@@ -42,6 +42,8 @@ const ConstraintNodeBody = styled.div`
   border: ${borders.small};
   background-color: ${(props) =>
     props.focused ? `${colors.brick}` : `${colors.mustard}`};
+  min-width: 20vw;
+  min-height: 5.5vh;
 `;
 
 export default ConstraintNode;

@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { sortPeriods } from "../Utilities/PeriodsFunctions";
+import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../Utilities/NotificationWrapper";
 
 const types = ["teams", "locations", "periods", "weeks"];
 
@@ -97,9 +99,17 @@ const constraintsSlice = createSlice({
           state.softConstraints[index] = constraint;
         }
       }
+      const wereOutdatedConstraints = state.outdatedConstraints.length > 0;
       state.outdatedConstraints = state.outdatedConstraints.filter(
         (n) => n !== name
       );
+      if (state.outdatedConstraints.length === 0 && wereOutdatedConstraints)
+        NotificationManager.success(
+          ...formatNtf(
+            "All outdated constraints have been resolved!",
+            "Success"
+          )
+        );
     },
     addNewConstraint(state, action) {
       const { name, type } = action.payload;
@@ -207,15 +217,15 @@ const constraintsSlice = createSlice({
         soft: state.softConstraints,
         hard: state.hardConstraints,
       };
-      const name = mapIdToList[type][index].name;
+      // const name = mapIdToList[type][index].name;
       mapIdToList[type].splice(index, 1);
-      state.outdatedConstraints = state.outdatedConstraints.filter(
-        (el) => el !== index
-      );
-      if (!isDrag)
-        state.outdatedConstraints = state.outdatedConstraints.filter(
-          (n) => n !== name
-        );
+      // state.outdatedConstraints = state.outdatedConstraints.filter(
+      //   (el) => el !== index
+      // );
+      // if (!isDrag)
+      //   state.outdatedConstraints = state.outdatedConstraints.filter(
+      //     (n) => n !== name
+      //   );
     },
     removeConstraintByName(state, action) {
       state.hardConstraints = state.hardConstraints.filter(
@@ -224,9 +234,17 @@ const constraintsSlice = createSlice({
       state.softConstraints = state.softConstraints.filter(
         (c) => c.name !== action.payload
       );
+      const wereOutdatedConstraints = state.outdatedConstraints.length > 0;
       state.outdatedConstraints = state.outdatedConstraints.filter(
         (n) => n !== action.payload
       );
+      if (state.outdatedConstraints.length === 0 && wereOutdatedConstraints)
+        NotificationManager.success(
+          ...formatNtf(
+            "All outdated constraints have been resolved!",
+            "Success"
+          )
+        );
     },
 
     updateOption(state, action) {
@@ -282,8 +300,13 @@ const constraintsSlice = createSlice({
               node.data.types[type] = node.data.types[type].filter(
                 (el) => el.value !== value
               );
-              if (node.data.types[type].length === 0)
+              if (node.data.types[type].length === 0) {
+                if (state.outdatedConstraints.length === 0)
+                  NotificationManager.error(
+                    ...formatNtf("Outdated constraints!", "Error")
+                  );
                 state.outdatedConstraints.push(constraint.name);
+              }
 
               if (type === "teams") {
                 const additional_types = ["play-against", "not-play-against"];
@@ -295,8 +318,13 @@ const constraintsSlice = createSlice({
                     if (
                       node.data.types[add_type].length === 0 &&
                       !state.outdatedConstraints.includes(constraint.name)
-                    )
+                    ) {
+                      if (state.outdatedConstraints.length === 0)
+                        NotificationManager.error(
+                          ...formatNtf("Outdated constraints!", "Error")
+                        );
                       state.outdatedConstraints.push(constraint.name);
+                    }
                   }
                 }
               }

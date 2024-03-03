@@ -14,6 +14,9 @@ const Legend = () => {
       <Container>
         <Text>Target handle: </Text> <GreenDot />
       </Container>
+      <Container>
+        <Text>To delete a node, select it and press the "Delete" key. </Text>
+      </Container>
     </div>
   );
 };

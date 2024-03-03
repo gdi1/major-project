@@ -153,6 +153,7 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
                 constraints={softConstraints}
                 setEditInfo={setEditInfo}
                 setIsEditConstraintModalOpen={setIsEditConstraintModalOpen}
+                setConstraintToDelete={setConstraintToDelete}
               />
             </ConstraintListContainer>
           )}

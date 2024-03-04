@@ -1,5 +1,8 @@
 import { useSelector } from "react-redux";
-import { ColumnContainer } from "../../GeneralComponents/Containers";
+import {
+  ColumnContainer,
+  RowContainer,
+} from "../../GeneralComponents/Containers";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
 import React, { useState, useCallback, useEffect } from "react";
 import ScheduleView from "./ScheduleView";
@@ -8,16 +11,21 @@ import styled from "styled-components";
 import paddings from "../../style-utils/paddings";
 import borders from "../../style-utils/borders";
 import gaps from "../../style-utils/gaps";
+import { Label } from "../../GeneralComponents/Labels";
+import { LargeIcon } from "../../GeneralComponents/Icons";
+import info_icon from "../../icons/info_icon.png";
+import MapInfoCardModal from "./SolutionModals/MapInfoCardModal";
 
 const SolutionPanel = () => {
   const [view, setView] = useState("schedule");
-  const { selectedTeam } = useSelector((state) => state.solution);
+  const { selectedTeam, speed } = useSelector((state) => state.solution);
   const switchButtonTitle =
     view === "schedule" ? "Switch to View Journey" : "Switch to View Schedule";
   const switchFunction = useCallback(
     () => (view === "schedule" ? setView("journey") : setView("schedule")),
     [view]
   );
+  const [isMapInfoCardOpened, setIsMapInfoCardOpened] = useState(false);
 
   useEffect(() => {
     if (!selectedTeam) return;
@@ -31,12 +39,43 @@ const SolutionPanel = () => {
 
   return (
     <SolutionBody>
-      <SwitchButton onClick={switchFunction}>{switchButtonTitle}</SwitchButton>
+      <MapInfoCardModal
+        isModalOpen={isMapInfoCardOpened}
+        setIsModalOpen={setIsMapInfoCardOpened}
+      />
+      <SubHeaderContainer>
+        {view === "journey" && (
+          <React.Fragment>
+            <Speed>Speed setting: {6 - speed / 1000}</Speed>
+            <InfoIcon
+              src={info_icon}
+              onClick={() => setIsMapInfoCardOpened(true)}
+            />
+          </React.Fragment>
+        )}
+        <SwitchButton onClick={switchFunction}>
+          {switchButtonTitle}
+        </SwitchButton>
+      </SubHeaderContainer>
       {view === "schedule" && <ScheduleView />}
       {view === "journey" && <JourneyView />}
     </SolutionBody>
   );
 };
+
+const SubHeaderContainer = styled(RowContainer)`
+  height: auto;
+  justify-content: end;
+  gap: ${gaps.med};
+`;
+
+const InfoIcon = styled(LargeIcon)`
+  cursor: pointer;
+`;
+
+const Speed = styled(Label)`
+  width: auto;
+`;
 
 const SolutionBody = styled(ColumnContainer)`
   padding: ${paddings.xsmall};

@@ -10,6 +10,7 @@ import colors from "../../style-utils/colors";
 import { solutionActions } from "../../store/solution";
 import gaps from "../../style-utils/gaps";
 import text_styles from "../../style-utils/text_styles";
+import paddings from "../../style-utils/paddings";
 
 const SelectedTeamGamesDescription = ({ pulsatingGames }) => {
   const { selectedTeamGames, focusedGame, selectedTeam } = useSelector(
@@ -98,7 +99,9 @@ const GameCard = styled(ColumnContainer)`
   border: ${borders.small};
   cursor: pointer;
   gap: ${gaps.xxsmall};
-  height: 10vh;
+  height: auto;
+  padding: ${paddings.xxsmall};
+  box-sizing: border-box;
 
   justify-content: space-between;
   background-color: ${(props) =>

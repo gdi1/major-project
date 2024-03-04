@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import {
   getCoordinatesOfLocations,
   filterConsecutiveSameLocations,
+  calculateDurations,
 } from "../../../Utilities/MapFunctions";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -27,10 +28,16 @@ function MapMovingMarker({ movingMarkerRef, setPulsatingGames }) {
   }, [focusedGame]);
 
   useEffect(() => {
-    if (movingMarkerRef.current !== null)
-      movingMarkerRef.current._durations = Array(locations.length - 1).fill(
+    if (movingMarkerRef.current !== null) {
+      movingMarkerRef.current._durations = calculateDurations(
+        selectedTeamJourney,
         speed
       );
+    }
+    // movingMarkerRef.current._durations = Array(locations.length - 1).fill(
+    //   speed
+    // );
+    console.log(calculateDurations(selectedTeamJourney, speed));
   }, [speed]);
 
   useEffect(() => {
@@ -53,7 +60,8 @@ function MapMovingMarker({ movingMarkerRef, setPulsatingGames }) {
       setIndex([0]);
       movingMarkerRef.current = L.Marker.movingMarker(
         locations.map(({ coordinates }) => coordinates),
-        Array(locations.length - 1).fill(speed),
+        // Array(locations.length - 1).fill(speed),
+        calculateDurations(selectedTeamJourney, speed),
         {
           icon: new Icon({
             iconUrl: process.env.PUBLIC_URL + "/team_icon.png",

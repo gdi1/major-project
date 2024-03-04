@@ -11,7 +11,7 @@ const solutionSlice = createSlice({
     violatedSoftConstraints: [],
     schedule: [],
     curvedPaths: [],
-    speed: 5000,
+    speed: 3000,
     teamsMap: {},
     locationsMap: {},
     periodsMap: {},
@@ -53,7 +53,7 @@ const solutionSlice = createSlice({
       state.speed = action.payload;
     },
     reduceSpeed(state, _) {
-      if (state.speed < 10000) state.speed += 1000;
+      if (state.speed < 5000) state.speed += 1000;
     },
     increaseSpeed(state, _) {
       if (state.speed > 1000) state.speed -= 1000;

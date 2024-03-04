@@ -1,33 +1,34 @@
-export const calculateBezierCurve = (startpoint, endpoint) => {
-  const offsetX = endpoint[1] - startpoint[1],
-    offsetY = endpoint[0] - startpoint[0];
+// export const calculateBezierCurve = (startpoint, endpoint) => {
+//   const offsetX = endpoint[1] - startpoint[1],
+//     offsetY = endpoint[0] - startpoint[0];
 
-  const r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
-    theta = Math.atan2(offsetY, offsetX);
+//   const r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
+//     theta = Math.atan2(offsetY, offsetX);
 
-  const thetaOffset = 3.14 / 10;
+//   const thetaOffset = 3.14 / 10;
 
-  const r2 = r / 2 / Math.cos(thetaOffset),
-    theta2 = theta + thetaOffset;
+//   const r2 = r / 2 / Math.cos(thetaOffset),
+//     theta2 = theta + thetaOffset;
 
-  const midpointX = r2 * Math.cos(theta2) + startpoint[1],
-    midpointY = r2 * Math.sin(theta2) + startpoint[0];
+//   const midpointX = r2 * Math.cos(theta2) + startpoint[1],
+//     midpointY = r2 * Math.sin(theta2) + startpoint[0];
 
-  const midpointLatLng = [midpointY, midpointX];
+//   const midpointLatLng = [midpointY, midpointX];
 
-  return [startpoint, midpointLatLng, endpoint];
-};
+//   return [startpoint, midpointLatLng, endpoint];
+// };
 
-export const formatJourneyCurvesEnds = (selectedTeamJourney) => {
-  const bezierCurvesEnds = [];
-  for (let i = 0; i < selectedTeamJourney.length - 1; i++) {
-    bezierCurvesEnds.push({
-      startpoint: selectedTeamJourney[i].coordinates,
-      endpoint: selectedTeamJourney[i + 1].coordinates,
-    });
-  }
-  return bezierCurvesEnds;
-};
+// export const formatJourneyCurvesEnds = (selectedTeamJourney) => {
+//   const bezierCurvesEnds = [];
+//   for (let i = 0; i < selectedTeamJourney.length - 1; i++) {
+//     bezierCurvesEnds.push({
+//       startpoint: selectedTeamJourney[i].coordinates,
+//       endpoint: selectedTeamJourney[i + 1].coordinates,
+//     });
+//   }
+//   return bezierCurvesEnds;
+// };
+import L from "leaflet";
 
 const extractUniquePointsCoordinates = (selectedTeamJourney) => {
   const coordinates = selectedTeamJourney.map(({ coordinates }) => coordinates);
@@ -98,4 +99,26 @@ export const filterConsecutiveSameLocations = (locations) => {
   }
   filteredLocations[filteredLocations.length - 1].cnt = cnt;
   return filteredLocations;
+};
+
+const calculatedDistances = (coordinates) => {
+  const distances = [];
+  for (let i = 0; i < coordinates.length - 1; i++) {
+    const p1 = L.latLng(coordinates[i][0], coordinates[i][1]);
+    const p2 = L.latLng(coordinates[i + 1][0], coordinates[i + 1][1]);
+    distances.push(p1.distanceTo(p2));
+  }
+  return distances;
+};
+
+export const calculateDurations = (selectedTeamJourney, speed) => {
+  const coordinates = filterConsecutiveSameLocations(
+    getCoordinatesOfLocations(selectedTeamJourney)
+  ).map(({ coordinates }) => coordinates);
+  const distances = calculatedDistances(coordinates);
+  const minDist = Math.min(...distances);
+  const factor = minDist / speed;
+
+  const weightedDistances = distances.map((d) => Math.min(d / factor, 5000));
+  return weightedDistances;
 };

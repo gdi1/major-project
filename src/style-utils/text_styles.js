@@ -7,7 +7,6 @@ let text_styles = {
     med_minus: "1.8vw",
     med: "2vw",
   },
-  colors: {},
   styles: {
     fontFamily: "Lucida Console, monospace",
   },

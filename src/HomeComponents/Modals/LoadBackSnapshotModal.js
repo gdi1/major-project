@@ -12,7 +12,7 @@ import Modal from "react-modal";
 import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { snapshotsHistoryActions } from "../../store/snapshotsHistory";
-import { constraintsActions } from "../../store/constraints";
+import { configurationsActions } from "../../store/configurations";
 import { solutionActions } from "../../store/solution";
 import { NotificationManager } from "react-notifications";
 import { formatNtf } from "../../Utilities/NotificationWrapper";
@@ -24,7 +24,7 @@ const LoadBackSnapshotModal = ({
 }) => {
   const modalRef = useRef();
   const nameRef = useRef();
-  const internalState = useSelector((state) => state.constraints);
+  const internalState = useSelector((state) => state.configurations);
   const { snapshots } = useSelector((state) => state.snapshotsHistory);
   const solution = useSelector((state) => state.solution);
   const dispatch = useDispatch();
@@ -64,7 +64,7 @@ const LoadBackSnapshotModal = ({
       (snapshot) => snapshot.name === snapshotName
     );
     console.log("Snapshot is:", snapshotToLoad);
-    dispatch(constraintsActions.setState(snapshotToLoad.internalState));
+    dispatch(configurationsActions.setState(snapshotToLoad.internalState));
     dispatch(solutionActions.setState(snapshotToLoad.solution));
     console.log("name: ", snapshotName);
     NotificationManager.success(

@@ -1,4 +1,4 @@
-import { constraintsActions } from "../../store/constraints";
+import { configurationsActions } from "../../store/configurations";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ColumnContainer,
@@ -17,22 +17,17 @@ import borders from "../../style-utils/borders";
 import DeleteConstraintModal from "./ConstraintModals/DeleteConstraintModal";
 import margins from "../../style-utils/margins";
 import gaps from "../../style-utils/gaps";
-import {
-  IconContainer,
-  LargeIcon,
-  SmallIcon,
-} from "../../GeneralComponents/Icons";
+import { IconContainer, LargeIcon } from "../../GeneralComponents/Icons";
 import info_icon from "../../icons/info_icon.png";
-import delete_icon from "../../icons/delete_icon.png";
-import colors from "../../style-utils/colors";
 import { TooltipText } from "../../GeneralComponents/TooltipText";
 import ConstraintsInfoCardModal from "./ConstraintModals/ConstraintsInfoCardModal";
+import exclamation_mark_icon from "../../icons/exclamation_mark_icon.png";
 
 const constraints_types = ["hard", "soft"];
 
 const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
   const { hardConstraints, softConstraints, outdatedConstraints, teams } =
-    useSelector((state) => state.constraints);
+    useSelector((state) => state.configurations);
   const dispatch = useDispatch();
   const [isInfoCardModalOpen, setIsInfoCardModalOpen] = useState(false);
   const [isNewConstraintModalOpen, setIsNewConstraintModalOpen] =
@@ -81,14 +76,14 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
     const constraint = mapIdToList[sourceListId][sourceIndex];
 
     dispatch(
-      constraintsActions.removeConstraint({
+      configurationsActions.removeConstraint({
         index: sourceIndex,
         type: sourceListId,
         isDrag: true,
       })
     );
     dispatch(
-      constraintsActions.addConstraint({
+      configurationsActions.addConstraint({
         constraint,
         index: destinationIndex,
         type: destinationListId,
@@ -120,10 +115,21 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
       <ConstraintHeader>
         <Title>
           Constraints
-          <InfoIcon
-            src={info_icon}
-            onClick={() => setIsInfoCardModalOpen(true)}
-          />
+          <IconContainer style={{ marginLeft: `${margins.xsmall}` }}>
+            <InfoIcon
+              src={info_icon}
+              onClick={() => setIsInfoCardModalOpen(true)}
+            />
+            <TooltipText>Info</TooltipText>
+          </IconContainer>
+          {outdatedConstraints.length > 0 && (
+            <IconContainer style={{ marginLeft: `${margins.xsmall}` }}>
+              <InfoIcon src={exclamation_mark_icon} />
+              <TooltipText>
+                Red highlighted constraints are inconsistent!
+              </TooltipText>
+            </IconContainer>
+          )}
         </Title>
         <GeneralButton onClick={addNewConstraint}>Add constraint</GeneralButton>
       </ConstraintHeader>
@@ -170,10 +176,6 @@ const ConstraintHeader = styled(RowContainer)`
   margin-bottom: ${margins.small};
 `;
 
-const ButtonGroup = styled(RowContainer)`
-  justify-content: space-evenly;
-  margin-bottom: ${margins.small};
-`;
 const ConstraintsGroup = styled(RowContainer)`
   justify-content: space-evenly;
   align-items: start;
@@ -193,7 +195,6 @@ const ConstraintListContainer = styled(ColumnContainer)`
 
 const InfoIcon = styled(LargeIcon)`
   cursor: pointer;
-  margin-left: ${margins.xsmall};
 `;
 export default ConstraintsPanel;
 

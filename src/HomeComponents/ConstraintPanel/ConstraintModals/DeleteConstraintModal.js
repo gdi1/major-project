@@ -9,7 +9,7 @@ import { modal_content } from "../../../style-utils/modalContent";
 import Modal from "react-modal";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { constraintsActions } from "../../../store/constraints";
+import { configurationsActions } from "../../../store/configurations";
 import { NotificationManager } from "react-notifications";
 import { formatNtf } from "../../../Utilities/NotificationWrapper";
 
@@ -23,7 +23,7 @@ const DeleteConstraintModal = ({
   const closeModal = () => setIsModalOpen(false);
 
   const deleteConstraint = () => {
-    dispatch(constraintsActions.removeConstraintByName(constraintToDelete));
+    dispatch(configurationsActions.removeConstraintByName(constraintToDelete));
     NotificationManager.success(
       ...formatNtf(
         `Successfully removed constraint ${constraintToDelete}`,

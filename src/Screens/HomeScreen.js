@@ -7,7 +7,7 @@ import SnapshotsPanel from "../HomeComponents/SnapshotsPanel/SnapshotsPanel";
 import React, { useEffect, useState } from "react";
 import SidebarComponent from "../HomeComponents/SidebarComponent";
 import GeneralButton from "../GeneralComponents/GeneralButton";
-import SetupOptionsPanel from "../HomeComponents/InitialSetupPanel/SetupOptionsPanel";
+import SetupOptionsPanel from "../HomeComponents/ParametersPanel/SetupOptionsPanel";
 import { solutionActions } from "../store/solution";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -41,7 +41,7 @@ const HomeScreen = () => {
   const [showGenerateNewSolutionModal, setShowGenerateNewSolutionModal] =
     useState(false);
 
-  const internalData = useSelector((state) => state.constraints);
+  const internalData = useSelector((state) => state.configurations);
   const { outdatedConstraints } = internalData;
   const {
     isSolution,

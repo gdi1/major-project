@@ -12,7 +12,7 @@ import { NotificationManager } from "react-notifications";
 import { formatNtf } from "../../Utilities/NotificationWrapper";
 import InputField from "../../GeneralComponents/InputField";
 import { solutionActions } from "../../store/solution";
-import { constraintsActions } from "../../store/constraints";
+import { configurationsActions } from "../../store/configurations";
 import { snapshotsHistoryActions } from "../../store/snapshotsHistory";
 import { useDispatch } from "react-redux";
 
@@ -34,12 +34,12 @@ const GeneralImportModal = ({ isModalOpen, setIsModalOpen }) => {
     const isEverythingExport = jsonFile.snapshots ? true : false;
     if (isEverythingExport) {
       const { internalState, snapshots, solution } = jsonFile;
-      dispatch(constraintsActions.setState(internalState));
+      dispatch(configurationsActions.setState(internalState));
       dispatch(solutionActions.setState(solution));
       dispatch(snapshotsHistoryActions.setSnapshots(snapshots));
     } else {
       const { internalState, solution } = jsonFile.snapshot;
-      dispatch(constraintsActions.setState(internalState));
+      dispatch(configurationsActions.setState(internalState));
       dispatch(solutionActions.setState(solution));
     }
     NotificationManager.success(

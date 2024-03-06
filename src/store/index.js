@@ -1,13 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import constraintsSlice from "./constraints";
+import configurationsSlice from "./configurations";
 import solutionSlice from "./solution";
-// import currentConstraintSlice from "./currentConstraint";
 import constraintFlowSlice from "./constraintFlow";
 import { combineReducers } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import hardSet from "redux-persist/lib/stateReconciler/hardSet";
-import workingCopySlice from "./workingCopy";
 import snapshotsHistorySlice from "./snapshotsHistory";
 
 const persistConfig = {
@@ -17,11 +15,9 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  constraints: constraintsSlice.reducer,
+  configurations: configurationsSlice.reducer,
   solution: solutionSlice.reducer,
-  // currentConstraint: currentConstraintSlice.reducer,
   flow: constraintFlowSlice.reducer,
-  workingCopy: workingCopySlice.reducer,
   snapshotsHistory: snapshotsHistorySlice.reducer,
 });
 

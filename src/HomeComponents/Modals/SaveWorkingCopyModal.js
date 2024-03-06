@@ -17,7 +17,7 @@ import { formatNtf } from "../../Utilities/NotificationWrapper";
 const SaveWorkingCopyModal = ({ isModalOpen, setIsModalOpen }) => {
   const modalRef = useRef();
   const nameRef = useRef();
-  const internalState = useSelector((state) => state.constraints);
+  const internalState = useSelector((state) => state.configurations);
   const { snapshots } = useSelector((state) => state.snapshotsHistory);
   const solution = useSelector((state) => state.solution);
   const dispatch = useDispatch();

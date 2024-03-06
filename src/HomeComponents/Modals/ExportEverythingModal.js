@@ -8,14 +8,14 @@ import {
 import { modal_content } from "../../style-utils/modalContent";
 import Modal from "react-modal";
 import { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { exportJSON } from "../../Utilities/ExportingFunction";
 import { NotificationManager } from "react-notifications";
 import { formatNtf } from "../../Utilities/NotificationWrapper";
 
 const ExportEverythingModal = ({ isModalOpen, setIsModalOpen }) => {
   const modalRef = useRef();
-  const internalState = useSelector((state) => state.constraints);
+  const internalState = useSelector((state) => state.configurations);
   const { snapshots } = useSelector((state) => state.snapshotsHistory);
   const solution = useSelector((state) => state.solution);
 

@@ -10,7 +10,7 @@ const solutionSlice = createSlice({
     focusedGame: undefined,
     violatedSoftConstraints: [],
     schedule: [],
-    curvedPaths: [],
+    // curvedPaths: [],
     speed: 3000,
     teamsMap: {},
     locationsMap: {},

@@ -2,8 +2,8 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import HomeScreen from "./Screens/HomeScreen";
 import ConstraintCreationScreen from "./Screens/ConstraintCreationScreen";
 import SolutionScreen from "./Screens/SolutionScreen";
-import React, { useEffect } from "react";
-import SetupOptionsPanel from "./HomeComponents/InitialSetupPanel/SetupOptionsPanel";
+import React from "react";
+import SetupOptionsPanel from "./HomeComponents/ParametersPanel/SetupOptionsPanel";
 import ConstraintsPanel from "./HomeComponents/ConstraintPanel/ConstraintsPanel";
 import { ReactNotifications } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
@@ -12,11 +12,9 @@ import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import styled from "styled-components";
 import colors from "./style-utils/colors";
-import text_styles from "./style-utils/text_styles";
 import paddings from "./style-utils/paddings";
 
 const App = () => {
-  const navigate = useNavigate();
   // useEffect(() => {
   //   if (localStorage.getItem("firstLoadDone") !== null) navigate("/");
   // }, []);

@@ -1,7 +1,7 @@
 import React from "react";
 import { RowContainer } from "../GeneralComponents/Containers";
-import SolutionPanel from "../SolutionComponents/SolutionPanel/SolutionPanel";
-import TeamsPanel from "../SolutionComponents/TeamsPanel/TeamsPanel";
+import SolutionPanel from "../SolutionComponents/SolutionPanel";
+import TeamsPanel from "../SolutionComponents/TeamsPanel";
 import Title from "../GeneralComponents/Title";
 import GeneralButton from "../GeneralComponents/GeneralButton";
 import { useNavigate } from "react-router-dom";

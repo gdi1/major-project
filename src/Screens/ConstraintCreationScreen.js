@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
-import SelectionPanel from "../ConstraintComponents/SelectionPanel";
+import SelectionPanel from "../ConstraintComponents/SelectionPanel/SelectionPanel";
 import { ColumnContainer, RowContainer } from "../GeneralComponents/Containers";
 import Title from "../GeneralComponents/Title";
 import GeneralButton from "../GeneralComponents/GeneralButton";
-import { constraintsActions } from "../store/constraints";
+import { configurationsActions } from "../store/configurations";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Label } from "../GeneralComponents/Labels";
-import ConstraintFlowPanel from "../ConstraintComponents/ConstraintFlowPanel";
+import ConstraintFlowPanel from "../ConstraintComponents/ConstraintCreationBoard/ConstraintFlowPanel";
 import { ReactFlowProvider } from "reactflow";
 import { constraintFlowActions } from "../store/constraintFlow";
 import { NotificationManager } from "react-notifications";
@@ -138,7 +138,7 @@ const ConstraintCreationScreen = () => {
     }
 
     dispatch(
-      constraintsActions.addNewFlowConstraint({ name, type, nodes, edges })
+      configurationsActions.addNewFlowConstraint({ name, type, nodes, edges })
     );
     dispatch(constraintFlowActions.resetConstraintFlow());
     NotificationManager.success(

@@ -92,6 +92,25 @@ const formatConstraintTree = ({ nodes, edges, name = "" }) => {
   return result;
 };
 
+const formatConstraintNode = (node, adjMatrix) => {
+  const { id, data } = node;
+  const types = Object.keys(data.types);
+
+  const isLeaf = types.every((type) => !operators.includes(type));
+  const formattedNode = { name: id, type: isLeaf ? "leaf" : types[0] };
+
+  if (isLeaf)
+    for (const type of types)
+      formattedNode[type] = data.types[type].map(({ value }) => value);
+  else {
+    formattedNode.children = [];
+    for (const child of adjMatrix[id]) {
+      formattedNode.children.push(child);
+    }
+  }
+  return formattedNode;
+};
+
 const getNodesIds = (nodes) => {
   return nodes.map(({ id }) => id);
 };
@@ -120,25 +139,6 @@ const getRootNode = (edges, nodes) => {
     targets.push(target);
   }
   return nodesIds.filter((node) => !targets.includes(node))[0];
-};
-
-const formatConstraintNode = (node, adjMatrix) => {
-  const { id, data } = node;
-  const types = Object.keys(data.types);
-
-  const isLeaf = types.every((type) => !operators.includes(type));
-  const formattedNode = { name: id, type: isLeaf ? "leaf" : types[0] };
-
-  if (isLeaf)
-    for (const type of types)
-      formattedNode[type] = data.types[type].map(({ value }) => value);
-  else {
-    formattedNode.children = [];
-    for (const child of adjMatrix[id]) {
-      formattedNode.children.push(child);
-    }
-  }
-  return formattedNode;
 };
 
 const compareNodes = (node1, node2) => {

@@ -11,7 +11,7 @@ export const TooltipText = styled.span`
   text-align: center;
   padding: 5px;
   position: absolute;
-  z-index: 1;
+  z-index: 1000;
   left: 50%;
   top: 160%;
   transform: translate(-50%, -50%);

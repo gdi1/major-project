@@ -22,13 +22,13 @@ const AddConstraintNameModal = ({
   isSoft = false,
 }) => {
   const { teams, periods, weeks, locations } = useSelector(
-    (state) => state.constraints
+    (state) => state.configurations
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { hardConstraints, softConstraints } = useSelector(
-    (state) => state.constraints
+    (state) => state.configurations
   );
 
   const closeModal = () => {

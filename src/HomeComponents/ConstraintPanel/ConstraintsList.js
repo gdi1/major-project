@@ -3,13 +3,10 @@ import Drag from "./Drag";
 import { RowContainer } from "../../GeneralComponents/Containers";
 import Constraint from "./Constraint";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import delete_icon from "./../../icons/delete_icon.png";
-import edit_icon from "./../../icons/edit_icon.png";
-import { constraintsActions } from "../../store/constraints";
 import text_styles from "../../style-utils/text_styles";
 import { IconContainer, LargeIcon } from "../../GeneralComponents/Icons";
-import GeneralButton from "../../GeneralComponents/GeneralButton";
 import { TooltipText } from "../../GeneralComponents/TooltipText";
 
 const ConstraintsList = ({
@@ -19,7 +16,7 @@ const ConstraintsList = ({
   setIsEditConstraintModalOpen,
   setConstraintToDelete,
 }) => {
-  const { outdatedConstraints } = useSelector((state) => state.constraints);
+  const { outdatedConstraints } = useSelector((state) => state.configurations);
 
   // const removeConstraint = (index) => {
   //   dispatch(constraintsActions.removeConstraint({ index, type }));

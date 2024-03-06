@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import Modal from "react-modal";
 import { modal_content } from "../../../style-utils/modalContent";
-import { constraintsActions } from "../../../store/constraints";
+import { configurationsActions } from "../../../store/configurations";
 import {
   ModalBody,
   ModalButton,
@@ -21,7 +21,7 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   const navigate = useNavigate();
   const { index, type, constraint } = editInfo;
   const { hardConstraints, softConstraints } = useSelector(
-    (state) => state.constraints
+    (state) => state.configurations
   );
 
   const closeModal = () => {
@@ -48,7 +48,7 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
       return false;
     }
     if (constraint.name === name) return true;
-    dispatch(constraintsActions.changeName({ index, type, name }));
+    dispatch(configurationsActions.changeName({ index, type, name }));
     NotificationManager.success(
       ...formatNtf("Successfully changed name", "Success")
     );

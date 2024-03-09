@@ -11,21 +11,23 @@ import SetupOptionsPanel from "../HomeComponents/ParametersPanel/SetupOptionsPan
 import { solutionActions } from "../store/solution";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import SaveWorkingCopyModal from "../HomeComponents/Modals/SaveWorkingCopyModal";
+import SaveWorkingCopyModal from "../HomeComponents/HomeModals/SaveWorkingCopyModal";
 import outdated_icon from "./../icons/outdated_icon.png";
 import { encodeAllInternalData } from "../Utilities/EncodingFunctions";
-import ExportEverythingModal from "../HomeComponents/Modals/ExportEverythingModal";
+import ExportEverythingModal from "../HomeComponents/HomeModals/ExportEverythingModal";
 import { NotificationManager } from "react-notifications";
 import { formatNtf } from "../Utilities/NotificationWrapper";
 import { compareInternalDatas } from "../Utilities/EncodingFunctions";
 import { TooltipText } from "../GeneralComponents/TooltipText";
-import GeneralImportModal from "../HomeComponents/Modals/GeneralImportModal";
+import GeneralImportModal from "../HomeComponents/HomeModals/GeneralImportModal";
 import gaps from "../style-utils/gaps";
 import paddings from "../style-utils/paddings";
 import { LargeIcon, IconContainer } from "../GeneralComponents/Icons";
 import colors from "../style-utils/colors";
-import ResetSolutionModal from "../HomeComponents/Modals/ResetSolutionModal";
-import GenerateNewSolutionModal from "../HomeComponents/Modals/GenerateNewSolutionModal";
+import ResetSolutionModal from "../HomeComponents/HomeModals/ResetSolutionModal";
+import GenerateNewSolutionModal from "../HomeComponents/HomeModals/GenerateNewSolutionModal";
+import text_styles from "../style-utils/text_styles";
+import LoadingModal from "../HomeComponents/HomeModals/LoadingModal";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -49,7 +51,7 @@ const HomeScreen = () => {
     internalData: solutionInternalData,
   } = useSelector((state) => state.solution);
 
-  const solveConfiguration = () => {
+  const solveConfiguration = async (signal) => {
     if (outdatedConstraints.length > 0) {
       NotificationManager.error(
         ...formatNtf(
@@ -66,9 +68,32 @@ const HomeScreen = () => {
       weeksMap,
       periodsMap,
     } = encodeAllInternalData(internalData);
-    console.log("formatted", formattedConfiguration);
-    console.log(teamsMap, locationsMap, periodsMap, weeksMap);
-    console.log(internalData);
+
+    // try {
+    //   const response = await fetch("http://localhost:8080", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     withCredentials: true,
+    //     credentials: "include",
+    //     signal,
+    //     body: JSON.stringify(formattedConfiguration),
+    //   });
+    //   if (response.ok) {
+    //     const data = await response.json();
+    //     console.log(data);
+    //   } else {
+    //     const data = await response.json();
+    //     console.log(data);
+    //     return false;
+    //   }
+    // } catch (err) {
+    //   if (err.name !== "AbortError") return false;
+    //   setIsLoadingModalOpened(false);
+    //   return true;
+    // }
+
     dispatch(
       solutionActions.setInternalData({
         internalData,
@@ -78,11 +103,12 @@ const HomeScreen = () => {
         periodsMap,
       })
     );
+    setIsLoadingModalOpened(false);
     navigate("/show-solution");
+    return true;
   };
 
   useEffect(() => {
-    console.log("hello");
     if (isSolution) {
       if (!compareInternalDatas(internalData, solutionInternalData))
         dispatch(solutionActions.setOutdatedStatus(true));
@@ -90,13 +116,20 @@ const HomeScreen = () => {
     }
   }, [internalData]);
 
+  const [isLoadingModalOpened, setIsLoadingModalOpened] = useState(false);
+
   return (
     <React.Fragment>
       <HomeScreenPage>
+        <LoadingModal
+          isModalOpen={isLoadingModalOpened}
+          setIsModalOpen={setIsLoadingModalOpened}
+          solveConfiguration={solveConfiguration}
+        />
         <GenerateNewSolutionModal
           setIsModalOpen={setShowGenerateNewSolutionModal}
           isModalOpen={showGenerateNewSolutionModal}
-          solveConfiguration={solveConfiguration}
+          setIsLoadingModalOpened={setIsLoadingModalOpened}
         />
         <SaveWorkingCopyModal
           setIsModalOpen={setShowSaveWorkingCopyModal}
@@ -125,13 +158,23 @@ const HomeScreen = () => {
         />
         <HomePage>
           <Header>
+            <Attribution>
+              Icons by
+              <IconsLink
+                href="https://icons8.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Icons8
+              </IconsLink>
+            </Attribution>
             <HomePageTitle>Sport Tournament Scheduling</HomePageTitle>
             <ButtonGroup>
               <GeneralButton
-                onClick={
+                onClick={() =>
                   isSolution
-                    ? setShowGenerateNewSolutionModal
-                    : solveConfiguration
+                    ? setShowGenerateNewSolutionModal(true)
+                    : setIsLoadingModalOpened(true)
                 }
               >
                 Generate new solution
@@ -173,6 +216,17 @@ const HomeScreen = () => {
   );
 };
 
+const IconsLink = styled.a`
+  font-size: ${text_styles.fonts.xsmall};
+  font-family: ${text_styles.styles.fontFamily};
+`;
+
+const Attribution = styled.div`
+  align-self: end;
+  font-size: ${text_styles.fonts.xsmall};
+  font-family: ${text_styles.styles.fontFamily};
+`;
+
 const HomeScreenPage = styled(RowContainer)`
   height: 100vh;
   align-items: start;
@@ -185,7 +239,7 @@ const ButtonGroup = styled(RowContainer)`
 `;
 
 const Header = styled(ColumnContainer)`
-  height: 12vh;
+  height: 15vh;
   padding: ${paddings.small};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
@@ -198,6 +252,7 @@ const HomePage = styled(ColumnContainer)`
   overflow-y: scroll;
   overflow-x: hidden;
   justify-content: start;
+  box-sizing: border-box;
   gap: ${gaps.med};
 `;
 

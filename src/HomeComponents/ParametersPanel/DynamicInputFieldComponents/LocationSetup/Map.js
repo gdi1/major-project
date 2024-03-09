@@ -18,6 +18,8 @@ import InputField from "../../../../GeneralComponents/InputField";
 import OnClickMarker from "./OnClickMarker";
 import gaps from "../../../../style-utils/gaps";
 import text_styles from "../../../../style-utils/text_styles";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import marker_icon from "../../../../icons/marker_icon.png";
 
 const Map = () => {
   const { locations } = useSelector((state) => state.configurations);
@@ -109,9 +111,10 @@ const Map = () => {
           <Marker
             icon={
               new Icon({
-                iconUrl: markerIconPng,
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
+                iconUrl: marker_icon,
+                shadowUrl: markerShadow,
+                iconSize: [41, 41],
+                iconAnchor: [21, 41],
               })
             }
             position={searchedLocation.coordinates}

@@ -12,14 +12,14 @@ import { useRef } from "react";
 const GenerateNewSolutionModal = ({
   isModalOpen,
   setIsModalOpen,
-  solveConfiguration,
+  setIsLoadingModalOpened,
 }) => {
   const modalRef = useRef();
   const closeModal = () => setIsModalOpen(false);
 
   const generateNewSolution = () => {
     closeModal();
-    solveConfiguration();
+    setIsLoadingModalOpened(true);
   };
 
   return (

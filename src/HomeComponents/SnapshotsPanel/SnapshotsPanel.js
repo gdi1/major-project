@@ -6,9 +6,9 @@ import Title from "../../GeneralComponents/Title";
 import { RowContainer } from "../../GeneralComponents/Containers";
 import borders from "../../style-utils/borders";
 import { CenteredLabel } from "../../GeneralComponents/Labels";
-import LoadBackSnapshotModal from "../Modals/LoadBackSnapshotModal";
+import LoadBackSnapshotModal from "../HomeModals/LoadBackSnapshotModal";
 import { useEffect, useState } from "react";
-import DeleteSnapshotModal from "../Modals/DeleteSnapshotModal";
+import DeleteSnapshotModal from "../HomeModals/DeleteSnapshotModal";
 import margins from "../../style-utils/margins";
 import gaps from "../../style-utils/gaps";
 

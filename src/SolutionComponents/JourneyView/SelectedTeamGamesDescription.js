@@ -16,7 +16,6 @@ const SelectedTeamGamesDescription = ({ pulsatingGames }) => {
   const { selectedTeamGames, focusedGame, selectedTeam } = useSelector(
     (state) => state.solution
   );
-  console.log(selectedTeamGames);
   const dispatch = useDispatch();
 
   const toggleFocusedGameOnMap = (idx) => {

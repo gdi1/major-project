@@ -117,8 +117,9 @@ export const calculateDurations = (selectedTeamJourney, speed) => {
   ).map(({ coordinates }) => coordinates);
   const distances = calculatedDistances(coordinates);
   const minDist = Math.min(...distances);
-  const factor = minDist / speed;
 
-  const weightedDistances = distances.map((d) => Math.min(d / factor, 5000));
+  const weightedDistances = distances.map((d) =>
+    Math.min((d / minDist) * speed, 5000)
+  );
   return weightedDistances;
 };

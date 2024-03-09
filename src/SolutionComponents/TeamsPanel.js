@@ -16,7 +16,6 @@ const TeamsPanel = () => {
   const { selectedTeam, selectedTeamGames, solution, teamsMap } = useSelector(
     (state) => state.solution
   );
-  console.log("aa", selectedTeamGames, solution, teamsMap);
   const toggleTeamSelection = (team) => {
     console.log(team.value);
     dispatch(

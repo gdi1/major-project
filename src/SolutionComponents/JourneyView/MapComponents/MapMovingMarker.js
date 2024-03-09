@@ -9,11 +9,13 @@ import {
   calculateDurations,
 } from "../../../Utilities/MapFunctions";
 import { useEffect, useState } from "react";
+import team_icon from "../../../icons/team_icon.png";
 
 const shadowUrl =
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png";
 
-function MapMovingMarker({ movingMarkerRef, setPulsatingGames }) {
+const MapMovingMarker = ({ movingMarkerRef, setPulsatingGames }) => {
+  console.log("AA", process.env.PUBLIC_URL);
   const { selectedTeamJourney, selectedTeam, focusedGame, speed } = useSelector(
     (state) => state.solution
   );
@@ -37,7 +39,7 @@ function MapMovingMarker({ movingMarkerRef, setPulsatingGames }) {
     // movingMarkerRef.current._durations = Array(locations.length - 1).fill(
     //   speed
     // );
-    console.log(calculateDurations(selectedTeamJourney, speed));
+    // console.log(calculateDurations(selectedTeamJourney, speed));
   }, [speed]);
 
   useEffect(() => {
@@ -45,9 +47,10 @@ function MapMovingMarker({ movingMarkerRef, setPulsatingGames }) {
   }, [selectedTeam]);
 
   useEffect(() => {
-    let offset = 0;
-    for (let i = 0; i < index[0]; i++) offset += locations[i].cnt;
-    const newGamesInterval = [offset, offset + locations[index[0]].cnt - 1];
+    let start = 0;
+    console.log("Indexx: ", index, selectedTeam);
+    for (let i = 0; i < index[0]; i++) start += locations[i].cnt;
+    const newGamesInterval = [start, start + locations[index[0]].cnt - 1];
     setPulsatingGames(newGamesInterval);
   }, [index, setPulsatingGames]);
 
@@ -55,18 +58,20 @@ function MapMovingMarker({ movingMarkerRef, setPulsatingGames }) {
     if (movingMarkerRef.current !== null) {
       movingMarkerRef.current.stop();
       map.removeLayer(movingMarkerRef.current);
+      movingMarkerRef.current = null;
     }
+    setIndex([0]);
     if (locations.length > 1) {
-      setIndex([0]);
+      // console.log("Hello, creating new moving marker");
       movingMarkerRef.current = L.Marker.movingMarker(
         locations.map(({ coordinates }) => coordinates),
         // Array(locations.length - 1).fill(speed),
         calculateDurations(selectedTeamJourney, speed),
         {
           icon: new Icon({
-            iconUrl: process.env.PUBLIC_URL + "/team_icon.png",
-            shadowUrl,
-            iconSize: [25, 41],
+            iconUrl: team_icon, //"/team_icon.png",
+            // shadowUrl: markerShadow,
+            iconSize: [41, 41],
             iconAnchor: [12, 41],
           }),
           autostart: false,
@@ -82,6 +87,6 @@ function MapMovingMarker({ movingMarkerRef, setPulsatingGames }) {
       movingMarkerRef.current.start();
     }
   }, [selectedTeam]);
-}
+};
 
 export default MapMovingMarker;

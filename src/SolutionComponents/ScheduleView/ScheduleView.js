@@ -31,15 +31,11 @@ const ScheduleView = () => {
         <React.Fragment>
           <SubTitle>Violated Constraints</SubTitle>
           <ViolatedSoftConstraints>
-            <Constraint>
-              <ConstraintName>ttt</ConstraintName>
-            </Constraint>
-            <Constraint>
-              <ConstraintName>ttt</ConstraintName>
-            </Constraint>
-            <Constraint>
-              <ConstraintName>ttt</ConstraintName>
-            </Constraint>
+            {violatedSoftConstraints.map((cname) => (
+              <Constraint>
+                <ConstraintName>{cname}</ConstraintName>
+              </Constraint>
+            ))}
           </ViolatedSoftConstraints>
         </React.Fragment>
       )}

@@ -21,6 +21,7 @@ const LoadBackSnapshotModal = ({
   isModalOpen,
   setIsModalOpen,
   snapshotName,
+  setSnapshotToLoadBack,
 }) => {
   const modalRef = useRef();
   const nameRef = useRef();
@@ -73,6 +74,7 @@ const LoadBackSnapshotModal = ({
         "Success"
       )
     );
+    setSnapshotToLoadBack(undefined);
     closeModal();
   };
 

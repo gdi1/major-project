@@ -20,6 +20,7 @@ import {
   IconContainer,
 } from "../../GeneralComponents/Icons";
 import gaps from "../../style-utils/gaps";
+import { TextWithEllipsisCSS } from "../../GeneralComponents/TextWithoutOverflow";
 
 const Snapshot = ({ snapshot, setSnapshotToLoadBack, setSnapshotToDelete }) => {
   const { name, date } = snapshot;
@@ -73,6 +74,7 @@ const Snapshot = ({ snapshot, setSnapshotToLoadBack, setSnapshotToDelete }) => {
 
 const Name = styled(Label)`
   width: 60%;
+  ${TextWithEllipsisCSS};
 `;
 const SolutionStatusIcon = styled(LargeIcon)``;
 const ActionIcon = styled(SmallIcon)``;
@@ -98,6 +100,8 @@ const SnapshotBody = styled(RowContainer)`
 const SnapshotDetails = styled(RowContainer)`
   height: auto;
   justify-content: start;
+  width: 80%;
+  gap: ${gaps.small};
 `;
 const SnapshotActionsGroup = styled(RowContainer)`
   width: auto;

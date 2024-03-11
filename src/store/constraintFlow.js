@@ -30,7 +30,6 @@ const constraintFlowSlice = createSlice({
     removeOptionIds(state, action) {
       const toRemoveIds = action.payload;
       toRemoveIds.forEach((id) => delete state.selectedOptions[id]);
-      console.log("bun");
     },
     addNewNode(state, action) {
       const type = action.payload;
@@ -112,7 +111,10 @@ const constraintFlowSlice = createSlice({
         const position = { x: node.position.x, y: node.position.y + 300 };
         const id = String(parseInt(state.nodes[state.nodes.length - 1].id) + 1);
         const data = { types: {} };
-        data.types[type] = [];
+        data.types[type] =
+          type === "at-least" || type === "at-most"
+            ? [{ value: 0, label: 0 }]
+            : [];
 
         state.nodes.forEach((node) => (node.selected = false));
         state.nodes.push({
@@ -122,7 +124,11 @@ const constraintFlowSlice = createSlice({
           position,
           selected: true,
         });
-        state.edges.push({ id: `e${node.id}-id`, source: node.id, target: id });
+        state.edges.push({
+          id: `e${node.id}-${id}`,
+          source: node.id,
+          target: id,
+        });
         return;
       }
 

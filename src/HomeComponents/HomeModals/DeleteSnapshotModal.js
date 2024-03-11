@@ -17,6 +17,7 @@ const DeleteSnapshotModal = ({
   isModalOpen,
   setIsModalOpen,
   snapshotToDelete,
+  setSnapshotToDelete,
 }) => {
   const modalRef = useRef();
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const DeleteSnapshotModal = ({
         "Success"
       )
     );
+    setSnapshotToDelete(undefined);
     closeModal();
   };
 

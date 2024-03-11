@@ -86,6 +86,9 @@ const ConstraintFlowPanel = () => {
         isValidConnection={isValidConnection}
         fitViewOptions={{ padding: 3 }}
         fitView
+        zoomOnPinch={false}
+        zoomOnScroll={false}
+        preventScrolling={false}
       >
         <NodeSelection />
         <Background color="#aaa" gap={16} />

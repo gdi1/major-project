@@ -43,7 +43,6 @@ const ConstraintBlock = ({ type }) => {
       element.style.setProperty("--rmsc-h", "4vh");
     });
   }, []);
-
   const getContentBlock = () => {
     if (multiselect_types.includes(type)) {
       return (
@@ -68,7 +67,6 @@ const ConstraintBlock = ({ type }) => {
   };
 
   const addFlowBlock = () => {
-    console.log("hello", selectedNode);
     if (selectedNode !== undefined)
       dispatch(constraintFlowActions.addFlowBlock(type));
     else dispatch(constraintFlowActions.addNewNode(type));

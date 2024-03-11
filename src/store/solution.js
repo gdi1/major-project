@@ -26,8 +26,14 @@ const solutionSlice = createSlice({
       state.isOutdated = action.payload;
     },
     setInternalData(state, action) {
-      const { internalData, teamsMap, periodsMap, locationsMap, weeksMap } =
-        action.payload;
+      const {
+        internalData,
+        teamsMap,
+        periodsMap,
+        locationsMap,
+        weeksMap,
+        solution = mock_solution,
+      } = action.payload;
 
       state.internalData = internalData;
       state.teamsMap = teamsMap;
@@ -35,7 +41,7 @@ const solutionSlice = createSlice({
       state.periodsMap = periodsMap;
       state.weeksMap = weeksMap;
 
-      state.solution = mock_solution;
+      state.solution = solution;
       state.schedule = state.solution.map(({ week, weekSchedule }) => ({
         week: state.weeksMap[week],
         weekSchedule: weekSchedule.map(({ period, games }) => ({

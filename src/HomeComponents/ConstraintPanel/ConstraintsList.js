@@ -8,6 +8,7 @@ import delete_icon from "./../../icons/delete_icon.png";
 import text_styles from "../../style-utils/text_styles";
 import { IconContainer, LargeIcon } from "../../GeneralComponents/Icons";
 import { TooltipText } from "../../GeneralComponents/TooltipText";
+import { TextWithEllipsisCSS } from "../../GeneralComponents/TextWithoutOverflow";
 
 const ConstraintsList = ({
   type,
@@ -71,6 +72,7 @@ const ConstraintsList = ({
 const ConstraintName = styled.div`
   width: 100%;
   text-align: center;
+  ${TextWithEllipsisCSS};
 `;
 
 const DeleteIcon = styled(LargeIcon)`

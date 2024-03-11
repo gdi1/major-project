@@ -3,7 +3,6 @@ import styled from "styled-components";
 import colors from "../style-utils/colors";
 
 export const Label = styled.label`
-  color: #${colors.black};
   font-size: ${text_styles.fonts.small_med};
   font-family: ${text_styles.styles.fontFamily};
   font-weight: bold;
@@ -11,10 +10,11 @@ export const Label = styled.label`
 `;
 
 export const CenteredLabel = styled.label`
-  color: #${colors.black};
   font-size: ${text_styles.fonts.small_med};
   font-family: ${text_styles.styles.fontFamily};
   font-weight: bold;
   width: 100%;
   text-align: center;
 `;
+
+// color: #${colors.black};

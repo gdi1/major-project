@@ -8,14 +8,16 @@ const Legend = () => {
   return (
     <div>
       <Container>
+        <Text>
+          To delete a node or edge, select it and press the "Delete" key.
+        </Text>
+      </Container>
+      <Container>
         <Text>Source handle: </Text>
         <OrangeDot />
       </Container>
       <Container>
         <Text>Target handle: </Text> <GreenDot />
-      </Container>
-      <Container>
-        <Text>To delete a node, select it and press the "Delete" key. </Text>
       </Container>
     </div>
   );

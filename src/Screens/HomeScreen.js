@@ -29,10 +29,13 @@ import GenerateNewSolutionModal from "../HomeComponents/HomeModals/GenerateNewSo
 import text_styles from "../style-utils/text_styles";
 import LoadingModal from "../HomeComponents/HomeModals/LoadingModal";
 
+const constraint_types = ["hard", "soft"];
+const options_types = ["teams", "locations", "periods", "weeks"];
+
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [show, setShow] = useState("home");
+  const [show, setShow] = useState(["home"]);
   const [optionsTypes, setOptionsTypes] = useState([]);
   const [showSaveWorkingCopyModal, setShowSaveWorkingCopyModal] =
     useState(false);
@@ -50,8 +53,9 @@ const HomeScreen = () => {
     isOutdated,
     internalData: solutionInternalData,
   } = useSelector((state) => state.solution);
+  console.log(show, optionsTypes);
 
-  const solveConfiguration = async (signal) => {
+  const generateNewSolution = () => {
     if (outdatedConstraints.length > 0) {
       NotificationManager.error(
         ...formatNtf(
@@ -61,6 +65,12 @@ const HomeScreen = () => {
       );
       return;
     }
+    return isSolution
+      ? setShowGenerateNewSolutionModal(true)
+      : setIsLoadingModalOpened(true);
+  };
+
+  const solveConfiguration = async (signal) => {
     const {
       encodedAllInternalData: formattedConfiguration,
       teamsMap,
@@ -68,6 +78,7 @@ const HomeScreen = () => {
       weeksMap,
       periodsMap,
     } = encodeAllInternalData(internalData);
+    console.log(formattedConfiguration);
 
     // try {
     //   const response = await fetch("http://localhost:8080", {
@@ -159,7 +170,7 @@ const HomeScreen = () => {
         <HomePage>
           <Header>
             <Attribution>
-              Icons by
+              {"Icons by "}
               <IconsLink
                 href="https://icons8.com"
                 target="_blank"
@@ -170,13 +181,7 @@ const HomeScreen = () => {
             </Attribution>
             <HomePageTitle>Sport Tournament Scheduling</HomePageTitle>
             <ButtonGroup>
-              <GeneralButton
-                onClick={() =>
-                  isSolution
-                    ? setShowGenerateNewSolutionModal(true)
-                    : setIsLoadingModalOpened(true)
-                }
-              >
+              <GeneralButton onClick={generateNewSolution}>
                 Generate new solution
               </GeneralButton>
               {isSolution && (
@@ -199,17 +204,27 @@ const HomeScreen = () => {
               )}
             </ButtonGroup>
           </Header>
-          {(show === "home" || show === "options") && (
+          {(show.includes("home") || show.includes("options")) && (
             <SetupOptionsPanel
-              optionsTypes={optionsTypes.length > 0 ? optionsTypes : undefined}
+              optionsTypes={
+                optionsTypes.length > 0
+                  ? optionsTypes.filter((opt) => options_types.includes(opt))
+                  : undefined
+              }
             />
           )}
-          {(show === "home" || show === "constraints") && (
+          {(show.includes("home") || show.includes("constraints")) && (
             <ConstraintsPanel
-              optionsTypes={optionsTypes.length > 0 ? optionsTypes : undefined}
+              optionsTypes={
+                optionsTypes.length > 0
+                  ? optionsTypes.filter((opt) => constraint_types.includes(opt))
+                  : undefined
+              }
             />
           )}
-          {(show === "home" || show === "snapshots") && <SnapshotsPanel />}
+          {(show.includes("home") || show.includes("snapshots")) && (
+            <SnapshotsPanel />
+          )}
         </HomePage>
       </HomeScreenPage>
     </React.Fragment>

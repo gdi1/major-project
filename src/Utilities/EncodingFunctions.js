@@ -1,16 +1,24 @@
-import { sortPeriodsPair } from "./PeriodsFunctions";
+// import { sortPeriodsPair } from "./PeriodsFunctions";
 
 const operators = ["and", "or"];
+const multi_select_blocks = [
+  "teams",
+  "locations",
+  "periods",
+  "weeks",
+  "play-against",
+  "not-play-against",
+];
 
-const sortByLabels = (option1, option2) => {
-  return option1.label < option2.label ? -1 : 1;
-};
+// const sortByLabels = (option1, option2) => {
+//   return option1.label < option2.label ? -1 : 1;
+// };
 
-const sortByCoordinates = (loc1, loc2) => {
-  if (loc1.coordinates[0] !== loc2.coordinates[0])
-    return loc1.coordinates[0] < loc2.coordinates[0] ? -1 : 1;
-  return loc1.coordinates[1] < loc2.coordinates[1] ? -1 : 1;
-};
+// const sortByCoordinates = (loc1, loc2) => {
+//   if (loc1.coordinates[0] !== loc2.coordinates[0])
+//     return loc1.coordinates[0] < loc2.coordinates[0] ? -1 : 1;
+//   return loc1.coordinates[1] < loc2.coordinates[1] ? -1 : 1;
+// };
 
 export const encodeAllInternalData = (internalData) => {
   const { hardConstraints, softConstraints } = internalData;
@@ -25,15 +33,39 @@ export const encodeAllInternalData = (internalData) => {
   const periodsMap = {};
   const weeksMap = {};
 
-  teams.sort(sortByLabels);
-  locations.sort(sortByCoordinates);
-  weeks.sort(sortByLabels);
-  periods.sort(sortPeriodsPair);
+  const inverseMaps = {
+    teams: {},
+    locations: {},
+    periods: {},
+    weeks: {},
+    "play-against": {},
+    "not-play-against": {},
+  };
 
-  teams.forEach((team, idx) => (teamsMap[idx + 1] = team));
-  locations.forEach((location, idx) => (locationsMap[idx + 1] = location));
-  weeks.forEach((week, idx) => (weeksMap[idx + 1] = week));
-  periods.forEach((period, idx) => (periodsMap[idx + 1] = period));
+  // teams.sort(sortByLabels);
+  // locations.sort(sortByCoordinates);
+  // weeks.sort(sortByLabels);
+  // periods.sort(sortPeriodsPair);
+
+  teams.forEach((team, idx) => {
+    teamsMap[idx + 1] = team;
+    inverseMaps.teams[team.value] = idx + 1;
+    inverseMaps["play-against"][team.value] = idx + 1;
+    inverseMaps["not-play-against"][team.value] = idx + 1;
+  });
+
+  locations.forEach((location, idx) => {
+    locationsMap[idx + 1] = location;
+    inverseMaps.locations[location.value] = idx + 1;
+  });
+  weeks.forEach((week, idx) => {
+    weeksMap[idx + 1] = week;
+    inverseMaps.weeks[week.value] = idx + 1;
+  });
+  periods.forEach((period, idx) => {
+    periodsMap[idx + 1] = period;
+    inverseMaps.periods[period.value] = idx + 1;
+  });
 
   const encodedAllInternalData = {
     teams: teams.map((_, idx) => idx + 1),
@@ -44,8 +76,10 @@ export const encodeAllInternalData = (internalData) => {
   };
 
   for (const { nodes, edges, name } of hardConstraints) {
-    console.log("h", nodes, edges, name);
-    const formattedConstraint = formatConstraintTree({ nodes, edges, name });
+    const formattedConstraint = formatConstraintTree(
+      { nodes, edges, name },
+      inverseMaps
+    );
     encodedAllInternalData.constraints.push({
       name,
       type: "hard",
@@ -54,7 +88,10 @@ export const encodeAllInternalData = (internalData) => {
   }
 
   for (const { nodes, edges, name } of softConstraints) {
-    const formattedConstraint = formatConstraintTree({ nodes, edges, name });
+    const formattedConstraint = formatConstraintTree(
+      { nodes, edges, name },
+      inverseMaps
+    );
     encodedAllInternalData.constraints.push({
       name,
       type: "soft",
@@ -71,17 +108,18 @@ export const encodeAllInternalData = (internalData) => {
   };
 };
 
-const formatConstraintTree = ({ nodes, edges, name = "" }) => {
+const formatConstraintTree = ({ nodes, edges, name = "" }, inverseMaps) => {
   const nodeMap = createNodeMap(nodes);
   const adjMatrix = createAdjacencyMatrix(edges);
   const root = getRootNode(edges, nodes);
-  console.log("nodemap", nodeMap, root);
   const result = [];
   let bfs = [root];
   while (bfs.length > 0) {
     const temp = [];
     for (const nodeId of bfs) {
-      result.push(formatConstraintNode(nodeMap[nodeId], adjMatrix));
+      result.push(
+        formatConstraintNode(nodeMap[nodeId], adjMatrix, inverseMaps)
+      );
       const children = adjMatrix[nodeId];
       if (children !== undefined)
         for (const child of children) temp.push(child);
@@ -92,16 +130,21 @@ const formatConstraintTree = ({ nodes, edges, name = "" }) => {
   return result;
 };
 
-const formatConstraintNode = (node, adjMatrix) => {
+const formatConstraintNode = (node, adjMatrix, inverseMaps) => {
   const { id, data } = node;
   const types = Object.keys(data.types);
 
   const isLeaf = types.every((type) => !operators.includes(type));
-  const formattedNode = { name: id, type: isLeaf ? "leaf" : types[0] };
+  const formattedNode = { id, type: isLeaf ? "leaf" : types[0] };
 
   if (isLeaf)
-    for (const type of types)
-      formattedNode[type] = data.types[type].map(({ value }) => value);
+    for (const type of types) {
+      if (multi_select_blocks.includes(type))
+        formattedNode[type] = data.types[type].map(
+          ({ value }) => inverseMaps[type][value]
+        );
+      else formattedNode[type] = data.types[type].map(({ value }) => value);
+    }
   else {
     formattedNode.children = [];
     for (const child of adjMatrix[id]) {

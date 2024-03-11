@@ -42,7 +42,7 @@ const SolutionPanel = () => {
         setIsModalOpen={setIsMapInfoCardOpened}
       />
       <SubHeaderContainer>
-        {view === "journey" && (
+        {view === "journey" && selectedTeam !== undefined && (
           <React.Fragment>
             <Speed>Speed setting: {6 - speed / 1000}</Speed>
             <IconContainer>

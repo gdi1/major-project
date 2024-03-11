@@ -12,6 +12,7 @@ import { TooltipText } from "../../GeneralComponents/TooltipText";
 import { SmallIcon } from "../../GeneralComponents/Icons";
 import text_styles from "../../style-utils/text_styles";
 import { useEffect } from "react";
+import { TextWithEllipsisCSS } from "../../GeneralComponents/TextWithoutOverflow";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -67,7 +68,7 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
       return (
         <React.Fragment>
           <Name>{blockNames[type]}</Name>
-          <div style={{ width: "8vw" }}>
+          <MultiSelectContainer>
             <MultiSelect
               options={
                 derived_multiselect_types.includes(type)
@@ -78,7 +79,7 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
               onChange={handleChange}
               labelledBy="Select"
             />
-          </div>
+          </MultiSelectContainer>
         </React.Fragment>
       );
     } else if (type === "at-least" || type === "at-most") {
@@ -117,6 +118,13 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
     </PreviewBlockComponent>
   );
 };
+
+const MultiSelectContainer = styled.div`
+  width: 8vw;
+  span {
+    ${TextWithEllipsisCSS};
+  }
+`;
 
 const Name = styled.div`
   font-size: ${text_styles.fonts.xsmall};

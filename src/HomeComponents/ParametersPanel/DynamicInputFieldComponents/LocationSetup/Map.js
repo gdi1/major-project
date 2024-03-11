@@ -20,6 +20,7 @@ import gaps from "../../../../style-utils/gaps";
 import text_styles from "../../../../style-utils/text_styles";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import marker_icon from "../../../../icons/marker_icon.png";
+import { TextWithWordBreakCSS } from "../../../../GeneralComponents/TextWithoutOverflow";
 
 const Map = () => {
   const { locations } = useSelector((state) => state.configurations);
@@ -72,7 +73,7 @@ const Map = () => {
   };
 
   const handleAddNewLocation = (e) => {
-    if (e.key === "Enter" && showChangeNameInput) addNewLocation();
+    if (e.key === "Enter" && showChangeNameInput) addNewLocation(e);
   };
 
   useEffect(() => {
@@ -180,8 +181,10 @@ const Map = () => {
 };
 
 const Text = styled.div`
+  width: 100%;
   font-family: ${text_styles.styles.fontFamily};
   font-size: ${text_styles.fonts.xsmall};
+  ${TextWithWordBreakCSS};
 `;
 
 const PopUpButton = styled(GeneralButton)`

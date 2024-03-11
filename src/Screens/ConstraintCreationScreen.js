@@ -32,6 +32,8 @@ const ConstraintCreationScreen = () => {
   const { nodes, edges, name, type, mode } = useSelector((state) => state.flow);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { selectedNode } = useSelector((state) => state.flow);
+  console.log(selectedNode);
 
   const title = mode === "new" ? "New Constraint" : "Edit Constraint";
   const actionButtonTitle = mode === "new" ? "Add" : "Done Editing";

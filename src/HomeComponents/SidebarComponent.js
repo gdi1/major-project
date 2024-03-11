@@ -61,34 +61,90 @@ const SidebarComponent = ({
   };
 
   const addNewType = (type) => {
+    setShow((prev) => prev.filter((el) => el !== "home"));
     if (type === "all-constraints") {
-      setShow("constraints");
-      setOptionsTypes(constraint_types);
+      if (
+        !show.includes("constraints") ||
+        !constraint_types.every((op) => optionsTypes.includes(op))
+      ) {
+        setShow((prev) => [...new Set([...prev, "constraints"])]);
+        setOptionsTypes((prev) => [...new Set([...prev, ...constraint_types])]);
+      } else {
+        setShow((prev) => {
+          const result = prev.filter((el) => el !== "constraints");
+          return result.length !== 0 ? result : ["home"];
+        });
+        setOptionsTypes((prev) =>
+          prev.filter((el) => !constraint_types.includes(el))
+        );
+      }
       return;
     }
     if (type === "all-options") {
-      setShow("options");
-      setOptionsTypes(options_types);
+      if (
+        !show.includes("options") ||
+        !options_types.every((op) => optionsTypes.includes(op))
+      ) {
+        setShow((prev) => [...new Set([...prev, "options"])]);
+        setOptionsTypes((prev) => [...new Set([...prev, ...options_types])]);
+      } else {
+        setShow((prev) => {
+          const result = prev.filter((el) => el !== "options");
+          return result.length !== 0 ? result : ["home"];
+        });
+        setOptionsTypes((prev) =>
+          prev.filter((el) => !options_types.includes(el))
+        );
+      }
+      return;
+    }
+    if (type === "all-snapshots") {
+      if (!show.includes("snapshots")) {
+        setShow((prev) => [...prev, "snapshots"]);
+        setOptionsTypes((prev) => [...prev, "snapshots"]);
+      } else {
+        setShow((prev) => {
+          const result = prev.filter((el) => el !== "snapshots");
+          return result.length !== 0 ? result : ["home"];
+        });
+        setOptionsTypes((prev) => prev.filter((el) => el !== "snapshots"));
+      }
       return;
     }
     if (constraint_types.includes(type)) {
-      if (show === "constraints") {
-        if (optionsTypes.includes(type))
-          setOptionsTypes((prev) => prev.filter((el) => el !== type));
-        else setOptionsTypes((prev) => [...prev, type]);
+      if (show.includes("constraints")) {
+        if (optionsTypes.includes(type)) {
+          setOptionsTypes((prev) => {
+            const result = prev.filter((el) => el !== type);
+            if (!result.some((op) => constraint_types.includes(op)))
+              setShow((prev) => {
+                const res = prev.filter((el) => el !== "constraints");
+                return res.length !== 0 ? res : ["home"];
+              });
+            return result;
+          });
+        } else setOptionsTypes((prev) => [...prev, type]);
       } else {
-        setShow("constraints");
-        setOptionsTypes([type]);
+        setShow((prev) => [...new Set([...prev, "constraints"])]);
+        setOptionsTypes((prev) => [...new Set([...prev, type])]);
       }
     }
     if (options_types.includes(type)) {
-      if (show === "options") {
-        if (optionsTypes.includes(type))
-          setOptionsTypes((prev) => prev.filter((el) => el !== type));
-        else setOptionsTypes((prev) => [...prev, type]);
+      if (show.includes("options")) {
+        if (optionsTypes.includes(type)) {
+          setOptionsTypes((prev) => {
+            const result = prev.filter((el) => el !== type);
+            if (!result.some((op) => options_types.includes(op)))
+              setShow((prev) => {
+                const res = prev.filter((el) => el !== "options");
+                return res.length !== 0 ? res : ["home"];
+              });
+            return result;
+          });
+        } else setOptionsTypes((prev) => [...prev, type]);
       } else {
-        setShow("options");
-        setOptionsTypes([type]);
+        setShow((prev) => [...new Set([...prev, "options"])]);
+        setOptionsTypes((prev) => [...new Set([...prev, type])]);
       }
     }
   };
@@ -136,7 +192,7 @@ const SidebarComponent = ({
         </MenuItem>
         <MenuItem
           onClick={() => {
-            setShow("home");
+            setShow(["home"]);
             setOptionsTypes([]);
           }}
           style={style_sidebar}
@@ -229,8 +285,7 @@ const SidebarComponent = ({
             >
               <MenuItem
                 onClick={() => {
-                  setShow("snapshots");
-                  setOptionsTypes([]);
+                  addNewType("all-snapshots");
                 }}
                 style={selectedStyle("snapshots")}
               >

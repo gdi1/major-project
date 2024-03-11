@@ -1,11 +1,28 @@
 import { Handle, Position } from "reactflow";
 import FlowBlock from "./FlowBlock";
 import { useSelector } from "react-redux";
-import { sortConstraintBlockTypes } from "../../Utilities/BinarySearch";
+// import { sortConstraintBlockTypes } from "../../Utilities/BinarySearch";
 import borders from "../../style-utils/borders";
 import styled from "styled-components";
 import paddings from "../../style-utils/paddings";
 import colors from "../../style-utils/colors";
+
+const positions = {
+  teams: 1,
+  play: 2,
+  "not-play": 2,
+  "play-against": 2,
+  "not-play-against": 2,
+  locations: 3,
+  weeks: 4,
+  periods: 5,
+  "at-least": 6,
+  "at-most": 6,
+};
+
+const sortConstraintBlockTypes = (arr) => {
+  return arr.sort((a, b) => positions[a] - positions[b]);
+};
 
 const operators = ["and", "or"];
 

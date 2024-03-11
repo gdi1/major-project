@@ -7,18 +7,22 @@ import styled from "styled-components";
 import InputField from "./InputField";
 import text_styles from "../style-utils/text_styles";
 import gaps from "../style-utils/gaps";
+import { TextWithWordBreakCSS } from "./TextWithoutOverflow";
 
 export const ModalLabel = styled(Label)`
   align-self: start;
+  ${TextWithWordBreakCSS};
 `;
 
 export const CenteredModalLabel = styled(Label)`
   align-self: start;
   text-align: center;
+  ${TextWithWordBreakCSS};
 `;
 
 export const ModalTitle = styled(Title)`
   border-bottom: ${borders.small};
+  ${TextWithWordBreakCSS};
 `;
 
 export const NameInputField = styled(InputField)`

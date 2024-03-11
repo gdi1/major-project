@@ -61,16 +61,6 @@ const NoOfWeeksOptions = () => {
         <SmallIcon src={isEdit ? check_icon : edit_icon} />
         <TooltipText>{isEdit ? "Save" : "Edit"}</TooltipText>
       </GeneralButton>
-      {/* {isEdit && (
-        <GeneralButton
-          onClick={() => {
-            setIsEdit(false);
-            setNoOfWeeks(weeks.length);
-          }}
-        >
-          X
-        </GeneralButton>
-      )} */}
     </WeeksDetailsBody>
   );
 };

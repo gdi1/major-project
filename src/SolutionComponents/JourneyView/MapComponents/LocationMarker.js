@@ -7,6 +7,7 @@ import text_styles from "../../../style-utils/text_styles";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import marker_icon from "../../../icons/marker_icon.png";
+import { TextWithWordBreakCSS } from "../../../GeneralComponents/TextWithoutOverflow";
 
 const shadowUrl =
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png";
@@ -54,6 +55,8 @@ const LocationLabel = styled.div`
   font-size: ${text_styles.fonts.xsmall};
   font-family: ${text_styles.styles.fontFamily};
   font-weight: bold;
+  ${TextWithWordBreakCSS};
+  white-space: normal;
 `;
 
 const GamesDetails = styled.div`

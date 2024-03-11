@@ -184,7 +184,7 @@ const ConstraintsGroup = styled(RowContainer)`
 `;
 
 const HomePageConstraintsSection = styled(ColumnContainer)`
-  width: 80%;
+  width: 80vw;
   height: auto;
 `;
 

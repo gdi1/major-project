@@ -4,7 +4,7 @@ import {
   ColumnContainer,
 } from "../../GeneralComponents/Containers";
 import styled, { css, keyframes } from "styled-components";
-import { TextWithEllipsis } from "../../GeneralComponents/TextWithEllipsis";
+import { TextWithEllipsis } from "../../GeneralComponents/TextWithoutOverflow";
 import borders from "../../style-utils/borders";
 import colors from "../../style-utils/colors";
 import { solutionActions } from "../../store/solution";
@@ -69,7 +69,6 @@ const pulseAnimation = keyframes`
     background-color: ${colors.brick};
   }
 `;
-//#9e42b0
 
 const GamesDescription = styled(ColumnContainer)`
   justify-content: start;
@@ -81,7 +80,6 @@ const GamesDescription = styled(ColumnContainer)`
 const Location = styled(TextWithEllipsis)`
   width: 60%;
   text-align: center;
-  font-size: ${text_styles.fonts.xsmall};
 `;
 
 const LeftTeam = styled(TextWithEllipsis)`

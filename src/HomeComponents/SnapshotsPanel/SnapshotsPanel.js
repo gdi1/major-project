@@ -45,11 +45,13 @@ const SnapshotsPanel = () => {
         isModalOpen={showLoadBackSnapshotModal}
         setIsModalOpen={setShowLoadBackSnapshotModal}
         snapshotName={snapshotToLoadBack}
+        setSnapshotToLoadBack={setSnapshotToLoadBack}
       />
       <DeleteSnapshotModal
         isModalOpen={showSnapshotToDeleteModal}
         setIsModalOpen={setShowSnapshotToDeleteModal}
         snapshotToDelete={snapshotToDelete}
+        setSnapshotToDelete={setSnapshotToDelete}
       />
       <SectionHeader>
         <Title>Snapshots</Title>
@@ -71,7 +73,7 @@ const SnapshotsPanel = () => {
 
 const SnapshotsBody = styled(ColumnContainer)`
   height: auto;
-  width: 80%;
+  width: 80vw;
   margin-bottom: ${margins.small};
 `;
 

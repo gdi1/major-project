@@ -25,11 +25,8 @@ const CreateButtonControl = ({ type, movingMarkerRef }) => {
           if (type === "pause" && movingMarkerRef.current.isRunning()) {
             movingMarkerRef.current.pause();
           } else if (type === "start") {
-            if (movingMarkerRef.current.isPaused())
-              movingMarkerRef.current.resume();
-            else if (movingMarkerRef.current.isEnded())
-              movingMarkerRef.current.start();
-            movingMarkerRef.current.resume();
+            dispatch(solutionActions.resetFocusedGame());
+            movingMarkerRef.current.start();
           } else if (type === "stop") {
             movingMarkerRef.current.stop();
           }
@@ -44,3 +41,8 @@ const CreateButtonControl = ({ type, movingMarkerRef }) => {
 const ButtonControl = createControlComponent(CreateButtonControl);
 
 export default ButtonControl;
+
+// if (movingMarkerRef.current.isPaused())
+//   movingMarkerRef.current.resume();
+// else if (movingMarkerRef.current.isEnded())
+//   movingMarkerRef.current.start();

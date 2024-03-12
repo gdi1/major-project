@@ -38,12 +38,12 @@ const SearchComponent = ({
     });
 
     const searchControlContainer = searchControl.getContainer();
-    const anchorElement = searchControlContainer.querySelector(
+    const elementToRemove = searchControlContainer.querySelector(
       ".leaflet-bar-part-single"
     );
 
-    if (anchorElement) {
-      anchorElement.remove();
+    if (elementToRemove) {
+      elementToRemove.remove();
     }
 
     return () => {

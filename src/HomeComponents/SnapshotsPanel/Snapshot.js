@@ -76,6 +76,7 @@ const Name = styled(Label)`
   width: 60%;
   ${TextWithEllipsisCSS};
 `;
+
 const SolutionStatusIcon = styled(LargeIcon)``;
 const ActionIcon = styled(SmallIcon)``;
 

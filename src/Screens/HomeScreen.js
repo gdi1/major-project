@@ -79,6 +79,7 @@ const HomeScreen = () => {
       periodsMap,
     } = encodeAllInternalData(internalData);
     console.log(formattedConfiguration);
+    console.log({ teamsMap, locationsMap, weeksMap, periodsMap });
 
     // try {
     //   const response = await fetch("http://localhost:8080", {
@@ -105,6 +106,7 @@ const HomeScreen = () => {
     //   return true;
     // }
 
+    dispatch(solutionActions.resetSolution());
     dispatch(
       solutionActions.setInternalData({
         internalData,
@@ -254,21 +256,20 @@ const ButtonGroup = styled(RowContainer)`
 `;
 
 const Header = styled(ColumnContainer)`
-  height: 15vh;
-  padding: ${paddings.small};
+  height: auto;
+  box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
   position: sticky;
   top: 0;
-  z-index: 1000;
   background-color: ${colors.beige};
 `;
 
 const HomePage = styled(ColumnContainer)`
-  overflow-y: scroll;
-  overflow-x: hidden;
   justify-content: start;
   box-sizing: border-box;
   gap: ${gaps.med};
+  overflow: scroll;
 `;
 
 const HomePageTitle = styled(Title)`

@@ -102,9 +102,9 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
   };
 
   useEffect(() => {
-    const elements = document.querySelectorAll(".rmsc");
-    elements.forEach((element) => {
-      element.style.setProperty("--rmsc-h", "4vh");
+    const tags = document.querySelectorAll(".rmsc");
+    tags.forEach((tag) => {
+      tag.style.setProperty("--rmsc-h", "4vh");
     });
   }, []);
 
@@ -121,11 +121,10 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
 
 const MultiSelectContainer = styled.div`
   width: 8vw;
-  span {
-    ${TextWithEllipsisCSS};
-  }
 `;
-
+// span {
+//   ${TextWithEllipsisCSS};
+// }
 const Name = styled.div`
   font-size: ${text_styles.fonts.xsmall};
   font-family: ${text_styles.styles.fontFamily};

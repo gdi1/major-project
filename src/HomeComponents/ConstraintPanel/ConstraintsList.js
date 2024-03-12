@@ -55,7 +55,6 @@ const ConstraintsList = ({
                     src={delete_icon}
                     onClick={(e) => {
                       e.stopPropagation();
-                      // removeConstraint(index);
                       setConstraintToDelete(constraint.name);
                     }}
                   />

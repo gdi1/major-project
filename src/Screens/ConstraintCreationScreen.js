@@ -81,7 +81,7 @@ const ConstraintCreationScreen = () => {
       return nodeTypes.some((type) => types.includes(type));
     });
 
-    const allNoOfTimesBlockIsNonnegative = nodes.every((node) => {
+    const allFrequencyBlockIsNonnegative = nodes.every((node) => {
       const nodeTypes = Object.keys(node.data.types);
       return nodeTypes.every((type) =>
         type === "at-least" || type === "at-most"
@@ -119,7 +119,7 @@ const ConstraintCreationScreen = () => {
       return;
     }
 
-    if (!allNoOfTimesBlockIsNonnegative) {
+    if (!allFrequencyBlockIsNonnegative) {
       NotificationManager.error(
         ...formatNtf(
           "All 'at least' or 'at most' blocks' must have a non-negative value",

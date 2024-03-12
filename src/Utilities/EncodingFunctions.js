@@ -10,6 +10,8 @@ const multi_select_blocks = [
   "not-play-against",
 ];
 
+const frequency_block = ["at-least", "at-most"];
+
 // const sortByLabels = (option1, option2) => {
 //   return option1.label < option2.label ? -1 : 1;
 // };
@@ -19,6 +21,11 @@ const multi_select_blocks = [
 //     return loc1.coordinates[0] < loc2.coordinates[0] ? -1 : 1;
 //   return loc1.coordinates[1] < loc2.coordinates[1] ? -1 : 1;
 // };
+
+// teams.sort(sortByLabels);
+// locations.sort(sortByCoordinates);
+// weeks.sort(sortByLabels);
+// periods.sort(sortPeriodsPair);
 
 export const encodeAllInternalData = (internalData) => {
   const { hardConstraints, softConstraints } = internalData;
@@ -41,11 +48,6 @@ export const encodeAllInternalData = (internalData) => {
     "play-against": {},
     "not-play-against": {},
   };
-
-  // teams.sort(sortByLabels);
-  // locations.sort(sortByCoordinates);
-  // weeks.sort(sortByLabels);
-  // periods.sort(sortPeriodsPair);
 
   teams.forEach((team, idx) => {
     teamsMap[idx + 1] = team;
@@ -108,7 +110,7 @@ export const encodeAllInternalData = (internalData) => {
   };
 };
 
-const formatConstraintTree = ({ nodes, edges, name = "" }, inverseMaps) => {
+const formatConstraintTree = ({ nodes, edges }, inverseMaps) => {
   const nodeMap = createNodeMap(nodes);
   const adjMatrix = createAdjacencyMatrix(edges);
   const root = getRootNode(edges, nodes);
@@ -135,7 +137,7 @@ const formatConstraintNode = (node, adjMatrix, inverseMaps) => {
   const types = Object.keys(data.types);
 
   const isLeaf = types.every((type) => !operators.includes(type));
-  const formattedNode = { id, type: isLeaf ? "leaf" : types[0] };
+  const formattedNode = { id: parseInt(id), type: isLeaf ? "leaf" : types[0] };
 
   if (isLeaf)
     for (const type of types) {
@@ -143,12 +145,16 @@ const formatConstraintNode = (node, adjMatrix, inverseMaps) => {
         formattedNode[type] = data.types[type].map(
           ({ value }) => inverseMaps[type][value]
         );
+      else if (frequency_block.includes(type))
+        formattedNode[type] = data.types[type].map(({ value }) =>
+          parseInt(value)
+        );
       else formattedNode[type] = data.types[type].map(({ value }) => value);
     }
   else {
     formattedNode.children = [];
     for (const child of adjMatrix[id]) {
-      formattedNode.children.push(child);
+      formattedNode.children.push(parseInt(child));
     }
   }
   return formattedNode;
@@ -174,16 +180,16 @@ const createAdjacencyMatrix = (edges) => {
 };
 
 const getRootNode = (edges, nodes) => {
-  // const sources = [];
   const targets = [];
   const nodesIds = getNodesIds(nodes);
   for (const { source, target } of edges) {
-    // sources.push(source);
     targets.push(target);
   }
   return nodesIds.filter((node) => !targets.includes(node))[0];
 };
 
+// const sources = [];
+// sources.push(source);
 const compareNodes = (node1, node2) => {
   const types1 = Object.keys(node1.data.types);
   const types2 = Object.keys(node2.data.types);
@@ -202,15 +208,27 @@ const compareNodes = (node1, node2) => {
     )
       return false;
 
-    const labels1 = node1.data.types[type1].map(({ label }) => label);
-    const labels2 = node2.data.types[type2].map(({ label }) => label);
+    let compare1 = [];
+    let compare2 = [];
 
-    labels1.sort();
-    labels2.sort();
+    if (type1 === "locations") {
+      compare1 = node1.data.types[type1].map(({ coordinates }) =>
+        JSON.stringify(coordinates)
+      );
+      compare2 = node2.data.types[type2].map(({ coordinates }) =>
+        JSON.stringify(coordinates)
+      );
+    } else {
+      compare1 = node1.data.types[type1].map(({ label }) => label);
+      compare2 = node2.data.types[type2].map(({ label }) => label);
+    }
 
-    const m = labels1.length;
+    compare1.sort();
+    compare2.sort();
+
+    const m = compare1.length;
     for (let j = 0; j < m; j++) {
-      if (labels1[j] !== labels2[j]) return false;
+      if (compare1[j] !== compare2[j]) return false;
     }
   }
   return true;
@@ -248,16 +266,19 @@ const compareTrees = (
 const compareConstraints = (constraint1, constraint2) => {
   const nodeMap1 = createNodeMap(constraint1.nodes);
   const adjMatrix1 = createAdjacencyMatrix(constraint1.edges);
-  const root1 = getRootNode(constraint1.edges, constraint1.nodes); // || constraint1.nodes[0].id;
+  const root1 = getRootNode(constraint1.edges, constraint1.nodes);
 
   const nodeMap2 = createNodeMap(constraint2.nodes);
   const adjMatrix2 = createAdjacencyMatrix(constraint2.edges);
-  const root2 = getRootNode(constraint2.edges, constraint2.nodes); // || constraint2.nodes[0].id;
+  const root2 = getRootNode(constraint2.edges, constraint2.nodes);
   return compareTrees(
     { root1, adjMatrix1, nodeMap1 },
     { root2, adjMatrix2, nodeMap2 }
   );
 };
+
+// || constraint1.nodes[0].id;
+// || constraint2.nodes[0].id;
 
 const areConstraintListsTheSame = (constraintsList1, constraintsList2) => {
   const constraints1 = [...constraintsList1];

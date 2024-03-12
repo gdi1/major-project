@@ -12,13 +12,11 @@ import text_styles from "../../style-utils/text_styles";
 import paddings from "../../style-utils/paddings";
 
 const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
-  // console.log(game);
   const { teamA, teamB, location } = game;
   const { selectedTeam } = useSelector((state) => state.solution);
   const focused = selectedTeam === teamA.value || selectedTeam === teamB.value;
 
   const goToAddNewConstraint = () => {
-    console.log("payload1", game, week, period);
     setNewConstraint({ game, week, period });
     setModalOpened(true);
   };
@@ -73,3 +71,7 @@ const RightTeam = styled(TextWithEllipsis)`
 `;
 
 export default Game;
+
+// console.log(game);
+// console.log(game);
+// console.log("payload1", game, week, period);

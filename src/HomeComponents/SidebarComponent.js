@@ -1,6 +1,6 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { useState, useEffect } from "react";
-import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
+// import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
 import options_icon from "./../icons/options_icon.png";
 import settings_icon from "./../icons/settings_icon.png";
 import snapshot_icon from "./../icons/snapshot_icon.png";
@@ -10,6 +10,8 @@ import save_icon from "./../icons/save_icon.png";
 import import_icon from "./../icons/import_icon.png";
 import export_icon from "./../icons/export_icon.png";
 import blocks_icon from "./../icons/blocks_icon.png";
+import right_arrow from "./../icons/right_arrow.png";
+import left_arrow from "./../icons/left_arrow.png";
 import styled from "styled-components";
 import React from "react";
 import { SmallIcon } from "../GeneralComponents/Icons";
@@ -35,12 +37,12 @@ const SidebarComponent = ({
 
   useEffect(() => {
     if (!collapsed) {
-      const menuIcons = document.querySelectorAll(".ps-menu-icon");
-      menuIcons.forEach((icon) => {
-        icon.style.marginRight = `${margins.xsmall}`;
-        icon.style.width = "1vw";
-        icon.style.height = "1vw";
-        icon.style.minWidth = "1vw";
+      const mIcons = document.querySelectorAll(".ps-menu-icon");
+      mIcons.forEach((ic) => {
+        ic.style.marginRight = `${margins.xsmall}`;
+        ic.style.width = "1vw";
+        ic.style.height = "1vw";
+        ic.style.minWidth = "1vw";
       });
     }
   }, [collapsed]);
@@ -166,9 +168,9 @@ const SidebarComponent = ({
             onClick={() => setCollapsed((prev) => !prev)}
           >
             {collapsed ? (
-              <FiArrowRightCircle style={small_icon} />
+              <SmallIcon src={right_arrow} />
             ) : (
-              <FiArrowLeftCircle style={small_icon} />
+              <SmallIcon src={left_arrow} />
             )}
           </MenuItemLabel>
         </MenuItem>
@@ -316,3 +318,9 @@ const ItemName = styled.div`
 `;
 
 export default SidebarComponent;
+
+//  {/* {collapsed ? (
+//               <FiArrowRightCircle style={small_icon} />
+//             ) : (
+//               <FiArrowLeftCircle style={small_icon} />
+//             )} */}

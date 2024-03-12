@@ -18,27 +18,26 @@ import { useDispatch } from "react-redux";
 
 const GeneralImportModal = ({ isModalOpen, setIsModalOpen }) => {
   const modalRef = useRef();
-  const [jsonFile, setJsonFile] = useState(undefined);
+  const [jsonImportFile, setJsonImportFile] = useState(undefined);
   const dispatch = useDispatch();
 
   const closeModal = () => setIsModalOpen(false);
 
   const importFile = () => {
-    console.log(jsonFile);
-    if (jsonFile === undefined) {
+    if (jsonImportFile === undefined) {
       NotificationManager.error(
         ...formatNtf("Must upload a file first!", "Error")
       );
       return;
     }
-    const isEverythingExport = jsonFile.snapshots ? true : false;
+    const isEverythingExport = jsonImportFile.snapshots ? true : false;
     if (isEverythingExport) {
-      const { internalState, snapshots, solution } = jsonFile;
+      const { internalState, snapshots, solution } = jsonImportFile;
       dispatch(configurationsActions.setState(internalState));
       dispatch(solutionActions.setState(solution));
       dispatch(snapshotsHistoryActions.setSnapshots(snapshots));
     } else {
-      const { internalState, solution } = jsonFile.snapshot;
+      const { internalState, solution } = jsonImportFile.snapshot;
       dispatch(configurationsActions.setState(internalState));
       dispatch(solutionActions.setState(solution));
     }
@@ -47,7 +46,7 @@ const GeneralImportModal = ({ isModalOpen, setIsModalOpen }) => {
         `Successfully imported ${
           isEverythingExport
             ? "everything"
-            : `external snapshot ${jsonFile.snapshot.name}`
+            : `external snapshot ${jsonImportFile.snapshot.name}`
         }!`,
         "Success"
       )
@@ -61,7 +60,7 @@ const GeneralImportModal = ({ isModalOpen, setIsModalOpen }) => {
     reader.onload = (e) => {
       try {
         const data = JSON.parse(e.target.result);
-        setJsonFile(data);
+        setJsonImportFile(data);
       } catch (error) {
         NotificationManager.error(
           ...formatNtf(

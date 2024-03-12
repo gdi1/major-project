@@ -137,9 +137,9 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
         <DragDropContext onDragEnd={handleDragEnd}>
           {optionsTypes.includes("hard") && (
             <ConstraintListContainer>
-              <RowContainer style={{ marginBottom: "20px" }}>
+              <ConstraintListTitle>
                 <CenteredLabel>Hard</CenteredLabel>
-              </RowContainer>
+              </ConstraintListTitle>
               <ConstraintsList
                 type={"hard"}
                 constraints={hardConstraints}
@@ -151,9 +151,9 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
           )}
           {optionsTypes.includes("soft") && (
             <ConstraintListContainer>
-              <RowContainer style={{ marginBottom: "20px" }}>
+              <ConstraintListTitle>
                 <CenteredLabel>Soft</CenteredLabel>
-              </RowContainer>
+              </ConstraintListTitle>
               <ConstraintsList
                 type={"soft"}
                 constraints={softConstraints}
@@ -168,6 +168,10 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
     </HomePageConstraintsSection>
   );
 };
+
+const ConstraintListTitle = styled(RowContainer)`
+  margin-bottom: ${margins.small};
+`;
 
 const ConstraintHeader = styled(RowContainer)`
   height: auto;

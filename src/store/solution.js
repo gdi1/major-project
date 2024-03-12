@@ -64,6 +64,9 @@ const solutionSlice = createSlice({
     increaseSpeed(state, _) {
       if (state.speed > 1000) state.speed -= 1000;
     },
+    // ? { game, period, week }
+    // : undefined
+
     selectTeam(state, action) {
       state.focusedGame = undefined;
       state.selectedTeam = action.payload;
@@ -75,8 +78,6 @@ const solutionSlice = createSlice({
                 (game) =>
                   state.teamsMap[game.teamA].value === action.payload ||
                   state.teamsMap[game.teamB].value === action.payload
-                // ? { game, period, week }
-                // : undefined
               )
               .map(({ teamA, teamB, location }) => ({
                 game: {

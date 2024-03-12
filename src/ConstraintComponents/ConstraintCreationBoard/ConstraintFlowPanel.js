@@ -91,7 +91,7 @@ const ConstraintFlowPanel = () => {
         preventScrolling={false}
       >
         <NodeSelection />
-        <Background color="#aaa" gap={16} />
+        <Background gap={16} />
         <Controls />
         <Legend />
       </ReactFlow>
@@ -109,6 +109,8 @@ const ConstraintFlow = styled(RowContainer)`
 
 // height: 6vh;
 // height: 87vh;
+
+//color="#aaa"
 
 // const initialNodes = [
 //   {

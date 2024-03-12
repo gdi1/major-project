@@ -14,9 +14,6 @@ const snapshotsHistorySlice = createSlice({
         ({ name }) => name !== action.payload
       );
     },
-    removeAllSnapshots(state, _) {
-      state.snapshots = [];
-    },
     setSnapshots(state, action) {
       state.snapshots = action.payload;
     },
@@ -25,3 +22,7 @@ const snapshotsHistorySlice = createSlice({
 
 export const snapshotsHistoryActions = snapshotsHistorySlice.actions;
 export default snapshotsHistorySlice;
+
+// removeAllSnapshots(state, _) {
+//   state.snapshots = [];
+// },

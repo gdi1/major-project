@@ -109,11 +109,11 @@ L.Marker.MovingMarker = L.Marker.extend({
 
     this._stopAnimation();
 
-    if (typeof elapsedTime === "undefined") {
-      // user call
-      elapsedTime = 0;
-      this._updatePosition();
-    }
+    // if (typeof elapsedTime === "undefined") {
+    //   // user call
+    //   elapsedTime = 0;
+    //   this._updatePosition();
+    // }
 
     this._state = L.Marker.MovingMarker.endedState;
     this.fire("end", { elapsedTime: elapsedTime });

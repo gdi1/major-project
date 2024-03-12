@@ -15,7 +15,6 @@ const shadowUrl =
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png";
 
 const MapMovingMarker = ({ movingMarkerRef, setPulsatingGames }) => {
-  console.log("AA", process.env.PUBLIC_URL);
   const { selectedTeamJourney, selectedTeam, focusedGame, speed } = useSelector(
     (state) => state.solution
   );
@@ -26,7 +25,8 @@ const MapMovingMarker = ({ movingMarkerRef, setPulsatingGames }) => {
   const [index, setIndex] = useState([0]);
 
   useEffect(() => {
-    if (focusedGame !== undefined) movingMarkerRef.current.pause();
+    if (focusedGame !== undefined && movingMarkerRef.current !== null)
+      movingMarkerRef.current.pause();
   }, [focusedGame]);
 
   useEffect(() => {
@@ -36,10 +36,6 @@ const MapMovingMarker = ({ movingMarkerRef, setPulsatingGames }) => {
         speed
       );
     }
-    // movingMarkerRef.current._durations = Array(locations.length - 1).fill(
-    //   speed
-    // );
-    // console.log(calculateDurations(selectedTeamJourney, speed));
   }, [speed]);
 
   useEffect(() => {
@@ -48,7 +44,6 @@ const MapMovingMarker = ({ movingMarkerRef, setPulsatingGames }) => {
 
   useEffect(() => {
     let start = 0;
-    console.log("Indexx: ", index, selectedTeam);
     for (let i = 0; i < index[0]; i++) start += locations[i].cnt;
     const newGamesInterval = [start, start + locations[index[0]].cnt - 1];
     setPulsatingGames(newGamesInterval);
@@ -62,15 +57,12 @@ const MapMovingMarker = ({ movingMarkerRef, setPulsatingGames }) => {
     }
     setIndex([0]);
     if (locations.length > 1) {
-      // console.log("Hello, creating new moving marker");
       movingMarkerRef.current = L.Marker.movingMarker(
         locations.map(({ coordinates }) => coordinates),
-        // Array(locations.length - 1).fill(speed),
         calculateDurations(selectedTeamJourney, speed),
         {
           icon: new Icon({
-            iconUrl: team_icon, //"/team_icon.png",
-            // shadowUrl: markerShadow,
+            iconUrl: team_icon,
             iconSize: [41, 41],
             iconAnchor: [12, 41],
           }),
@@ -90,3 +82,13 @@ const MapMovingMarker = ({ movingMarkerRef, setPulsatingGames }) => {
 };
 
 export default MapMovingMarker;
+
+//"/team_icon.png",
+// shadowUrl: markerShadow,
+// Array(locations.length - 1).fill(speed),
+// console.log("Hello, creating new moving marker");
+
+// movingMarkerRef.current._durations = Array(locations.length - 1).fill(
+//   speed
+// );
+// console.log(calculateDurations(selectedTeamJourney, speed));

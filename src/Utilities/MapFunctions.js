@@ -1,33 +1,3 @@
-// export const calculateBezierCurve = (startpoint, endpoint) => {
-//   const offsetX = endpoint[1] - startpoint[1],
-//     offsetY = endpoint[0] - startpoint[0];
-
-//   const r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
-//     theta = Math.atan2(offsetY, offsetX);
-
-//   const thetaOffset = 3.14 / 10;
-
-//   const r2 = r / 2 / Math.cos(thetaOffset),
-//     theta2 = theta + thetaOffset;
-
-//   const midpointX = r2 * Math.cos(theta2) + startpoint[1],
-//     midpointY = r2 * Math.sin(theta2) + startpoint[0];
-
-//   const midpointLatLng = [midpointY, midpointX];
-
-//   return [startpoint, midpointLatLng, endpoint];
-// };
-
-// export const formatJourneyCurvesEnds = (selectedTeamJourney) => {
-//   const bezierCurvesEnds = [];
-//   for (let i = 0; i < selectedTeamJourney.length - 1; i++) {
-//     bezierCurvesEnds.push({
-//       startpoint: selectedTeamJourney[i].coordinates,
-//       endpoint: selectedTeamJourney[i + 1].coordinates,
-//     });
-//   }
-//   return bezierCurvesEnds;
-// };
 import L from "leaflet";
 
 const extractUniquePointsCoordinates = (selectedTeamJourney) => {

@@ -97,7 +97,7 @@ const LoadBackSnapshotModal = ({
           >
             Close
           </ModalButton>
-          <ModalTitle>Export everything</ModalTitle>
+          <ModalTitle>Load back snapshot</ModalTitle>
           <CenteredModalLabel>
             Do you want to save your current work before loading the previous
             snapshot, which will replace it?

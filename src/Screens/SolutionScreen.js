@@ -18,7 +18,6 @@ const SolutionScreen = () => {
         <div />
         <Title>Solution</Title>
         <ButtonGroup>
-          {/* <GeneralButton>Save</GeneralButton> */}
           <GeneralButton onClick={() => navigate("/")}>Back</GeneralButton>
         </ButtonGroup>
       </SolutionPageHeader>

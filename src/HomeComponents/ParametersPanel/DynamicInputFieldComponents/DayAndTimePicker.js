@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import GeneralButton from "../../../GeneralComponents/GeneralButton";
 import { configurationsActions } from "../../../store/configurations";
 import { useState, useRef, useEffect } from "react";
-import { Container, RowContainer } from "../../../GeneralComponents/Containers";
+import { RowContainer } from "../../../GeneralComponents/Containers";
 import {
   daysOfWeek,
   generateTimeArray,
@@ -54,31 +54,31 @@ const DayAndTimePicker = () => {
   return (
     <React.Fragment>
       <DateSelectionBody>
-        <Container>
-          <DateSelect
-            value={selectedDay}
-            onChange={handleDayChange}
-            onKeyDown={handleKeyPress}
-            ref={daySelectRef}
-          >
-            {daysOfWeek.map((day) => (
-              <option key={day} value={day}>
-                {day}
-              </option>
-            ))}
-          </DateSelect>
-          <DateSelect
-            value={selectedTime}
-            onChange={handleTimeChange}
-            onKeyDown={handleKeyPress}
-          >
-            {timesOfDay.map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
-          </DateSelect>
-        </Container>
+        {/* <RowContainer> */}
+        <DateSelect
+          value={selectedDay}
+          onChange={handleDayChange}
+          onKeyDown={handleKeyPress}
+          ref={daySelectRef}
+        >
+          {daysOfWeek.map((day) => (
+            <option key={day} value={day}>
+              {day}
+            </option>
+          ))}
+        </DateSelect>
+        <DateSelect
+          value={selectedTime}
+          onChange={handleTimeChange}
+          onKeyDown={handleKeyPress}
+        >
+          {timesOfDay.map((time) => (
+            <option key={time} value={time}>
+              {time}
+            </option>
+          ))}
+        </DateSelect>
+        {/* </RowContainer> */}
       </DateSelectionBody>
       <GeneralButton onClick={addNewPeriod}>
         <SmallIcon src={check_icon} />

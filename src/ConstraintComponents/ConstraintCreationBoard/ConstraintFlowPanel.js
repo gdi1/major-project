@@ -18,6 +18,13 @@ import { constraintFlowActions } from "../../store/constraintFlow";
 import "reactflow/dist/style.css";
 import Legend from "./Legend";
 
+/**
+ *
+ * References
+ *
+ * “Quickstart – React Flow.” – React Flow, n.d. https://reactflow.dev/learn.
+ */
+
 const ConstraintFlowPanel = () => {
   const dispatch = useDispatch();
   const nodeTypes = useMemo(() => ({ ConstraintNode: ConstraintNode }), []);
@@ -49,6 +56,12 @@ const ConstraintFlowPanel = () => {
     [edges, dispatch]
   );
 
+  /**
+   * References
+   *
+   * “React Flow – React Flow.” React Flow – React Flow, n.d.
+   * https://reactflow.dev/examples/interaction/prevent-cycles.
+   */
   const isValidConnection = useCallback(
     (connection) => {
       const nodes = getNodes();
@@ -106,73 +119,3 @@ const ConstraintFlow = styled(RowContainer)`
   box-sizing: border-box;
   height: 85vh;
 `;
-
-// height: 6vh;
-// height: 87vh;
-
-//color="#aaa"
-
-// const initialNodes = [
-//   {
-//     id: "1",
-//     data: { label: "Input Node" },
-//     position: { x: -620.5, y: 34.5 },
-//   },
-//   {
-//     id: "2",
-//     // you can also pass a React component as a label
-//     style: { height: "200px" },
-//     data: {
-//       label: (
-//         <div>
-//           Default Node
-//           <MultiSelect
-//             className="nodrag"
-//             options={[
-//               { value: 1, label: "1" },
-//               { value: 2, label: "2" },
-//             ]}
-//             onClick={() => console.log("Hello")}
-//             onChange={() => {}}
-//           />
-//         </div>
-//       ),
-//     },
-//     position: { x: 100, y: 125 },
-//   },
-//   {
-//     id: "3",
-//     type: "output",
-//     data: { label: "Output Node" },
-//     position: { x: 250, y: 250 },
-//   },
-//   {
-//     id: "4",
-//     type: "customnode",
-//     position: { x: 300, y: 300 },
-//     data: { types: ["teams", "weeks", "locations"] },
-//   },
-// ];
-
-// const initialEdges = [
-//   { id: "e1-2", source: "1", target: "2" },
-//   { id: "e2-3", source: "2", target: "3" },
-// ];
-
-// const addNewNode = () => {
-//   console.log("hello");
-//   setNodes((nds) => [
-//     ...nds,
-//     {
-//       id: `${cnt}`,
-//       data: { label: `Node ${cnt}` },
-//       position: { x: nds[0].position.x, y: nds[0].position.y + 10 },
-//     },
-//   ]);
-//   setEdges((eds) => [
-//     ...eds,
-//     { id: `e1-${cnt}`, source: `1`, target: `${cnt}` },
-//   ]);
-//   setCnt((c) => c + 1);
-// };
-// console.log(nodes);

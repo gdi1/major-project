@@ -10,6 +10,13 @@ const titles = {
   start: "Start/Restart Animation",
   stop: "Stop Animation",
 };
+/**
+ *
+ * References
+ *
+ * “Custom Button on the Leaflet Map with React-Leaflet Version3.” Stack Overflow, n.d.
+ * https://stackoverflow.com/questions/68414583/custom-button-on-the-leaflet-map-with-react-leaflet-version3.
+ */
 const CreateButtonControl = ({ type, movingMarkerRef }) => {
   const dispatch = useDispatch();
   const MapButton = L.Control.extend({
@@ -17,7 +24,6 @@ const CreateButtonControl = ({ type, movingMarkerRef }) => {
       const button = L.DomUtil.create("button", "");
       button.innerHTML = titles[type];
       button.style.cursor = "pointer";
-      // add the event listener that will create a marker on the map
       button.addEventListener("click", () => {
         if (type === "increase") dispatch(solutionActions.increaseSpeed());
         else if (type === "decrease") dispatch(solutionActions.reduceSpeed());
@@ -41,8 +47,3 @@ const CreateButtonControl = ({ type, movingMarkerRef }) => {
 const ButtonControl = createControlComponent(CreateButtonControl);
 
 export default ButtonControl;
-
-// if (movingMarkerRef.current.isPaused())
-//   movingMarkerRef.current.resume();
-// else if (movingMarkerRef.current.isEnded())
-//   movingMarkerRef.current.start();

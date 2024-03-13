@@ -10,7 +10,6 @@ const solutionSlice = createSlice({
     focusedGame: undefined,
     violatedSoftConstraints: [],
     schedule: [],
-    // curvedPaths: [],
     speed: 3000,
     teamsMap: {},
     locationsMap: {},
@@ -64,8 +63,6 @@ const solutionSlice = createSlice({
     increaseSpeed(state, _) {
       if (state.speed > 1000) state.speed -= 1000;
     },
-    // ? { game, period, week }
-    // : undefined
 
     selectTeam(state, action) {
       state.focusedGame = undefined;
@@ -182,39 +179,3 @@ const solutionSlice = createSlice({
 export const solutionActions = solutionSlice.actions;
 
 export default solutionSlice;
-
-// {
-//   teamA: 1,
-//   teamB: 2,
-//   location:
-//     "dwav reaofbmadeamfeov,rsmvbkl,wpaf,eomvgors,bvos,,va,faevkrsmvgkrs kbrkefamkaedeamfkeafea",
-// },
-// {
-//   teamA:
-//     "dwav reaofbmadeamfeov,rsmvbkl,wpaf,eomvgors,bvos,,va,faevkrsmvgkrs kbrkefamkaedeamfkeafea",
-//   teamB:
-//     "dwav reaofbmadeamfeov,rsmvbkl,wpaf,eomvgors,bvos,,va,faevkrsmvgkrs kbrkefamkaedeamfkeafea",
-//   location: 2,
-// },
-
-// state.selectedTeamJourney = state.schedule
-//   .map(({ weekSchedule }) =>
-//     weekSchedule.map(({ games }) =>
-//       games.map(({ teamA, teamB, location }) =>
-//         teamA === action.payload || teamB === action.payload
-//           ? location
-//           : undefined
-//       )
-//     )
-//   )
-//   .flat(Infinity)
-//   .filter((location) => location);
-
-// const { teams, locations, periods, weeks } = action.payload;
-// console.log(teams, locations, periods, weeks);
-// teams.forEach((team) => (state.teamsMap[team.value] = team));
-// locations.forEach(
-//   (location) => (state.locationsMap[location.value] = location)
-// );
-// periods.forEach((period) => (state.periodsMap[period.value] = period));
-// weeks.forEach((week) => (state.weeksMap[week.value] = week));

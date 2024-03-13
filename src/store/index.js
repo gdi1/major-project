@@ -8,6 +8,14 @@ import { persistReducer, persistStore } from "redux-persist";
 import hardSet from "redux-persist/lib/stateReconciler/hardSet";
 import snapshotsHistorySlice from "./snapshotsHistory";
 
+/**
+ *
+ * References
+ *
+ * “Persist State with Redux Persist Using Redux Toolkit in React.” LogRocket Blog, n.d.
+ * https://blog.logrocket.com/persist-state-redux-persist-redux-toolkit-react/.
+ */
+
 const persistConfig = {
   key: "root",
   storage,

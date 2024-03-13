@@ -61,6 +61,7 @@ const AddConstraintNameModal = ({
           makeConstraintUpToDate(newConstraint)
         )
       );
+    closeModal();
     navigate("/new-constraint");
   };
 
@@ -96,6 +97,10 @@ const AddConstraintNameModal = ({
     };
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") goToNewConstraintCreation();
+  };
+
   return (
     <Modal
       ariaHideApp={false}
@@ -108,7 +113,11 @@ const AddConstraintNameModal = ({
       <ModalBody>
         <ModalTitle>Add Constraint</ModalTitle>
         <ModalLabel>Name</ModalLabel>
-        <NameInputField placeholder="Enter name" ref={newConstraintNameRef} />
+        <NameInputField
+          placeholder="Enter name"
+          ref={newConstraintNameRef}
+          onKeyDown={handleKeyDown}
+        />
         <ModalButtonGroup>
           <ModalButton onClick={closeModal}>Close</ModalButton>
           <ModalButton onClick={goToNewConstraintCreation}>
@@ -121,6 +130,3 @@ const AddConstraintNameModal = ({
 };
 
 export default AddConstraintNameModal;
-
-// dispatch(currentConstraintActions.setNewConstraintName(name));
-// dispatch(currentConstraintActions.setNewConstraint(newConstraint));

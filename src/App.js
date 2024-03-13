@@ -10,6 +10,12 @@ import styled from "styled-components";
 import colors from "./style-utils/colors";
 import paddings from "./style-utils/paddings";
 
+/**
+ * References
+ *
+ * “React-Notifications,” npm, n.d.,
+ * https://www.npmjs.com/package/react-notifications.
+ */
 const App = () => {
   return (
     <FullView>
@@ -34,11 +40,3 @@ const FullView = styled.div`
 `;
 
 export default App;
-
-// <Route path="options" element={<SetupOptionsPanel />} />
-//           <Route path="constraints" element={<ConstraintsPanel />} />
-//           </Route>
-
-// useEffect(() => {
-//   if (localStorage.getItem("firstLoadDone") !== null) navigate("/");
-// }, []);

@@ -1,5 +1,3 @@
-// import { sortPeriodsPair } from "./PeriodsFunctions";
-
 const operators = ["and", "or"];
 const multi_select_blocks = [
   "teams",
@@ -11,21 +9,6 @@ const multi_select_blocks = [
 ];
 
 const frequency_block = ["at-least", "at-most"];
-
-// const sortByLabels = (option1, option2) => {
-//   return option1.label < option2.label ? -1 : 1;
-// };
-
-// const sortByCoordinates = (loc1, loc2) => {
-//   if (loc1.coordinates[0] !== loc2.coordinates[0])
-//     return loc1.coordinates[0] < loc2.coordinates[0] ? -1 : 1;
-//   return loc1.coordinates[1] < loc2.coordinates[1] ? -1 : 1;
-// };
-
-// teams.sort(sortByLabels);
-// locations.sort(sortByCoordinates);
-// weeks.sort(sortByLabels);
-// periods.sort(sortPeriodsPair);
 
 export const encodeAllInternalData = (internalData) => {
   const { hardConstraints, softConstraints } = internalData;
@@ -188,8 +171,6 @@ const getRootNode = (edges, nodes) => {
   return nodesIds.filter((node) => !targets.includes(node))[0];
 };
 
-// const sources = [];
-// sources.push(source);
 const compareNodes = (node1, node2) => {
   const types1 = Object.keys(node1.data.types);
   const types2 = Object.keys(node2.data.types);

@@ -25,6 +25,14 @@ import paddings from "../../style-utils/paddings";
 
 const controlButtonTypes = ["increase", "decrease", "start", "pause", "stop"];
 
+/**
+ *
+ * References
+ *
+ * “React Leaflet.” React Leaflet, n.d. https://react-leaflet.js.org/.
+ *
+ * Setup.” React Leaflet, n.d. https://react-leaflet.js.org/docs/start-setup/.
+ */
 const JourneyView = () => {
   const { selectedTeam, selectedTeamJourney, focusedGame } = useSelector(
     (state) => state.solution
@@ -134,10 +142,3 @@ const JourneyDetailedItinerary = styled(ColumnContainer)`
 `;
 
 export default JourneyView;
-
-// whenReady={(map) => {
-//   console.log("created", map);
-// }}
-
-// {/* <MapRoute waypoints={waypoints} /> */}
-//                 {/* <MapCurve points={undefined} /> */}

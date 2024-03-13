@@ -1,7 +1,6 @@
 import { Handle, Position } from "reactflow";
 import FlowBlock from "./FlowBlock";
 import { useSelector } from "react-redux";
-// import { sortConstraintBlockTypes } from "../../Utilities/BinarySearch";
 import borders from "../../style-utils/borders";
 import styled from "styled-components";
 import paddings from "../../style-utils/paddings";

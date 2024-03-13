@@ -16,5 +16,3 @@ export const CenteredLabel = styled.label`
   width: 100%;
   text-align: center;
 `;
-
-// color: #${colors.black};

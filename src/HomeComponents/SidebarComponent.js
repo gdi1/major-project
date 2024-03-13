@@ -15,7 +15,6 @@ import left_arrow from "./../icons/left_arrow.png";
 import styled from "styled-components";
 import React from "react";
 import { SmallIcon } from "../GeneralComponents/Icons";
-import { small_icon } from "../style-utils/icons";
 import colors from "../style-utils/colors";
 import text_styles from "../style-utils/text_styles";
 import gaps from "../style-utils/gaps";
@@ -24,6 +23,21 @@ import margins from "../style-utils/margins";
 const constraint_types = ["hard", "soft"];
 const options_types = ["teams", "locations", "periods", "weeks"];
 
+/**
+ * References
+ *
+ * Codesandbox.io, n.d.,
+ * https://codesandbox.io/p/sandbox/create-a-sidebar-menu-in-reactjs-dpdb1?file=%2Fsrc%2FComponents%2FHeader%2FHeader.js.
+ *
+ * “Create a Sidebar Menu in React JS,” Medium, n.d.,
+ * https://medium.com/how-to-react/create-a-sidebar-menu-in-react-js-3463b306ca9a.
+ *
+ * “Create Responsive Sidebars with React-pro-Sidebar and Mui,” LogRocket Blog, n.d.,
+ * https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/.
+ *
+ * “React-pro-Sidebar,” npm, n.d.,
+ * https://www.npmjs.com/package/react-pro-sidebar.
+ */
 const SidebarComponent = ({
   show,
   setShow,
@@ -318,9 +332,3 @@ const ItemName = styled.div`
 `;
 
 export default SidebarComponent;
-
-//  {/* {collapsed ? (
-//               <FiArrowRightCircle style={small_icon} />
-//             ) : (
-//               <FiArrowLeftCircle style={small_icon} />
-//             )} */}

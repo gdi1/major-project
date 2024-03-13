@@ -3,6 +3,27 @@ import { useMap } from "react-leaflet";
 import { useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 
+/**
+ *
+ * References
+ *
+ * “React Leaflet.” React Leaflet, n.d. https://react-leaflet.js.org/.
+ *
+ * Codesandbox.io, n.d.
+ * https://codesandbox.io/p/sandbox/search-box-implementation-in-react-leaflet-v310-sx0rp?file=%2Fsrc%2FMapWrapper.jsx.
+ *
+ * Codesandbox.io, n.d. https://codesandbox.io/p/sandbox/elegant-feather-xgelk?file=%2Fsrc%2FSearchControl.js%3A17%2C15.
+ *
+ * Codesandbox.io, n.d.
+ * https://codesandbox.io/p/sandbox/programmatically-open-popup-with-react-leaflet-y12g0?file=%2Fsrc%2FApp.js.
+ *
+ * “Usage.” Leaflet GeoSearch, n.d. https://smeijer.github.io/leaflet-geosearch/usage.
+ *
+ * “Introduction.” Leaflet GeoSearch, n.d. https://smeijer.github.io/leaflet-geosearch/.
+ *
+ * Smeijer. “Smeijer/Leaflet-Geosearch: A Geocoding/Address-Lookup Library Supporting Various API Providers.” GitHub, n.d.
+ * https://github.com/smeijer/leaflet-geosearch.
+ */
 const SearchComponent = ({
   onLocationChange,
   setAddedSuccessfully,
@@ -28,7 +49,6 @@ const SearchComponent = ({
 
     map.on("geosearch/showlocation", (event) => {
       const { x, y, label } = event.location;
-      console.log(x, y, label);
       onLocationChange({ coordinates: [y, x], label });
       setAddedSuccessfully(false);
       setShowChangeNameInput(false);

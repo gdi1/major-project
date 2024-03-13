@@ -1,5 +1,13 @@
 import L from "leaflet";
 
+/**
+ *
+ * References
+ *
+ * “Ewoken/Leaflet.Movingmarker: A Leaflet Plug-in to Create Moving Marker.” GitHub, n.d.
+ * https://github.com/ewoken/Leaflet.MovingMarker.
+ */
+
 L.interpolatePosition = function (p1, p2, duration, t) {
   var k = t / duration;
   k = k > 0 ? k : 0;

@@ -21,7 +21,6 @@ import { compareInternalDatas } from "../Utilities/EncodingFunctions";
 import { TooltipText } from "../GeneralComponents/TooltipText";
 import GeneralImportModal from "../HomeComponents/HomeModals/GeneralImportModal";
 import gaps from "../style-utils/gaps";
-import paddings from "../style-utils/paddings";
 import { LargeIcon, IconContainer } from "../GeneralComponents/Icons";
 import colors from "../style-utils/colors";
 import ResetSolutionModal from "../HomeComponents/HomeModals/ResetSolutionModal";
@@ -53,9 +52,23 @@ const HomeScreen = () => {
     isOutdated,
     internalData: solutionInternalData,
   } = useSelector((state) => state.solution);
-  console.log(show, optionsTypes);
 
   const generateNewSolution = () => {
+    const { teams, locations, periods, weeks } = internalData;
+    if (
+      teams.length === 0 ||
+      locations.length === 0 ||
+      periods.length === 0 ||
+      weeks === 0
+    ) {
+      NotificationManager.error(
+        ...formatNtf(
+          "Each parameter must have at least one option configured.",
+          "Error"
+        )
+      );
+      return;
+    }
     if (outdatedConstraints.length > 0) {
       NotificationManager.error(
         ...formatNtf(

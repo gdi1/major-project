@@ -3,12 +3,6 @@ import { sortPeriods } from "../Utilities/PeriodsFunctions";
 import { NotificationManager } from "react-notifications";
 import { formatNtf } from "../Utilities/NotificationWrapper";
 
-// const types = ["teams", "locations", "periods", "weeks"];
-
-// const getNextId = (arr) => {
-//   return Math.max(...arr.map(({ value }) => value), 0) + 1;
-// };
-
 const configurationsSlice = createSlice({
   name: "configurationsSlice",
   initialState: {
@@ -146,18 +140,13 @@ const configurationsSlice = createSlice({
     },
     addTeam(state, action) {
       state.teams.push({
-        // value: getNextId(state.teams),
         value: action.payload,
         label: action.payload,
       });
-
-      // state.teams.sort(sortByLabels);
-      // for (let i = 0; i < state.teams.length; i++) state.teams[i].value = i;
     },
     addLocation(state, action) {
       const { coordinates, label } = action.payload;
       state.locations.push({
-        // value: getNextId(state.locations),
         value: label,
         coordinates,
         label,
@@ -165,7 +154,6 @@ const configurationsSlice = createSlice({
     },
     addPeriod(state, action) {
       state.periods.push({
-        // value: getNextId(state.periods),
         value: action.payload,
         label: action.payload,
       });
@@ -217,15 +205,7 @@ const configurationsSlice = createSlice({
         soft: state.softConstraints,
         hard: state.hardConstraints,
       };
-      // const name = mapIdToList[type][index].name;
       mapIdToList[type].splice(index, 1);
-      // state.outdatedConstraints = state.outdatedConstraints.filter(
-      //   (el) => el !== index
-      // );
-      // if (!isDrag)
-      //   state.outdatedConstraints = state.outdatedConstraints.filter(
-      //     (n) => n !== name
-      //   );
     },
     removeConstraintByName(state, action) {
       state.hardConstraints = state.hardConstraints.filter(
@@ -262,7 +242,7 @@ const configurationsSlice = createSlice({
             if (node.data.types[type]) {
               node.data.types[type] = node.data.types[type].map((el) =>
                 el.value === value
-                  ? { /*...el,*/ value: updatedOption, label: updatedOption }
+                  ? { value: updatedOption, label: updatedOption }
                   : el
               );
               if (type === "teams") {
@@ -273,7 +253,7 @@ const configurationsSlice = createSlice({
                       (el) =>
                         el.value === value
                           ? {
-                              /*...el,*/ value: updatedOption,
+                              value: updatedOption,
                               label: updatedOption,
                             }
                           : el
@@ -355,57 +335,3 @@ const configurationsSlice = createSlice({
 export const configurationsActions = configurationsSlice.actions;
 
 export default configurationsSlice;
-
-// state.hardConstraints = state.hardConstraints.filter(
-//   (constraint) =>
-//     !constraint.nodes.some((node) =>
-//       types.reduce(
-//         (acc, cur) =>
-//           acc ||
-//           (node.data.types[cur] !== undefined &&
-//             node.data.types[cur].length === 0),
-//         false
-//       )
-//     )
-// );
-
-// state.softConstraints = state.softConstraints.filter(
-//   (constraint) =>
-//     !constraint.nodes.some((node) =>
-//       types.reduce(
-//         (acc, cur) =>
-//           acc ||
-//           (node.data.types[cur] !== undefined &&
-//             node.data.types[cur].length === 0),
-//         false
-//       )
-//     )
-// );
-
-// state.softConstraints.forEach((constraint) => {
-//   constraint.nodes.forEach((node) => {
-//     if (node.data.types[type]) {
-//       node.data.types[type] = node.data.types[type].filter(
-//         (el) => el.value !== value
-//       );
-//       if (node.data.types[type].length === 0)
-//         state.outdatedConstraints.push(constraint.name);
-
-//       if (type === "teams") {
-//         const additional_types = ["play-against", "not-play-against"];
-//         for (const add_type of additional_types) {
-//           if (node.data.types[add_type]) {
-//             node.data.types[add_type] = node.data.types[add_type].filter(
-//               (el) => el.value !== value
-//             );
-//             if (
-//               node.data.types[add_type].length === 0 &&
-//               !state.outdatedConstraints.includes(constraint.name)
-//             )
-//               state.outdatedConstraints.push(constraint.name);
-//           }
-//         }
-//       }
-//     }
-//   });
-// });

@@ -61,6 +61,12 @@ const Details = styled.div`
   font-family: ${text_styles.styles.fontFamily};
 `;
 
+/**
+ * References
+ *
+ * “A Pen By Josh Branchaud,” codepen.io, n.d.,
+ * https://codepen.io/jbranchaud/pen/vYYqQjO.
+ */
 const pulseAnimation = keyframes`
   0%, 100% {
     background-color: ${colors.beige};
@@ -92,6 +98,14 @@ const RightTeam = styled(TextWithEllipsis)`
   text-align: left;
 `;
 
+const pulseAnimationCSS = css`
+  animation: ${pulseAnimation} 1s;
+`;
+
+const noAnimationCSS = css`
+  animation: none;
+`;
+
 const GameCard = styled(ColumnContainer)`
   border: ${borders.small};
   cursor: pointer;
@@ -103,12 +117,7 @@ const GameCard = styled(ColumnContainer)`
   justify-content: space-between;
   background-color: ${(props) =>
     props.focused ? `${colors.brick}` : `${colors.beige}`};
-  ${(props) =>
-    props.pulsating
-      ? css`
-          animation: ${pulseAnimation} 1s;
-        `
-      : "animation: none;"}
+  ${(props) => (props.pulsating ? pulseAnimationCSS : noAnimationCSS)}
   &: hover {
     background-color: ${(props) =>
       !props.focused ? `${colors.mustard}` : `${colors.brick}`};

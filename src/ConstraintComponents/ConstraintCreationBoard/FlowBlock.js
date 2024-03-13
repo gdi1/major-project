@@ -12,7 +12,6 @@ import { TooltipText } from "../../GeneralComponents/TooltipText";
 import { SmallIcon } from "../../GeneralComponents/Icons";
 import text_styles from "../../style-utils/text_styles";
 import { useEffect } from "react";
-import { TextWithEllipsisCSS } from "../../GeneralComponents/TextWithoutOverflow";
 
 const blockNames = {
   teams: "Team(s) ",
@@ -122,9 +121,7 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
 const MultiSelectContainer = styled.div`
   width: 8vw;
 `;
-// span {
-//   ${TextWithEllipsisCSS};
-// }
+
 const Name = styled.div`
   font-size: ${text_styles.fonts.xsmall};
   font-family: ${text_styles.styles.fontFamily};
@@ -141,29 +138,3 @@ const NoOfTimesInputField = styled(InputField)`
 `;
 
 export default FlowBlock;
-
-// position: relative;
-
-//   &:hover {
-//     background-color: ${(props) => (props.showX ? colors.creme : "")};
-//   }
-
-//   background: ${(props) =>
-//     props.showX
-//       ? `linear-gradient(
-//     to top left,
-//     rgba(0, 0, 0, 0) 0%,
-//     rgba(0, 0, 0, 0) calc(50% - 0.8px),
-//     rgba(0, 0, 0, 1) 50%,
-//     rgba(0, 0, 0, 0) calc(50% + 0.8px),
-//     rgba(0, 0, 0, 0) 100%
-//   ),
-//   linear-gradient(
-//     to top right,
-//     rgba(0, 0, 0, 0) 0%,
-//     rgba(0, 0, 0, 0) calc(50% - 0.8px),
-//     rgba(0, 0, 0, 1) 50%,
-//     rgba(0, 0, 0, 0) calc(50% + 0.8px),
-//     rgba(0, 0, 0, 0) 100%
-//   )`
-//       : ""};

@@ -1,3 +1,10 @@
+/**
+ *
+ * References
+ *
+ * Thomas Findlay, “How to Download CSV and JSON Files in React,” The Road To Enterprise, n.d.,
+ * https://theroadtoenterprise.com/blog/how-to-download-csv-and-json-files-in-react.
+ */
 export const exportJSON = (data) => {
   const json = JSON.stringify(data);
   const blob = new Blob([json], { type: "application/json" });
@@ -14,12 +21,3 @@ export const exportJSON = (data) => {
   a.dispatchEvent(clickEvt);
   a.remove();
 };
-
-// const link = document.createElement("a");
-// link.href = url;
-// link.download = "data.json";
-// document.body.appendChild(link);
-// link.click();
-
-// URL.revokeObjectURL(url);
-// document.body.removeChild(link);

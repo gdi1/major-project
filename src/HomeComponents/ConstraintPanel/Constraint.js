@@ -18,5 +18,4 @@ const Constraint = styled.div`
   background-color: ${(props) =>
     props.outdated ? `${colors.brick}` : `${colors.mustard}`};
 `;
-//
 export default Constraint;

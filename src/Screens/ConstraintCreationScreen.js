@@ -161,8 +161,6 @@ const ConstraintCreationScreen = () => {
 
   const handleConstraintTypeChange = (e) => {
     const newType = e.target.value;
-    console.log(newType);
-    // dispatch(currentConstraintActions.setType(newType));
     dispatch(constraintFlowActions.setType(newType));
   };
 
@@ -201,16 +199,10 @@ const ConstraintCreationScreen = () => {
         <ReactFlowProvider>
           <ConstraintFlowPanel />
         </ReactFlowProvider>
-        {/* <PreviewPanel /> */}
       </PageBody>
     </ConstraintCreationPage>
   );
 };
-
-// () => {
-//   dispatch(currentConstraintActions.resetCurrentConstraint());
-//   navigate("/");
-// }
 
 const TypeSelectComponent = styled.select`
   background-color: ${colors.beige};

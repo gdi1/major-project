@@ -11,8 +11,13 @@ import {
 import { useEffect, useState } from "react";
 import team_icon from "../../../icons/team_icon.png";
 
-const shadowUrl =
-  "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png";
+/**
+ *
+ * References
+ *
+ * “Ewoken/Leaflet.Movingmarker: A Leaflet Plug-in to Create Moving Marker.” GitHub, n.d.
+ * https://github.com/ewoken/Leaflet.MovingMarker.
+ */
 
 const MapMovingMarker = ({ movingMarkerRef, setPulsatingGames }) => {
   const { selectedTeamJourney, selectedTeam, focusedGame, speed } = useSelector(
@@ -82,13 +87,3 @@ const MapMovingMarker = ({ movingMarkerRef, setPulsatingGames }) => {
 };
 
 export default MapMovingMarker;
-
-//"/team_icon.png",
-// shadowUrl: markerShadow,
-// Array(locations.length - 1).fill(speed),
-// console.log("Hello, creating new moving marker");
-
-// movingMarkerRef.current._durations = Array(locations.length - 1).fill(
-//   speed
-// );
-// console.log(calculateDurations(selectedTeamJourney, speed));

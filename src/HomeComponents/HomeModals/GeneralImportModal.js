@@ -54,6 +54,15 @@ const GeneralImportModal = ({ isModalOpen, setIsModalOpen }) => {
     closeModal();
   };
 
+  /**
+   *
+   * References
+   *
+   * “Using the Filereader API to Preview Images in React.” LogRocket Blog, n.d.
+   * https://blog.logrocket.com/using-filereader-api-preview-images-react/.
+   *
+   * JSFiddle, JSFiddle, n.d., https://jsfiddle.net/Noitidart/zTe4j/3/.
+   */
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();

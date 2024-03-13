@@ -67,10 +67,9 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
     navigate("/new-constraint");
   };
 
-  // const removeConstraint = () => {
-  //   dispatch(constraintsActions.removeConstraint({ index, type }));
-  //   closeModal();
-  // };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && changeName()) closeModal();
+  };
 
   return (
     <Modal
@@ -87,6 +86,7 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
         <NameInputField
           defaultValue={constraint ? constraint.name : ""}
           ref={editConstraintNameRef}
+          onKeyDown={handleKeyDown}
         />
         <ModalButtonGroup>
           <ModalButton

@@ -29,6 +29,13 @@ const Text = styled.div`
   font-size: ${text_styles.fonts.xsmall};
   font-family: ${text_styles.styles.fontFamily};
 `;
+
+/**
+ * References
+ *
+ * “How to - Circles,” How To Create Circles / Round Dots, n.d.,
+ * https://www.w3schools.com/howto/howto_css_circles.asp.
+ */
 const Dot = styled.div`
   height: 1vw;
   width: 1vw;

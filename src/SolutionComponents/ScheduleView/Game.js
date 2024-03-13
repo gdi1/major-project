@@ -71,7 +71,3 @@ const RightTeam = styled(TextWithEllipsis)`
 `;
 
 export default Game;
-
-// console.log(game);
-// console.log(game);
-// console.log("payload1", game, week, period);

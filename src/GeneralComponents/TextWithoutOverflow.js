@@ -1,6 +1,11 @@
 import styled, { css } from "styled-components";
 import text_styles from "../style-utils/text_styles";
 
+/**
+ * References
+ *
+ * CSS Tooltip, n.d., https://www.w3schools.com/css/css_tooltip.asp.
+ */
 export const TextWithEllipsis = styled.div`
   word-break: break-word;
   white-space: nowrap;
@@ -21,6 +26,3 @@ export const TextWithWordBreakCSS = css`
   white-space: normal;
   overflow-wrap: break-word;
 `;
-
-// text-overflow: ellipsis;
-//   overflow: hidden;

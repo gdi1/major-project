@@ -10,6 +10,16 @@ import { IconContainer, LargeIcon } from "../../GeneralComponents/Icons";
 import { TooltipText } from "../../GeneralComponents/TooltipText";
 import { TextWithEllipsisCSS } from "../../GeneralComponents/TextWithoutOverflow";
 
+/**
+ *
+ * References
+ *
+ * Codesandbox.io, n.d.
+ * https://codesandbox.io/p/sandbox/react-beautiful-dnd-nested-example-forked-3o0i1i?file=%2Fsrc%2FNestedListComponent.js.
+ *
+ * “Simplifying Drag and Drop (Lists and Nested Lists).” Tania Rascia RSS, n.d.
+ * https://www.taniarascia.com/simplifying-drag-and-drop/.
+ */
 const ConstraintsList = ({
   type,
   constraints,
@@ -18,10 +28,6 @@ const ConstraintsList = ({
   setConstraintToDelete,
 }) => {
   const { outdatedConstraints } = useSelector((state) => state.configurations);
-
-  // const removeConstraint = (index) => {
-  //   dispatch(constraintsActions.removeConstraint({ index, type }));
-  // };
   return (
     <Drop
       id={type}

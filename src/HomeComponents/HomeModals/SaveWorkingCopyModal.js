@@ -55,6 +55,10 @@ const SaveWorkingCopyModal = ({ isModalOpen, setIsModalOpen }) => {
     closeModal();
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") saveWorkingCopy();
+  };
+
   return (
     <Modal
       ariaHideApp={false}
@@ -70,6 +74,7 @@ const SaveWorkingCopyModal = ({ isModalOpen, setIsModalOpen }) => {
           placeholder="Enter name"
           ref={nameRef}
           autoFocus={true}
+          onKeyDown={handleKeyDown}
         />
         <ModalButtonGroup>
           <ModalButton onClick={closeModal}>Close</ModalButton>

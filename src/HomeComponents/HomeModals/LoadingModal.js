@@ -67,7 +67,7 @@ const LoadingModal = ({ isModalOpen, setIsModalOpen, solveConfiguration }) => {
             An unexpected error has occurred when generation a solution.
           </CenteredModalLabel>
         )}
-        {!isError && <Loader />}
+        {!isError && <LoadingSpinner />}
         <ModalButtonGroup>
           <ModalButton onClick={closeModal}>Close</ModalButton>
         </ModalButtonGroup>
@@ -76,19 +76,25 @@ const LoadingModal = ({ isModalOpen, setIsModalOpen, solveConfiguration }) => {
   );
 };
 
-const spin = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+const spinning_animation = keyframes`
+  0% { 
+    transform: rotate(0deg); 
+  }
+
+  100% { 
+    transform: rotate(360deg); 
+  }
 `;
 
-// Create the Loader component using styled-components
-const Loader = styled.div`
-  border: 0.5vw solid ${colors.mustard}; /* Light grey */
-  border-top: 0.5vw solid ${colors.brick}; /* Blue */
-  border-radius: 50%;
-  width: 2vw;
+const LoadingSpinner = styled.div`
   height: 2vw;
-  animation: ${spin} 2s linear infinite;
+  width: 2vw;
+
+  border: 0.5vw solid ${colors.mustard};
+  border-top: 0.5vw solid ${colors.brick};
+  border-radius: 50%;
+
+  animation: ${spinning_animation} 2s linear infinite;
 `;
 
 export default LoadingModal;

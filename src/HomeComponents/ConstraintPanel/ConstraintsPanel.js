@@ -24,7 +24,16 @@ import ConstraintsInfoCardModal from "./ConstraintModals/ConstraintsInfoCardModa
 import exclamation_mark_icon from "../../icons/exclamation_mark_icon.png";
 
 const constraints_types = ["hard", "soft"];
-
+/**
+ *
+ * References
+ *
+ * Codesandbox.io, n.d.
+ * https://codesandbox.io/p/sandbox/react-beautiful-dnd-nested-example-forked-3o0i1i?file=%2Fsrc%2FNestedListComponent.js.
+ *
+ * “Simplifying Drag and Drop (Lists and Nested Lists).” Tania Rascia RSS, n.d.
+ * https://www.taniarascia.com/simplifying-drag-and-drop/.
+ */
 const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
   const { hardConstraints, softConstraints, outdatedConstraints, teams } =
     useSelector((state) => state.configurations);
@@ -201,100 +210,3 @@ const InfoIcon = styled(LargeIcon)`
   cursor: pointer;
 `;
 export default ConstraintsPanel;
-
-// {
-/* <Drop id="hard" style={{ width: "50%" }}>
-            <Label
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              Hard
-            </Label>
-            {hardConstraints.length === 0 && (
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                No constraints.
-              </div>
-            )}
-            {hardConstraints.length > 0 &&
-              hardConstraints.map((constraint, index) => {
-                return (
-                  <Drag
-                    key={constraint.name}
-                    id={constraint.name}
-                    index={index}
-                  >
-                    <Constraint
-                      onClick={() => {
-                        setEditInfo({
-                          index,
-                          type: "hard",
-                          constraint,
-                        });
-                        setIsEditConstraintModalOpen(true);
-                      }}
-                    >
-                      {constraint.name}
-                    </Constraint>
-                  </Drag>
-                );
-              })}
-          </Drop>
-          <Drop id="soft" style={{ width: "50%" }}>
-            <Label
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              Soft
-            </Label>
-            {softConstraints.length === 0 && (
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                No constraints.
-              </div>
-            )}
-            {softConstraints.length > 0 &&
-              softConstraints.map((constraint, index) => {
-                return (
-                  <Drag
-                    key={constraint.name}
-                    id={constraint.name}
-                    index={index}
-                  >
-                    <Constraint
-                      onClick={() => {
-                        setEditInfo({
-                          index,
-                          type: "soft",
-                          constraint,
-                        });
-                        setIsEditConstraintModalOpen(true);
-                      }}
-                    >
-                      {constraint.name}
-                    </Constraint>
-                  </Drag>
-                );
-              })}
-          </Drop> */
-// }

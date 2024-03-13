@@ -22,6 +22,20 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import marker_icon from "../../../../icons/marker_icon.png";
 import { TextWithWordBreakCSS } from "../../../../GeneralComponents/TextWithoutOverflow";
 
+/**
+ *
+ * References
+ *
+ * “React Leaflet.” React Leaflet, n.d. https://react-leaflet.js.org/.
+ *
+ * Setup.” React Leaflet, n.d. https://react-leaflet.js.org/docs/start-setup/.
+ *
+ * “Child Components.” React Leaflet, n.d.
+ * https://react-leaflet.js.org/docs/api-components/#marker.
+ *
+ * Codesandbox.io, n.d.
+ * https://codesandbox.io/p/sandbox/programmatically-open-popup-with-react-leaflet-y12g0?file=%2Fsrc%2FApp.js.
+ */
 const Map = () => {
   const { locations } = useSelector((state) => state.configurations);
   const [searchedLocation, setSearchedLocation] = useState(null);
@@ -131,11 +145,7 @@ const Map = () => {
           >
             <Popup>
               <PopUpDetails>
-                {!showChangeNameInput && (
-                  <Text style={{ textAlign: "center" }}>
-                    {searchedLocation.label}
-                  </Text>
-                )}
+                {!showChangeNameInput && <Text>{searchedLocation.label}</Text>}
                 {showChangeNameInput && (
                   <InputField
                     onChange={onChangeName}
@@ -185,6 +195,7 @@ const Text = styled.div`
   font-family: ${text_styles.styles.fontFamily};
   font-size: ${text_styles.fonts.xsmall};
   ${TextWithWordBreakCSS};
+  text-align: center;
 `;
 
 const PopUpButton = styled(GeneralButton)`

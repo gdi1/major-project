@@ -13,9 +13,7 @@ import colors from "../style-utils/colors";
 const TeamsPanel = () => {
   const dispatch = useDispatch();
   const { teams } = useSelector((state) => state.solution.internalData);
-  const { selectedTeam, selectedTeamGames, solution, teamsMap } = useSelector(
-    (state) => state.solution
-  );
+  const { selectedTeam } = useSelector((state) => state.solution);
   const toggleTeamSelection = (team) => {
     console.log(team.value);
     dispatch(

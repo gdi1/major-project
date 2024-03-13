@@ -21,7 +21,6 @@ const DropDownItem = ({ id, option, type }) => {
   const optionInputRef = useRef();
   const dispatch = useDispatch();
   const options = useSelector((state) => state.configurations[type]);
-  // const { outdatedConstraints } = useSelector((state) => state.configurations);
 
   const handleDeleteOption = () => {
     dispatch(configurationsActions.removeOption({ type, id }));
@@ -108,7 +107,6 @@ const OptionBundle = styled(RowContainer)`
   gap: ${gaps.xsmall};
   box-sizing: border-box;
 `;
-//justify-content: end;
 
 const OptionButton = styled(GeneralButton)``;
 

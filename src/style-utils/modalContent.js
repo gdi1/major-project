@@ -2,6 +2,14 @@ import colors from "./colors";
 import borders from "./borders";
 import paddings from "./paddings";
 
+/**
+ * Reference
+ *
+ * CS3099 project
+ *
+ * This particular styling has been borrowed from the CS3099 project,
+ * where my team has also made use of it to style the React modals throughout the entire application.
+ */
 export const modal_content = {
   content: {
     top: "50%",

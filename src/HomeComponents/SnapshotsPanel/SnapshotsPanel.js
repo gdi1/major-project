@@ -25,7 +25,7 @@ const SnapshotsPanel = () => {
 
   useEffect(() => {
     if (snapshotToLoadBack) setShowLoadBackSnapshotModal(true);
-  }, snapshotToLoadBack);
+  }, [snapshotToLoadBack]);
 
   useEffect(() => {
     if (!showLoadBackSnapshotModal) setSnapshotToLoadBack(undefined);
@@ -33,7 +33,7 @@ const SnapshotsPanel = () => {
 
   useEffect(() => {
     if (snapshotToDelete) setShowSnapshotToDeleteModal(true);
-  }, snapshotToDelete);
+  }, [snapshotToDelete]);
 
   useEffect(() => {
     if (!setShowSnapshotToDeleteModal) setSnapshotToDelete(undefined);

@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { ColumnContainer } from "../GeneralComponents/Containers";
 import { CenteredLabel } from "../GeneralComponents/Labels";
-import Title from "../GeneralComponents/Title";
 import { solutionActions } from "../store/solution";
 import styled from "styled-components";
 import paddings from "../style-utils/paddings";
@@ -15,7 +14,6 @@ const TeamsPanel = () => {
   const { teams } = useSelector((state) => state.solution.internalData);
   const { selectedTeam } = useSelector((state) => state.solution);
   const toggleTeamSelection = (team) => {
-    console.log(team.value);
     dispatch(
       selectedTeam !== team.value
         ? solutionActions.selectTeam(team.value)

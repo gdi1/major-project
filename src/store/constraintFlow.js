@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getRootNode } from "../Utilities/EncodingFunctions";
 
 const operators = ["and", "or"];
 
@@ -13,6 +14,21 @@ const constraintFlowSlice = createSlice({
     edges: [],
   },
   reducers: {
+    focusRootNode(state, _) {
+      if (state.nodes.length == 0) return;
+
+      const targets = [];
+      const nodesIds = state.nodes.map(({ id }) => id);
+      for (const { source, target } of state.edges) {
+        targets.push(target);
+      }
+      state.selectedNode = nodesIds.filter(
+        (node) => !targets.includes(node)
+      )[0];
+
+      for (const node of state.nodes)
+        if (node.id === state.selectedNode) node.selected = true;
+    },
     setName(state, action) {
       state.name = action.payload;
     },
@@ -176,6 +192,7 @@ const constraintFlowSlice = createSlice({
     setNewConstraint(state, action) {
       const { game, period, week } = action.payload;
       console.log("payload", game, period, week);
+      state.selectedNode = "1";
       state.nodes.push({
         id: "1",
         type: "ConstraintNode",

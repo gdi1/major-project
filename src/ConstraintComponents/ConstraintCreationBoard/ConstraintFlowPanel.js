@@ -102,6 +102,7 @@ const ConstraintFlowPanel = () => {
         zoomOnPinch={false}
         zoomOnScroll={false}
         preventScrolling={false}
+        onInit={() => dispatch(constraintFlowActions.focusRootNode())}
       >
         <NodeSelection />
         <Background gap={16} />

@@ -12,6 +12,7 @@ import margins from "../../style-utils/margins";
 import colors from "../../style-utils/colors";
 import Constraint from "../../HomeComponents/ConstraintPanel/Constraint";
 import text_styles from "../../style-utils/text_styles";
+import { TextWithEllipsisCSS } from "../../GeneralComponents/TextWithoutOverflow";
 
 const ScheduleView = () => {
   const { schedule, violatedSoftConstraints } = useSelector(
@@ -69,6 +70,7 @@ const ScheduleView = () => {
 const ConstraintName = styled.div`
   width: 100%;
   text-align: center;
+  ${TextWithEllipsisCSS};
 `;
 
 const ViolatedSoftConstraints = styled(GridContainer)`

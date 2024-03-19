@@ -44,6 +44,8 @@ const FlowBlock = ({ id, type, selectedOptions }) => {
 
   const handleInputChange = (e) => {
     let sanitizedValue = e.target.value.replace(/\D/g, "");
+    if (sanitizedValue !== "")
+      sanitizedValue = parseInt(sanitizedValue).toString();
     dispatch(
       constraintFlowActions.updateOptions({
         selectedOptions: [{ value: sanitizedValue, label: sanitizedValue }],

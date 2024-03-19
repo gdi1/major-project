@@ -22,6 +22,8 @@ import info_icon from "../../icons/info_icon.png";
 import { TooltipText } from "../../GeneralComponents/TooltipText";
 import ConstraintsInfoCardModal from "./ConstraintModals/ConstraintsInfoCardModal";
 import exclamation_mark_icon from "../../icons/exclamation_mark_icon.png";
+import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../Utilities/NotificationWrapper";
 
 const constraints_types = ["hard", "soft"];
 /**
@@ -64,8 +66,11 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
 
   const addNewConstraint = () => {
     if (teams.length === 0) {
-      alert(
-        "You must at least input some teams before creating a new constraint."
+      NotificationManager.error(
+        ...formatNtf(
+          "You must add at least one team before creating a new constraint.",
+          "Error"
+        )
       );
       return;
     }

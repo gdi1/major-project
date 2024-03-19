@@ -103,7 +103,7 @@ const ConstraintCreationScreen = () => {
     if (!allNodesEitherNonLeafOrLeafWithTeamsAndVerb) {
       NotificationManager.error(
         ...formatNtf(
-          "Non leaf nodes must be either AND or OR, leaf nodes must contain 'Teams' and a verb at least.",
+          "Non-leaf nodes must be either AND or OR.\nLeaf nodes must contain both a 'Teams' and a Verb block.",
           "Error"
         )
       );

@@ -1,6 +1,5 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { useState, useEffect } from "react";
-// import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
 import options_icon from "./../icons/options_icon.png";
 import settings_icon from "./../icons/settings_icon.png";
 import snapshot_icon from "./../icons/snapshot_icon.png";
@@ -19,6 +18,8 @@ import colors from "../style-utils/colors";
 import text_styles from "../style-utils/text_styles";
 import gaps from "../style-utils/gaps";
 import margins from "../style-utils/margins";
+import { sidebarActions } from "../store/sidebar";
+import { useDispatch } from "react-redux";
 
 const constraint_types = ["hard", "soft"];
 const options_types = ["teams", "locations", "periods", "weeks"];
@@ -40,14 +41,15 @@ const options_types = ["teams", "locations", "periods", "weeks"];
  */
 const SidebarComponent = ({
   show,
-  setShow,
-  setOptionsTypes,
+  // setShow,
+  // setOptionsTypes,
   optionsTypes,
   setShowSaveWorkingCopyModal,
   setShowExportEverythingModal,
   setShowGeneralImportModal,
 }) => {
   const [collapsed, setCollapsed] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!collapsed) {
@@ -76,93 +78,94 @@ const SidebarComponent = ({
     minHeight: "5vh",
   };
 
-  const addNewType = (type) => {
-    setShow((prev) => prev.filter((el) => el !== "home"));
-    if (type === "all-constraints") {
-      if (
-        !show.includes("constraints") ||
-        !constraint_types.every((op) => optionsTypes.includes(op))
-      ) {
-        setShow((prev) => [...new Set([...prev, "constraints"])]);
-        setOptionsTypes((prev) => [...new Set([...prev, ...constraint_types])]);
-      } else {
-        setShow((prev) => {
-          const result = prev.filter((el) => el !== "constraints");
-          return result.length !== 0 ? result : ["home"];
-        });
-        setOptionsTypes((prev) =>
-          prev.filter((el) => !constraint_types.includes(el))
-        );
-      }
-      return;
-    }
-    if (type === "all-options") {
-      if (
-        !show.includes("options") ||
-        !options_types.every((op) => optionsTypes.includes(op))
-      ) {
-        setShow((prev) => [...new Set([...prev, "options"])]);
-        setOptionsTypes((prev) => [...new Set([...prev, ...options_types])]);
-      } else {
-        setShow((prev) => {
-          const result = prev.filter((el) => el !== "options");
-          return result.length !== 0 ? result : ["home"];
-        });
-        setOptionsTypes((prev) =>
-          prev.filter((el) => !options_types.includes(el))
-        );
-      }
-      return;
-    }
-    if (type === "all-snapshots") {
-      if (!show.includes("snapshots")) {
-        setShow((prev) => [...prev, "snapshots"]);
-        setOptionsTypes((prev) => [...prev, "snapshots"]);
-      } else {
-        setShow((prev) => {
-          const result = prev.filter((el) => el !== "snapshots");
-          return result.length !== 0 ? result : ["home"];
-        });
-        setOptionsTypes((prev) => prev.filter((el) => el !== "snapshots"));
-      }
-      return;
-    }
-    if (constraint_types.includes(type)) {
-      if (show.includes("constraints")) {
-        if (optionsTypes.includes(type)) {
-          setOptionsTypes((prev) => {
-            const result = prev.filter((el) => el !== type);
-            if (!result.some((op) => constraint_types.includes(op)))
-              setShow((prev) => {
-                const res = prev.filter((el) => el !== "constraints");
-                return res.length !== 0 ? res : ["home"];
-              });
-            return result;
-          });
-        } else setOptionsTypes((prev) => [...prev, type]);
-      } else {
-        setShow((prev) => [...new Set([...prev, "constraints"])]);
-        setOptionsTypes((prev) => [...new Set([...prev, type])]);
-      }
-    }
-    if (options_types.includes(type)) {
-      if (show.includes("options")) {
-        if (optionsTypes.includes(type)) {
-          setOptionsTypes((prev) => {
-            const result = prev.filter((el) => el !== type);
-            if (!result.some((op) => options_types.includes(op)))
-              setShow((prev) => {
-                const res = prev.filter((el) => el !== "options");
-                return res.length !== 0 ? res : ["home"];
-              });
-            return result;
-          });
-        } else setOptionsTypes((prev) => [...prev, type]);
-      } else {
-        setShow((prev) => [...new Set([...prev, "options"])]);
-        setOptionsTypes((prev) => [...new Set([...prev, type])]);
-      }
-    }
+  const toggleNewType = (type) => {
+    dispatch(sidebarActions.toggleNewType(type));
+    // setShow((prev) => prev.filter((el) => el !== "home"));
+    // if (type === "all-constraints") {
+    //   if (
+    //     !show.includes("constraints") ||
+    //     !constraint_types.every((op) => optionsTypes.includes(op))
+    //   ) {
+    //     setShow((prev) => [...new Set([...prev, "constraints"])]);
+    //     setOptionsTypes((prev) => [...new Set([...prev, ...constraint_types])]);
+    //   } else {
+    //     setShow((prev) => {
+    //       const result = prev.filter((el) => el !== "constraints");
+    //       return result.length !== 0 ? result : ["home"];
+    //     });
+    //     setOptionsTypes((prev) =>
+    //       prev.filter((el) => !constraint_types.includes(el))
+    //     );
+    //   }
+    //   return;
+    // }
+    // if (type === "all-options") {
+    //   if (
+    //     !show.includes("options") ||
+    //     !options_types.every((op) => optionsTypes.includes(op))
+    //   ) {
+    //     setShow((prev) => [...new Set([...prev, "options"])]);
+    //     setOptionsTypes((prev) => [...new Set([...prev, ...options_types])]);
+    //   } else {
+    //     setShow((prev) => {
+    //       const result = prev.filter((el) => el !== "options");
+    //       return result.length !== 0 ? result : ["home"];
+    //     });
+    //     setOptionsTypes((prev) =>
+    //       prev.filter((el) => !options_types.includes(el))
+    //     );
+    //   }
+    //   return;
+    // }
+    // if (type === "all-snapshots") {
+    //   if (!show.includes("snapshots")) {
+    //     setShow((prev) => [...prev, "snapshots"]);
+    //     setOptionsTypes((prev) => [...prev, "snapshots"]);
+    //   } else {
+    //     setShow((prev) => {
+    //       const result = prev.filter((el) => el !== "snapshots");
+    //       return result.length !== 0 ? result : ["home"];
+    //     });
+    //     setOptionsTypes((prev) => prev.filter((el) => el !== "snapshots"));
+    //   }
+    //   return;
+    // }
+    // if (constraint_types.includes(type)) {
+    //   if (show.includes("constraints")) {
+    //     if (optionsTypes.includes(type)) {
+    //       setOptionsTypes((prev) => {
+    //         const result = prev.filter((el) => el !== type);
+    //         if (!result.some((op) => constraint_types.includes(op)))
+    //           setShow((prev) => {
+    //             const res = prev.filter((el) => el !== "constraints");
+    //             return res.length !== 0 ? res : ["home"];
+    //           });
+    //         return result;
+    //       });
+    //     } else setOptionsTypes((prev) => [...prev, type]);
+    //   } else {
+    //     setShow((prev) => [...new Set([...prev, "constraints"])]);
+    //     setOptionsTypes((prev) => [...new Set([...prev, type])]);
+    //   }
+    // }
+    // if (options_types.includes(type)) {
+    //   if (show.includes("options")) {
+    //     if (optionsTypes.includes(type)) {
+    //       setOptionsTypes((prev) => {
+    //         const result = prev.filter((el) => el !== type);
+    //         if (!result.some((op) => options_types.includes(op)))
+    //           setShow((prev) => {
+    //             const res = prev.filter((el) => el !== "options");
+    //             return res.length !== 0 ? res : ["home"];
+    //           });
+    //         return result;
+    //       });
+    //     } else setOptionsTypes((prev) => [...prev, type]);
+    //   } else {
+    //     setShow((prev) => [...new Set([...prev, "options"])]);
+    //     setOptionsTypes((prev) => [...new Set([...prev, type])]);
+    //   }
+    // }
   };
 
   return (
@@ -208,8 +211,9 @@ const SidebarComponent = ({
         </MenuItem>
         <MenuItem
           onClick={() => {
-            setShow(["home"]);
-            setOptionsTypes([]);
+            dispatch(sidebarActions.resetView());
+            // setShow(["home"]);
+            // setOptionsTypes([]);
           }}
           style={style_sidebar}
         >
@@ -235,30 +239,30 @@ const SidebarComponent = ({
                     ...style_sidebar,
                     paddingLeft: "4vw",
                   }}
-                  onClick={() => addNewType("all-options")}
+                  onClick={() => toggleNewType("all-options")}
                 >
                   <ItemName>All</ItemName>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => addNewType("teams")}
+                  onClick={() => toggleNewType("teams")}
                   style={selectedStyle("teams")}
                 >
                   <ItemName>Teams</ItemName>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => addNewType("locations")}
+                  onClick={() => toggleNewType("locations")}
                   style={selectedStyle("locations")}
                 >
                   <ItemName>Locations</ItemName>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => addNewType("periods")}
+                  onClick={() => toggleNewType("periods")}
                   style={selectedStyle("periods")}
                 >
                   <ItemName>Periods</ItemName>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => addNewType("weeks")}
+                  onClick={() => toggleNewType("weeks")}
                   style={selectedStyle("weeks")}
                 >
                   <ItemName>Weeks</ItemName>
@@ -276,18 +280,18 @@ const SidebarComponent = ({
                     ...style_sidebar,
                     paddingLeft: "4vw",
                   }}
-                  onClick={() => addNewType("all-constraints")}
+                  onClick={() => toggleNewType("all-constraints")}
                 >
                   <ItemName>All</ItemName>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => addNewType("hard")}
+                  onClick={() => toggleNewType("hard")}
                   style={selectedStyle("hard")}
                 >
                   <ItemName>Hard</ItemName>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => addNewType("soft")}
+                  onClick={() => toggleNewType("soft")}
                   style={selectedStyle("soft")}
                 >
                   <ItemName>Soft</ItemName>
@@ -301,7 +305,7 @@ const SidebarComponent = ({
             >
               <MenuItem
                 onClick={() => {
-                  addNewType("all-snapshots");
+                  toggleNewType("all-snapshots");
                 }}
                 style={selectedStyle("snapshots")}
               >

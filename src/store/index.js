@@ -7,6 +7,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import hardSet from "redux-persist/lib/stateReconciler/hardSet";
 import snapshotsHistorySlice from "./snapshotsHistory";
+import sidebarSlice from "./sidebar";
 
 /**
  *
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   solution: solutionSlice.reducer,
   flow: constraintFlowSlice.reducer,
   snapshotsHistory: snapshotsHistorySlice.reducer,
+  sidebar: sidebarSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -79,7 +79,7 @@ const JourneyView = () => {
               <MapContainer
                 style={{ height: "100%", width: "100%" }}
                 center={center}
-                zoom={5}
+                // zoom={5}
                 scrollWheelZoom={false}
                 id="leafletmap"
                 doubleClickZoom={false}

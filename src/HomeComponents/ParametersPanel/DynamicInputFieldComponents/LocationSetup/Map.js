@@ -35,6 +35,9 @@ import { TextWithWordBreakCSS } from "../../../../GeneralComponents/TextWithoutO
  *
  * Codesandbox.io, n.d.
  * https://codesandbox.io/p/sandbox/programmatically-open-popup-with-react-leaflet-y12g0?file=%2Fsrc%2FApp.js.
+ *
+ * Codesandbox.io, n.d.
+ * https://codesandbox.io/p/sandbox/elegant-feather-xgelk?file=%2Fsrc%2FSearchControl.js%3A17%2C15
  */
 const Map = () => {
   const { locations } = useSelector((state) => state.configurations);

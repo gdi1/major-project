@@ -32,11 +32,14 @@ const LoadBackSnapshotModal = ({
 
   const [goToSaveWorkingCopy, setGoToSaveWorkingCopy] = useState(false);
 
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setGoToSaveWorkingCopy(false);
+    setIsModalOpen(false);
+  };
 
   const saveCurrentWorkingCopy = () => {
-    const name = nameRef.current.value;
-    if (!name || name.trim() === "") {
+    const name = nameRef.current.value.trim();
+    if (!name || name === "") {
       NotificationManager.error(
         ...formatNtf("Mush give a name to the snapshot", "Error")
       );
@@ -53,7 +56,7 @@ const LoadBackSnapshotModal = ({
         name,
         internalState,
         solution,
-        date: new Date(),
+        date: new window.Date().toISOString(),
       })
     );
     return true;
@@ -61,13 +64,22 @@ const LoadBackSnapshotModal = ({
 
   const loadBackSnapshot = (saveWorkingCopy) => {
     if (saveWorkingCopy && !saveCurrentWorkingCopy()) return;
+
     const snapshotToLoad = snapshots.find(
       (snapshot) => snapshot.name === snapshotName
     );
-    console.log("Snapshot is:", snapshotToLoad);
+    console.log(snapshotToLoad);
     dispatch(configurationsActions.setState(snapshotToLoad.internalState));
     dispatch(solutionActions.setState(snapshotToLoad.solution));
-    console.log("name: ", snapshotName);
+    if (saveWorkingCopy) {
+      const currentWorkingCopySnapshotName = nameRef.current.value.trim();
+      NotificationManager.success(
+        ...formatNtf(
+          `Successfully saved current working copy in snapshot ${currentWorkingCopySnapshotName}!`,
+          "Success"
+        )
+      );
+    }
     NotificationManager.success(
       ...formatNtf(
         `Successfully loaded back snapshot ${snapshotName}!`,
@@ -76,6 +88,10 @@ const LoadBackSnapshotModal = ({
     );
     setSnapshotToLoadBack(undefined);
     closeModal();
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") loadBackSnapshot(true);
   };
 
   return (
@@ -120,9 +136,14 @@ const LoadBackSnapshotModal = ({
           >
             Go back
           </ModalButton>
-          <ModalTitle>Export everything</ModalTitle>
+          <ModalTitle>Save current working copy</ModalTitle>
           <ModalLabel>Working Copy's Snapshot Name</ModalLabel>
-          <NameInputField placeholder="Enter name" ref={nameRef} />
+          <NameInputField
+            placeholder="Enter name"
+            ref={nameRef}
+            autoFocus={true}
+            onKeyDown={handleKeyDown}
+          />
           <ModalButtonGroup>
             <ModalButton onClick={closeModal}>Close</ModalButton>
             <ModalButton onClick={() => loadBackSnapshot(true)}>

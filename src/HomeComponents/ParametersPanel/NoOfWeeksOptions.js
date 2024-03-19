@@ -11,6 +11,8 @@ import { configurationsActions } from "../../store/configurations";
 import text_styles from "../../style-utils/text_styles";
 import { SmallIcon } from "../../GeneralComponents/Icons";
 import { TooltipText } from "../../GeneralComponents/TooltipText";
+import { NotificationManager } from "react-notifications";
+import { formatNtf } from "../../Utilities/NotificationWrapper";
 
 const NoOfWeeksOptions = () => {
   const { weeks } = useSelector((state) => state.configurations);
@@ -19,14 +21,25 @@ const NoOfWeeksOptions = () => {
   const noOfWeeksRef = useRef();
   const dispatch = useDispatch();
   const handleChange = (e) => {
-    if (e.target.value < 0) return;
-    setNoOfWeeks(e.target.value);
+    let sanitizedValue = e.target.value.replace(/\D/g, "");
+    setNoOfWeeks(sanitizedValue);
   };
 
   const handleInputKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter") toggleButton();
+  };
+
+  const toggleButton = () => {
+    if (!isEdit) setIsEdit(true);
+    else {
+      if (noOFWeeks === "" || parseInt(noOFWeeks) === 0) {
+        NotificationManager.error(
+          ...formatNtf("The number of weeks must be positive!", "Error")
+        );
+        return;
+      }
       setIsEdit(false);
-      dispatch(configurationsActions.addWeeks(noOFWeeks));
+      dispatch(configurationsActions.addWeeks(parseInt(noOFWeeks)));
     }
   };
 
@@ -49,15 +62,7 @@ const NoOfWeeksOptions = () => {
         />
       )}
       {!isEdit && <SmallerLabel>{weeks.length}</SmallerLabel>}
-      <GeneralButton
-        onClick={() => {
-          if (!isEdit) setIsEdit(true);
-          else {
-            setIsEdit(false);
-            dispatch(configurationsActions.addWeeks(noOFWeeks));
-          }
-        }}
-      >
+      <GeneralButton onClick={toggleButton}>
         <SmallIcon src={isEdit ? check_icon : edit_icon} />
         <TooltipText>{isEdit ? "Save" : "Edit"}</TooltipText>
       </GeneralButton>

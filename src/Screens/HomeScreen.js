@@ -34,8 +34,9 @@ const options_types = ["teams", "locations", "periods", "weeks"];
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [show, setShow] = useState(["home"]);
-  const [optionsTypes, setOptionsTypes] = useState([]);
+  const { show, optionsTypes } = useSelector((state) => state.sidebar);
+  // const [show, setShow] = useState(["home"]);
+  // const [optionsTypes, setOptionsTypes] = useState([]);
   const [showSaveWorkingCopyModal, setShowSaveWorkingCopyModal] =
     useState(false);
   const [showExportEverythingModal, setShowExportEverythingModal] =
@@ -59,7 +60,7 @@ const HomeScreen = () => {
       teams.length === 0 ||
       locations.length === 0 ||
       periods.length === 0 ||
-      weeks === 0
+      weeks.length === 0
     ) {
       NotificationManager.error(
         ...formatNtf(
@@ -129,6 +130,7 @@ const HomeScreen = () => {
         periodsMap,
       })
     );
+    // dispatch(solutionActions.setViolatedSoftConstraints(["c1", "c2", "c3"]));
     setIsLoadingModalOpened(false);
     navigate("/show-solution");
     return true;
@@ -175,8 +177,8 @@ const HomeScreen = () => {
         />
         <SidebarComponent
           show={show}
-          setShow={setShow}
-          setOptionsTypes={setOptionsTypes}
+          // setShow={setShow}
+          // setOptionsTypes={setOptionsTypes}
           optionsTypes={optionsTypes}
           setShowSaveWorkingCopyModal={setShowSaveWorkingCopyModal}
           setShowExportEverythingModal={setShowExportEverythingModal}

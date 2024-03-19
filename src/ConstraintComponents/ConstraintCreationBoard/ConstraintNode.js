@@ -1,10 +1,11 @@
-import { Handle, Position } from "reactflow";
+import { Handle, Position, useUpdateNodeInternals } from "reactflow";
 import FlowBlock from "./FlowBlock";
 import { useSelector } from "react-redux";
 import borders from "../../style-utils/borders";
 import styled from "styled-components";
 import paddings from "../../style-utils/paddings";
 import colors from "../../style-utils/colors";
+import { useEffect } from "react";
 
 const positions = {
   teams: 1,
@@ -26,9 +27,15 @@ const sortConstraintBlockTypes = (arr) => {
 const operators = ["and", "or"];
 
 const ConstraintNode = ({ id, data }) => {
+  const updateNodeInternals = useUpdateNodeInternals();
   const types = sortConstraintBlockTypes(Object.keys(data.types));
   const bottomHandle = types.some((type) => operators.includes(type));
   const { selectedNode } = useSelector((state) => state.flow);
+
+  useEffect(() => {
+    updateNodeInternals(id);
+    console.log("blabal");
+  }, [bottomHandle]);
 
   return (
     <ConstraintNodeBody focused={selectedNode === id}>
@@ -36,7 +43,7 @@ const ConstraintNode = ({ id, data }) => {
         <Handle
           type="target"
           position={Position.Top}
-          style={{ backgroundColor: "green" }}
+          style={{ backgroundColor: "green", width: "0.5vw", height: "0.5vw" }}
         />
       )}
       {types.map((type) => (
@@ -46,7 +53,7 @@ const ConstraintNode = ({ id, data }) => {
         <Handle
           type="source"
           position={Position.Bottom}
-          style={{ backgroundColor: "orange" }}
+          style={{ backgroundColor: "orange", width: "0.5vw", height: "0.5vw" }}
         />
       )}
     </ConstraintNodeBody>

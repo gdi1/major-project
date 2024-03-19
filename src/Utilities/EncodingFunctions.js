@@ -162,7 +162,7 @@ const createAdjacencyMatrix = (edges) => {
   return adjMatrix;
 };
 
-const getRootNode = (edges, nodes) => {
+export const getRootNode = (edges, nodes) => {
   const targets = [];
   const nodesIds = getNodesIds(nodes);
   for (const { source, target } of edges) {

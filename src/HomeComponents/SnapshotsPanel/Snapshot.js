@@ -55,7 +55,12 @@ const Snapshot = ({ snapshot, setSnapshotToLoadBack, setSnapshotToDelete }) => {
         </DateAndSolutionStatusContainer>
       </SnapshotDetails>
       <SnapshotActionsGroup>
-        <GeneralButton onClick={() => setSnapshotToLoadBack(name)}>
+        <GeneralButton
+          onClick={(e) => {
+            if (e.detail === 0) return;
+            setSnapshotToLoadBack(name);
+          }}
+        >
           <ActionIcon src={load_back_icon} />
           <TooltipText>Load snapshot back</TooltipText>
         </GeneralButton>

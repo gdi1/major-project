@@ -64,7 +64,7 @@ const LoadingModal = ({ isModalOpen, setIsModalOpen, solveConfiguration }) => {
         )}
         {isError && (
           <CenteredModalLabel>
-            An unexpected error has occurred when generation a solution.
+            An unexpected error has occurred when generating a solution.
           </CenteredModalLabel>
         )}
         {!isError && <LoadingSpinner />}

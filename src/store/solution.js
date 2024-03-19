@@ -10,7 +10,7 @@ const solutionSlice = createSlice({
     focusedGame: undefined,
     violatedSoftConstraints: [],
     schedule: [],
-    speed: 3000,
+    speed: 5000,
     teamsMap: {},
     locationsMap: {},
     periodsMap: {},
@@ -117,6 +117,9 @@ const solutionSlice = createSlice({
           })),
         })),
       }));
+    },
+    setViolatedSoftConstraints(state, action) {
+      state.violatedSoftConstraints = action.payload;
     },
     setState(state, action) {
       const {

@@ -9,6 +9,7 @@ import "react-notifications/lib/notifications.css";
 import styled from "styled-components";
 import colors from "./style-utils/colors";
 import paddings from "./style-utils/paddings";
+import { useSelector } from "react-redux";
 
 /**
  * References
@@ -17,13 +18,30 @@ import paddings from "./style-utils/paddings";
  * https://www.npmjs.com/package/react-notifications.
  */
 const App = () => {
+  const { isSolution } = useSelector((state) => state.solution);
+  const { name } = useSelector((state) => state.flow);
+
   return (
     <FullView>
       <NotificationContainer />
       <Routes>
         <Route path="/" element={<HomeScreen />} />
-        <Route path="/new-constraint" element={<ConstraintCreationScreen />} />
-        <Route path="/show-solution" element={<SolutionScreen />} />
+        <Route
+          path="/new-constraint"
+          element={
+            name !== undefined ? (
+              <ConstraintCreationScreen />
+            ) : (
+              <Navigate replace to="/" />
+            )
+          }
+        />
+        <Route
+          path="/show-solution"
+          element={
+            isSolution ? <SolutionScreen /> : <Navigate replace to="/" />
+          }
+        />
         <Route path="/*" element={<Navigate replace to="/" />} />
       </Routes>
     </FullView>

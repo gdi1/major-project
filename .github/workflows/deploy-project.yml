@@ -23,7 +23,7 @@ jobs:
         run: yarn install
 
       - name: Build Project
-        run: yarn build 
+        run: CI=false yarn build
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4.4.3

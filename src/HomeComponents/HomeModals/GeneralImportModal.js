@@ -43,10 +43,10 @@ const GeneralImportModal = ({ isModalOpen, setIsModalOpen }) => {
     }
     NotificationManager.success(
       ...formatNtf(
-        `Successfully imported ${
+        `Successfully imported external${
           isEverythingExport
-            ? "everything"
-            : `external snapshot ${jsonImportFile.snapshot.name}`
+            ? "project"
+            : `snapshot ${jsonImportFile.snapshot.name}`
         }!`,
         "Success"
       )

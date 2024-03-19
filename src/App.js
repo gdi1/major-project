@@ -20,10 +20,6 @@ import { useSelector } from "react-redux";
 const App = () => {
   const { isSolution } = useSelector((state) => state.solution);
   const { name } = useSelector((state) => state.flow);
-  console.log("App", window.location);
-  const path = window.location.pathname.split("/").slice(0, 2);
-  const redirectPath = path.join("/");
-  console.log("App", redirectPath, window.location.origin + redirectPath);
   return (
     <FullView>
       <NotificationContainer />

@@ -38,7 +38,7 @@ const ConstraintsPanel = () => {
   const { hardConstraints, softConstraints, outdatedConstraints, teams } =
     useSelector((state) => state.configurations);
 
-  const { optionsTypes } = useSelector((state) => state.sidebar);
+  const { optionsTypes, show } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
   const [isInfoCardModalOpen, setIsInfoCardModalOpen] = useState(false);
   const [isNewConstraintModalOpen, setIsNewConstraintModalOpen] =
@@ -148,7 +148,7 @@ const ConstraintsPanel = () => {
       </ConstraintHeader>
       <ConstraintsGroup>
         <DragDropContext onDragEnd={handleDragEnd}>
-          {optionsTypes.includes("hard") && (
+          {(optionsTypes.includes("hard") || show.includes("home")) && (
             <ConstraintListContainer>
               <ConstraintListTitle>
                 <CenteredLabel>Hard</CenteredLabel>
@@ -162,7 +162,7 @@ const ConstraintsPanel = () => {
               />
             </ConstraintListContainer>
           )}
-          {optionsTypes.includes("soft") && (
+          {(optionsTypes.includes("soft") || show.includes("home")) && (
             <ConstraintListContainer>
               <ConstraintListTitle>
                 <CenteredLabel>Soft</CenteredLabel>

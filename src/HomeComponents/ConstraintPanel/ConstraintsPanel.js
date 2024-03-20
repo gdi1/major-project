@@ -24,8 +24,6 @@ import ConstraintsInfoCardModal from "./ConstraintModals/ConstraintsInfoCardModa
 import exclamation_mark_icon from "../../icons/exclamation_mark_icon.png";
 import { NotificationManager } from "react-notifications";
 import { formatNtf } from "../../Utilities/NotificationWrapper";
-
-const constraints_types = ["hard", "soft"];
 /**
  *
  * References
@@ -36,9 +34,11 @@ const constraints_types = ["hard", "soft"];
  * “Simplifying Drag and Drop (Lists and Nested Lists).” Tania Rascia RSS, n.d.
  * https://www.taniarascia.com/simplifying-drag-and-drop/.
  */
-const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
+const ConstraintsPanel = () => {
   const { hardConstraints, softConstraints, outdatedConstraints, teams } =
     useSelector((state) => state.configurations);
+
+  const { optionsTypes } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
   const [isInfoCardModalOpen, setIsInfoCardModalOpen] = useState(false);
   const [isNewConstraintModalOpen, setIsNewConstraintModalOpen] =
@@ -93,7 +93,6 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
       configurationsActions.removeConstraint({
         index: sourceIndex,
         type: sourceListId,
-        isDrag: true,
       })
     );
     dispatch(
@@ -110,7 +109,7 @@ const ConstraintsPanel = ({ optionsTypes = constraints_types }) => {
       <AddConstraintNameModal
         isModalOpen={isNewConstraintModalOpen}
         setIsModalOpen={setIsNewConstraintModalOpen}
-        isSoft={optionsTypes.length === 1 && optionsTypes[0] === "soft"}
+        isSoft={optionsTypes.includes("soft")}
       />
       <EditConstraintModal
         isModalOpen={isEditConstraintModalOpen}

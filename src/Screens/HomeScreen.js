@@ -35,8 +35,6 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { show, optionsTypes } = useSelector((state) => state.sidebar);
-  // const [show, setShow] = useState(["home"]);
-  // const [optionsTypes, setOptionsTypes] = useState([]);
   const [showSaveWorkingCopyModal, setShowSaveWorkingCopyModal] =
     useState(false);
   const [showExportEverythingModal, setShowExportEverythingModal] =
@@ -176,9 +174,6 @@ const HomeScreen = () => {
           isModalOpen={showResetSolutionModal}
         />
         <SidebarComponent
-          show={show}
-          // setShow={setShow}
-          // setOptionsTypes={setOptionsTypes}
           optionsTypes={optionsTypes}
           setShowSaveWorkingCopyModal={setShowSaveWorkingCopyModal}
           setShowExportEverythingModal={setShowExportEverythingModal}
@@ -270,6 +265,12 @@ const ButtonGroup = styled(RowContainer)`
   gap: ${gaps.med};
 `;
 
+/**
+ * References
+ *
+ * “One Line - Sticky Header Using CSS.” DEV Community,
+ * n.d. https://dev.to/akhilarjun/one-line-sticky-header-using-css-5gp3.
+ */
 const Header = styled(ColumnContainer)`
   height: auto;
   box-sizing: border-box;

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { ColumnContainer, RowContainer } from "../GeneralComponents/Containers";
 import GeneralButton from "../GeneralComponents/GeneralButton";
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import ScheduleView from "./ScheduleView/ScheduleView";
 import JourneyView from "./JourneyView/JourneyView";
 import styled from "styled-components";
@@ -24,16 +24,6 @@ const SolutionPanel = () => {
     [view]
   );
   const [isMapInfoCardOpened, setIsMapInfoCardOpened] = useState(false);
-
-  useEffect(() => {
-    if (!selectedTeam) return;
-    const leafletDivInstructions = document.querySelector(
-      ".leaflet-top.leaflet-right"
-    );
-    if (leafletDivInstructions) {
-      leafletDivInstructions.remove();
-    }
-  }, [selectedTeam]);
 
   return (
     <SolutionBody>

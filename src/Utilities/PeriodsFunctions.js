@@ -1,13 +1,14 @@
-export const generateTimeArray = () => {
-  const timesArray = [];
-  for (let hour = 0; hour < 24; hour++) {
-    timesArray.push(`${hour.toString().padStart(2, "0")}:00`);
-    timesArray.push(`${hour.toString().padStart(2, "0")}:30`);
+export const generateTimes = () => {
+  const times = [];
+  for (let i = 0; i < 24; i++) {
+    const hour = i.toString().padStart(2, "0");
+    times.push(`${hour}:00`);
+    times.push(`${hour}:30`);
   }
-  return timesArray;
+  return times;
 };
 
-export const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+export const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const mapDayToIndex = {
   Mon: "1",

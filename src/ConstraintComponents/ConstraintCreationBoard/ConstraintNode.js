@@ -34,7 +34,6 @@ const ConstraintNode = ({ id, data }) => {
 
   useEffect(() => {
     updateNodeInternals(id);
-    console.log("blabal");
   }, [bottomHandle]);
 
   return (

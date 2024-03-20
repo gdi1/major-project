@@ -3,6 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const constraint_types = ["hard", "soft"];
 const options_types = ["teams", "locations", "periods", "weeks"];
 
+/**
+ * References
+ *
+ * Redux Toolkit, n.d. https://redux-toolkit.js.org/.
+ */
 const sidebarSlice = createSlice({
   name: "sidebar",
   initialState: {

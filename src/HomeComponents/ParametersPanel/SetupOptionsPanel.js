@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import {
   ColumnContainer,
   RowContainer,
@@ -16,6 +16,7 @@ import NoOfWeeksOptions from "./NoOfWeeksOptions";
 import margins from "../../style-utils/margins";
 import gaps from "../../style-utils/gaps";
 import colors from "../../style-utils/colors";
+import { fadeIn } from "../../GeneralComponents/animations";
 
 const types = ["teams", "locations", "periods", "weeks"];
 const titles = {
@@ -96,26 +97,17 @@ const Options = styled(ColumnContainer)`
   gap: ${gaps.small};
 `;
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
 export const OptionsGridContainer = styled.div`
   display: grid;
   animation: ${fadeIn} 0.3s ease-in-out;
   grid-template-columns: repeat(auto-fit, 16vw);
-  width: 100%;
+  background-color: ${colors.beige};
   row-gap: ${gaps.lrg};
   column-gap: ${gaps.med};
-  background-color: ${colors.beige};
   box-sizing: border-box;
   justify-content: start;
   margin-bottom: ${margins.med};
+  width: 100%;
 `;
 
 const OptionSection = styled(ColumnContainer)`

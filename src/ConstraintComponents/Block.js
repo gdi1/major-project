@@ -1,17 +1,9 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import paddings from "../style-utils/paddings";
 import gaps from "../style-utils/gaps";
 import borders from "../style-utils/borders";
 import text_styles from "../style-utils/text_styles";
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
+import { fadeIn } from "../GeneralComponents/animations";
 
 const Block = styled.div`
   border: ${borders.small};
@@ -27,12 +19,6 @@ const Block = styled.div`
   background-color: white;
   font-size: ${text_styles.fonts.xxsmall};
   font-family: ${text_styles.styles.fontFamily};
-
   animation: ${fadeIn} 0.3s ease-in-out;
-  &:hover {
-    .close-btn {
-      display: block;
-    }
-  }
 `;
 export default Block;

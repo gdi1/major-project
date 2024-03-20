@@ -68,7 +68,6 @@ const LoadBackSnapshotModal = ({
     const snapshotToLoad = snapshots.find(
       (snapshot) => snapshot.name === snapshotName
     );
-    console.log(snapshotToLoad);
     dispatch(configurationsActions.setState(snapshotToLoad.internalState));
     dispatch(solutionActions.setState(snapshotToLoad.solution));
     if (saveWorkingCopy) {

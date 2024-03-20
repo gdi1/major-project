@@ -258,9 +258,6 @@ const compareConstraints = (constraint1, constraint2) => {
   );
 };
 
-// || constraint1.nodes[0].id;
-// || constraint2.nodes[0].id;
-
 const areConstraintListsTheSame = (constraintsList1, constraintsList2) => {
   const constraints1 = [...constraintsList1];
   const constraints2 = [...constraintsList2];

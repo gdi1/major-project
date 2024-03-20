@@ -1,6 +1,5 @@
-import { DropdownItem } from "./DropDownComponents";
 import InputField from "../../GeneralComponents/InputField";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
 import { useDispatch, useSelector } from "react-redux";
 import { configurationsActions } from "../../store/configurations";
@@ -15,6 +14,7 @@ import { SmallIcon } from "../../GeneralComponents/Icons";
 import text_styles from "../../style-utils/text_styles";
 import { formatNtf } from "../../Utilities/NotificationWrapper";
 import { TooltipText } from "../../GeneralComponents/TooltipText";
+import { TextWithEllipsisCSS } from "../../GeneralComponents/TextWithoutOverflow";
 
 const DropDownItem = ({ id, option, type }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -58,10 +58,6 @@ const DropDownItem = ({ id, option, type }) => {
     if (type === "teams" || type === "locations") setIsEdit(true);
   };
 
-  useEffect(() => {
-    if (isEdit) optionInputRef.current.focus();
-  }, [isEdit]);
-
   const handleInputKeyDown = (e) => {
     if (e.key === "Enter") updateOption();
   };
@@ -92,6 +88,7 @@ const DropDownItem = ({ id, option, type }) => {
             defaultValue={option.label}
             ref={optionInputRef}
             onKeyDown={handleInputKeyDown}
+            autoFocus={true}
           />
           <OptionButton onClick={updateOption}>
             <SmallIcon src={check_icon} />
@@ -110,9 +107,12 @@ const OptionBundle = styled(RowContainer)`
 
 const OptionButton = styled(GeneralButton)``;
 
-const Option = styled(DropdownItem)`
+const Option = styled.div`
+  cursor: pointer;
+  font-size: ${text_styles.fonts.xsmall};
   font-size: ${text_styles.fonts.xsmall};
   font-family: ${text_styles.styles.fontFamily};
+  ${TextWithEllipsisCSS}
 `;
 
 export default DropDownItem;

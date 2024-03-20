@@ -78,7 +78,6 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
       isOpen={isModalOpen}
       onRequestClose={closeModal}
       style={modal_content}
-      onAfterOpen={() => editConstraintNameRef.current.focus()}
     >
       <ModalBody>
         <ModalTitle>Edit Constraint</ModalTitle>
@@ -87,6 +86,7 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
           defaultValue={constraint ? constraint.name : ""}
           ref={editConstraintNameRef}
           onKeyDown={handleKeyDown}
+          autoFocus={true}
         />
         <ModalButtonGroup>
           <ModalButton

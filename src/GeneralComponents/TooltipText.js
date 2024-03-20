@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import text_styles from "../style-utils/text_styles";
 
+/**
+ * References
+ *
+ * CSS Tooltip, n.d., https://www.w3schools.com/css/css_tooltip.asp.
+ *
+ * “W3Schools Online HTML Editor,” W3Schools Online Web Tutorials,
+ * n.d., https://www.w3schools.com/css/tryit.asp?filename=trycss_tooltip_arrow_top.
+ */
 export const TooltipText = styled.span`
   visibility: hidden;
   background-color: black;

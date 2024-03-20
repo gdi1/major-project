@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import DayAndTimePicker from "./DayAndTimePicker";
 import AddLocationModal from "./LocationSetup/AddLocationModal";
 import InputField from "../../../GeneralComponents/InputField";
@@ -33,22 +33,20 @@ const DynamicInputField = ({ type }) => {
   };
 
   const addNewOption = () => {
-    if (
-      type === "teams" &&
-      teams.some((team) => team.label === inputValue.trim())
-    ) {
+    const input = inputValue.trim();
+    if (type === "teams" && teams.some((team) => team.label === input)) {
       NotificationManager.error(
         ...formatNtf("There is already a team with this name!", "Error")
       );
       return;
     }
-    if (!inputValue.trim()) {
+    if (!input) {
       NotificationManager.error(
         ...formatNtf("Teams must have a name!", "Error")
       );
       return;
     }
-    dispatch(updateFunctionMap[type](inputValue));
+    dispatch(updateFunctionMap[type](input));
     setInputValue("");
   };
 
@@ -57,10 +55,6 @@ const DynamicInputField = ({ type }) => {
   };
 
   const toggleShowInputField = () => setShowInputField((prev) => !prev);
-
-  useEffect(() => {
-    if (inputRef.current) inputRef.current.focus();
-  }, [showInputField]);
 
   return (
     <InputFieldBody showInputField={showInputField}>
@@ -83,6 +77,7 @@ const DynamicInputField = ({ type }) => {
                 placeholder="Type and press Enter"
                 style={{ width: "70%", height: "100%" }}
                 ref={inputRef}
+                autoFocus={true}
               />
               <GeneralButton onClick={addNewOption}>
                 <SmallIcon src={check_icon} />
@@ -116,6 +111,7 @@ const DynamicInputField = ({ type }) => {
                 style={{ width: "50%", height: "100%" }}
                 type="number"
                 placeholder="Enter no. of weeks"
+                autoFocus={true}
               />
               <GeneralButton onClick={toggleShowInputField}>
                 X<TooltipText>Close</TooltipText>

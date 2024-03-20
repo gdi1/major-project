@@ -12,10 +12,10 @@ const FitMapBounds = () => {
   );
 
   useEffect(() => {
-    const points = getCoordinatesOfLocations(selectedTeamJourney);
-    if (points.length > 0) {
-      points.forEach((point) => {
-        bounds.extend(point);
+    const locationsCoordinates = getCoordinatesOfLocations(selectedTeamJourney);
+    if (locationsCoordinates.length > 0) {
+      locationsCoordinates.forEach((coords) => {
+        bounds.extend(coords);
       });
       map.fitBounds(bounds);
     }

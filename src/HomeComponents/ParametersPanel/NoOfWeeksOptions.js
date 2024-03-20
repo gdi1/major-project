@@ -1,11 +1,11 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import GeneralButton from "../../GeneralComponents/GeneralButton";
 import InputField from "../../GeneralComponents/InputField";
 import edit_icon from "./../../icons/edit_icon.png";
 import check_icon from "./../../icons/check_icon.png";
 import { RowContainer } from "../../GeneralComponents/Containers";
 import { Label } from "../../GeneralComponents/Labels";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { configurationsActions } from "../../store/configurations";
 import text_styles from "../../style-utils/text_styles";
@@ -13,11 +13,12 @@ import { SmallIcon } from "../../GeneralComponents/Icons";
 import { TooltipText } from "../../GeneralComponents/TooltipText";
 import { NotificationManager } from "react-notifications";
 import { formatNtf } from "../../Utilities/NotificationWrapper";
+import { fadeIn } from "../../GeneralComponents/animations";
 
 const NoOfWeeksOptions = () => {
   const { weeks } = useSelector((state) => state.configurations);
   const [isEdit, setIsEdit] = useState(weeks.length === 0);
-  const [noOFWeeks, setNoOfWeeks] = useState(weeks.length);
+  const [noOfWeeks, setNoOfWeeks] = useState(weeks.length);
   const noOfWeeksRef = useRef();
   const dispatch = useDispatch();
   const handleChange = (e) => {
@@ -32,20 +33,16 @@ const NoOfWeeksOptions = () => {
   const toggleButton = () => {
     if (!isEdit) setIsEdit(true);
     else {
-      if (noOFWeeks === "" || parseInt(noOFWeeks) === 0) {
+      if (noOfWeeks === "" || parseInt(noOfWeeks) === 0) {
         NotificationManager.error(
           ...formatNtf("The number of weeks must be positive!", "Error")
         );
         return;
       }
       setIsEdit(false);
-      dispatch(configurationsActions.addWeeks(parseInt(noOFWeeks)));
+      dispatch(configurationsActions.addWeeks(parseInt(noOfWeeks)));
     }
   };
-
-  useEffect(() => {
-    if (isEdit) noOfWeeksRef.current.focus();
-  }, [isEdit]);
 
   return (
     <WeeksDetailsBody>
@@ -54,10 +51,11 @@ const NoOfWeeksOptions = () => {
         <InputField
           defaultValue={weeks.length}
           type="number"
-          value={noOFWeeks}
+          value={noOfWeeks}
           ref={noOfWeeksRef}
           onKeyDown={handleInputKeyDown}
           onChange={handleChange}
+          autoFocus={true}
           style={{ width: "5vw" }}
         />
       )}
@@ -69,15 +67,6 @@ const NoOfWeeksOptions = () => {
     </WeeksDetailsBody>
   );
 };
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
 
 const SmallerLabel = styled(Label)`
   width: auto;

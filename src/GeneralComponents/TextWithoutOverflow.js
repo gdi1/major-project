@@ -4,7 +4,7 @@ import text_styles from "../style-utils/text_styles";
 /**
  * References
  *
- * CSS Tooltip, n.d., https://www.w3schools.com/css/css_tooltip.asp.
+ * CSS text-overflow property, n.d., https://www.w3schools.com/cssref/css3_pr_text-overflow.php.
  */
 export const TextWithEllipsis = styled.div`
   word-break: break-word;

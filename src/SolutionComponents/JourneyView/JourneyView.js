@@ -47,14 +47,6 @@ const JourneyView = () => {
   const markers = formatMarkers(selectedTeamJourney);
 
   useEffect(() => {
-    if (!selectedTeam) return;
-    const leafletTopRightDiv = document.querySelector(
-      ".leaflet-top.leaflet-right"
-    );
-    if (leafletTopRightDiv) leafletTopRightDiv.remove();
-  }, [selectedTeam]);
-
-  useEffect(() => {
     if (focusedGame !== undefined) {
       setFlyToPoint(selectedTeamJourney[focusedGame].coordinates);
       setPulsatingGames([]);
@@ -79,7 +71,6 @@ const JourneyView = () => {
               <MapContainer
                 style={{ height: "100%", width: "100%" }}
                 center={center}
-                // zoom={5}
                 scrollWheelZoom={false}
                 id="leafletmap"
                 doubleClickZoom={false}

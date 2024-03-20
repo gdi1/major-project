@@ -8,6 +8,7 @@ import borders from "../style-utils/borders";
 import margins from "../style-utils/margins";
 import gaps from "../style-utils/gaps";
 import colors from "../style-utils/colors";
+import { TextWithEllipsisCSS } from "../GeneralComponents/TextWithoutOverflow";
 
 const TeamsPanel = () => {
   const dispatch = useDispatch();
@@ -44,10 +45,7 @@ const TeamOption = styled(CenteredLabel)`
   border: ${borders.small};
   cursor: pointer;
   width: 80%;
-  word-break: break-word;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  ${TextWithEllipsisCSS};
   background-color: ${(props) => (props.focused ? `${colors.brick}` : "white")};
 `;
 

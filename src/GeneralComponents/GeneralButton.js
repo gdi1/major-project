@@ -3,6 +3,14 @@ import styled from "styled-components";
 import colors from "../style-utils/colors";
 import borders from "../style-utils/borders";
 
+/**
+ * References
+ *
+ * CSS Tooltip, n.d., https://www.w3schools.com/css/css_tooltip.asp.
+ *
+ * “W3Schools Online HTML Editor,” W3Schools Online Web Tutorials,
+ * n.d., https://www.w3schools.com/css/tryit.asp?filename=trycss_tooltip_arrow_top.
+ */
 const GeneralButton = styled.button`
   color: #${colors.black};
   font-size: ${text_styles.fonts.small_med};

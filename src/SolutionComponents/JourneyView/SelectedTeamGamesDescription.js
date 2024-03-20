@@ -3,7 +3,7 @@ import {
   RowContainer,
   ColumnContainer,
 } from "../../GeneralComponents/Containers";
-import styled, { css, keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 import { TextWithEllipsis } from "../../GeneralComponents/TextWithoutOverflow";
 import borders from "../../style-utils/borders";
 import colors from "../../style-utils/colors";
@@ -11,6 +11,7 @@ import { solutionActions } from "../../store/solution";
 import gaps from "../../style-utils/gaps";
 import text_styles from "../../style-utils/text_styles";
 import paddings from "../../style-utils/paddings";
+import { pulseAnimation } from "../../GeneralComponents/animations";
 
 const SelectedTeamGamesDescription = ({ pulsatingGames }) => {
   const { selectedTeamGames, focusedGame, selectedTeam } = useSelector(
@@ -59,21 +60,6 @@ export default SelectedTeamGamesDescription;
 const Details = styled.div`
   font-size: ${text_styles.fonts.xsmall};
   font-family: ${text_styles.styles.fontFamily};
-`;
-
-/**
- * References
- *
- * “A Pen By Josh Branchaud,” codepen.io, n.d.,
- * https://codepen.io/jbranchaud/pen/vYYqQjO.
- */
-const pulseAnimation = keyframes`
-  0%, 100% {
-    background-color: ${colors.beige};
-  }
-  50% {
-    background-color: ${colors.brick};
-  }
 `;
 
 const GamesDescription = styled(ColumnContainer)`

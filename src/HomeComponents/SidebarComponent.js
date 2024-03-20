@@ -21,9 +21,6 @@ import margins from "../style-utils/margins";
 import { sidebarActions } from "../store/sidebar";
 import { useDispatch } from "react-redux";
 
-const constraint_types = ["hard", "soft"];
-const options_types = ["teams", "locations", "periods", "weeks"];
-
 /**
  * References
  *
@@ -40,9 +37,6 @@ const options_types = ["teams", "locations", "periods", "weeks"];
  * https://www.npmjs.com/package/react-pro-sidebar.
  */
 const SidebarComponent = ({
-  show,
-  // setShow,
-  // setOptionsTypes,
   optionsTypes,
   setShowSaveWorkingCopyModal,
   setShowExportEverythingModal,
@@ -63,12 +57,6 @@ const SidebarComponent = ({
     }
   }, [collapsed]);
 
-  const selectedStyle = (type) => ({
-    ...style_sidebar,
-    paddingLeft: "4vw",
-    backgroundColor: optionsTypes.includes(type) ? `${colors.mustard}` : "",
-  });
-
   const style_sidebar = {
     fontFamily: `${text_styles.styles.fontFamily}`,
     fontSize: `${text_styles.fonts.xsmall}`,
@@ -78,94 +66,14 @@ const SidebarComponent = ({
     minHeight: "5vh",
   };
 
+  const selectedStyle = (type) => ({
+    ...style_sidebar,
+    paddingLeft: "4vw",
+    backgroundColor: optionsTypes.includes(type) ? `${colors.mustard}` : "",
+  });
+
   const toggleNewType = (type) => {
     dispatch(sidebarActions.toggleNewType(type));
-    // setShow((prev) => prev.filter((el) => el !== "home"));
-    // if (type === "all-constraints") {
-    //   if (
-    //     !show.includes("constraints") ||
-    //     !constraint_types.every((op) => optionsTypes.includes(op))
-    //   ) {
-    //     setShow((prev) => [...new Set([...prev, "constraints"])]);
-    //     setOptionsTypes((prev) => [...new Set([...prev, ...constraint_types])]);
-    //   } else {
-    //     setShow((prev) => {
-    //       const result = prev.filter((el) => el !== "constraints");
-    //       return result.length !== 0 ? result : ["home"];
-    //     });
-    //     setOptionsTypes((prev) =>
-    //       prev.filter((el) => !constraint_types.includes(el))
-    //     );
-    //   }
-    //   return;
-    // }
-    // if (type === "all-options") {
-    //   if (
-    //     !show.includes("options") ||
-    //     !options_types.every((op) => optionsTypes.includes(op))
-    //   ) {
-    //     setShow((prev) => [...new Set([...prev, "options"])]);
-    //     setOptionsTypes((prev) => [...new Set([...prev, ...options_types])]);
-    //   } else {
-    //     setShow((prev) => {
-    //       const result = prev.filter((el) => el !== "options");
-    //       return result.length !== 0 ? result : ["home"];
-    //     });
-    //     setOptionsTypes((prev) =>
-    //       prev.filter((el) => !options_types.includes(el))
-    //     );
-    //   }
-    //   return;
-    // }
-    // if (type === "all-snapshots") {
-    //   if (!show.includes("snapshots")) {
-    //     setShow((prev) => [...prev, "snapshots"]);
-    //     setOptionsTypes((prev) => [...prev, "snapshots"]);
-    //   } else {
-    //     setShow((prev) => {
-    //       const result = prev.filter((el) => el !== "snapshots");
-    //       return result.length !== 0 ? result : ["home"];
-    //     });
-    //     setOptionsTypes((prev) => prev.filter((el) => el !== "snapshots"));
-    //   }
-    //   return;
-    // }
-    // if (constraint_types.includes(type)) {
-    //   if (show.includes("constraints")) {
-    //     if (optionsTypes.includes(type)) {
-    //       setOptionsTypes((prev) => {
-    //         const result = prev.filter((el) => el !== type);
-    //         if (!result.some((op) => constraint_types.includes(op)))
-    //           setShow((prev) => {
-    //             const res = prev.filter((el) => el !== "constraints");
-    //             return res.length !== 0 ? res : ["home"];
-    //           });
-    //         return result;
-    //       });
-    //     } else setOptionsTypes((prev) => [...prev, type]);
-    //   } else {
-    //     setShow((prev) => [...new Set([...prev, "constraints"])]);
-    //     setOptionsTypes((prev) => [...new Set([...prev, type])]);
-    //   }
-    // }
-    // if (options_types.includes(type)) {
-    //   if (show.includes("options")) {
-    //     if (optionsTypes.includes(type)) {
-    //       setOptionsTypes((prev) => {
-    //         const result = prev.filter((el) => el !== type);
-    //         if (!result.some((op) => options_types.includes(op)))
-    //           setShow((prev) => {
-    //             const res = prev.filter((el) => el !== "options");
-    //             return res.length !== 0 ? res : ["home"];
-    //           });
-    //         return result;
-    //       });
-    //     } else setOptionsTypes((prev) => [...prev, type]);
-    //   } else {
-    //     setShow((prev) => [...new Set([...prev, "options"])]);
-    //     setOptionsTypes((prev) => [...new Set([...prev, type])]);
-    //   }
-    // }
   };
 
   return (
@@ -212,8 +120,6 @@ const SidebarComponent = ({
         <MenuItem
           onClick={() => {
             dispatch(sidebarActions.resetView());
-            // setShow(["home"]);
-            // setOptionsTypes([]);
           }}
           style={style_sidebar}
         >

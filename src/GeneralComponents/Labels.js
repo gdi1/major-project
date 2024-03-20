@@ -1,6 +1,5 @@
 import text_styles from "../style-utils/text_styles";
 import styled from "styled-components";
-import colors from "../style-utils/colors";
 
 export const Label = styled.label`
   font-size: ${text_styles.fonts.small_med};

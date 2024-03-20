@@ -8,8 +8,9 @@ import {
   CenteredModalLabel,
 } from "../../GeneralComponents/ModalComponents";
 import React, { useEffect, useRef, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import colors from "../../style-utils/colors";
+import { spinning_animation } from "../../GeneralComponents/animations";
 
 const LoadingModal = ({ isModalOpen, setIsModalOpen, solveConfiguration }) => {
   const modalRef = useRef();
@@ -75,16 +76,6 @@ const LoadingModal = ({ isModalOpen, setIsModalOpen, solveConfiguration }) => {
     </Modal>
   );
 };
-
-const spinning_animation = keyframes`
-  0% { 
-    transform: rotate(0deg); 
-  }
-
-  100% { 
-    transform: rotate(360deg); 
-  }
-`;
 
 const LoadingSpinner = styled.div`
   height: 2vw;

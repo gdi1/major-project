@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+/**
+ * References
+ *
+ * Redux Toolkit, n.d. https://redux-toolkit.js.org/.
+ */
 const snapshotsHistorySlice = createSlice({
   name: "snapshotsHistory",
   initialState: {

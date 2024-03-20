@@ -3,10 +3,7 @@ import GeneralButton from "../../../GeneralComponents/GeneralButton";
 import { configurationsActions } from "../../../store/configurations";
 import { useState, useRef, useEffect } from "react";
 import { RowContainer } from "../../../GeneralComponents/Containers";
-import {
-  daysOfWeek,
-  generateTimeArray,
-} from "../../../Utilities/PeriodsFunctions";
+import { weekdays, generateTimes } from "../../../Utilities/PeriodsFunctions";
 import styled from "styled-components";
 import { NotificationManager } from "react-notifications";
 import { formatNtf } from "../../../Utilities/NotificationWrapper";
@@ -18,23 +15,23 @@ import { TooltipText } from "../../../GeneralComponents/TooltipText";
 
 const DayAndTimePicker = () => {
   const { periods } = useSelector((state) => state.configurations);
-  const timesOfDay = generateTimeArray();
+  const times = generateTimes();
   const daySelectRef = useRef();
   const dispatch = useDispatch();
 
-  const [selectedDay, setSelectedDay] = useState("Mon");
-  const [selectedTime, setSelectedTime] = useState("12:00");
+  const [day, setDay] = useState("Mon");
+  const [time, setTime] = useState("12:00");
 
-  const handleDayChange = (e) => {
-    setSelectedDay(e.target.value);
+  const changeDay = (e) => {
+    setDay(e.target.value);
   };
 
-  const handleTimeChange = (e) => {
-    setSelectedTime(e.target.value);
+  const changeTime = (e) => {
+    setTime(e.target.value);
   };
 
   const addNewPeriod = () => {
-    const newPeriod = `${selectedDay} ${selectedTime}`;
+    const newPeriod = `${day} ${time}`;
     if (periods.some((period) => period.label === newPeriod)) {
       NotificationManager.error(
         ...formatNtf("This period has already been selected.", "Error")
@@ -54,31 +51,29 @@ const DayAndTimePicker = () => {
   return (
     <React.Fragment>
       <DateSelectionBody>
-        {/* <RowContainer> */}
         <DateSelect
-          value={selectedDay}
-          onChange={handleDayChange}
+          value={day}
+          onChange={changeDay}
           onKeyDown={handleKeyPress}
           ref={daySelectRef}
         >
-          {daysOfWeek.map((day) => (
+          {weekdays.map((day) => (
             <option key={day} value={day}>
               {day}
             </option>
           ))}
         </DateSelect>
         <DateSelect
-          value={selectedTime}
-          onChange={handleTimeChange}
+          value={time}
+          onChange={changeTime}
           onKeyDown={handleKeyPress}
         >
-          {timesOfDay.map((time) => (
+          {times.map((time) => (
             <option key={time} value={time}>
               {time}
             </option>
           ))}
         </DateSelect>
-        {/* </RowContainer> */}
       </DateSelectionBody>
       <GeneralButton onClick={addNewPeriod}>
         <SmallIcon src={check_icon} />

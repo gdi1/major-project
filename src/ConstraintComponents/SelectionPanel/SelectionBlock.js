@@ -38,11 +38,12 @@ const ConstraintBlock = ({ type }) => {
   ];
 
   useEffect(() => {
-    const elements = document.querySelectorAll(".rmsc");
-    elements.forEach((element) => {
-      element.style.setProperty("--rmsc-h", "4vh");
+    const tags = document.querySelectorAll(".rmsc");
+    tags.forEach((tags) => {
+      tags.style.setProperty("--rmsc-h", "4vh");
     });
   }, []);
+
   const getContentBlock = () => {
     if (multiselect_types.includes(type)) {
       return (

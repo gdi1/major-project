@@ -32,6 +32,7 @@ const LocationMarker = ({ coordinates, games, label }) => {
       markerRef.current.openPopup();
     else markerRef.current.closePopup();
   }, [focusedGame]);
+
   return (
     <Marker
       position={coordinates}

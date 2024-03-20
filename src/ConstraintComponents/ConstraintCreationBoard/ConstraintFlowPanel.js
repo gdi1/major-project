@@ -40,6 +40,7 @@ const ConstraintFlowPanel = () => {
     },
     [nodes, dispatch]
   );
+
   const onEdgesChange = useCallback(
     (changes) => {
       dispatch(

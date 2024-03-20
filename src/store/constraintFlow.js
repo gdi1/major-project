@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getRootNode } from "../Utilities/EncodingFunctions";
-
 const operators = ["and", "or"];
-
+/**
+ * References
+ *
+ * Redux Toolkit, n.d. https://redux-toolkit.js.org/.
+ */
 const constraintFlowSlice = createSlice({
   name: "constraintsSlice",
   initialState: {
@@ -15,7 +17,7 @@ const constraintFlowSlice = createSlice({
   },
   reducers: {
     focusRootNode(state, _) {
-      if (state.nodes.length == 0) return;
+      if (state.nodes.length === 0) return;
 
       const targets = [];
       const nodesIds = state.nodes.map(({ id }) => id);
@@ -49,7 +51,6 @@ const constraintFlowSlice = createSlice({
     },
     addNewNode(state, action) {
       const type = action.payload;
-      console.log("in here");
       let position = state.nodes.reduce(
         (acc, node) => ({
           x: acc.x + node.position.x,
@@ -191,7 +192,6 @@ const constraintFlowSlice = createSlice({
 
     setNewConstraint(state, action) {
       const { game, period, week } = action.payload;
-      console.log("payload", game, period, week);
       state.selectedNode = "1";
       state.nodes.push({
         id: "1",

@@ -10,6 +10,14 @@ export const LargeIcon = styled.img`
   height: 2vw;
 `;
 
+/**
+ * References
+ *
+ * CSS Tooltip, n.d., https://www.w3schools.com/css/css_tooltip.asp.
+ *
+ * “W3Schools Online HTML Editor,” W3Schools Online Web Tutorials,
+ * n.d., https://www.w3schools.com/css/tryit.asp?filename=trycss_tooltip_arrow_top.
+ */
 export const IconContainer = styled.div`
   position: relative;
   display: inline-block;

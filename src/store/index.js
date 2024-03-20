@@ -13,6 +13,8 @@ import sidebarSlice from "./sidebar";
  *
  * References
  *
+ * “React Redux.” React Redux, n.d. https://react-redux.js.org/.
+ *
  * “Persist State with Redux Persist Using Redux Toolkit in React.” LogRocket Blog, n.d.
  * https://blog.logrocket.com/persist-state-redux-persist-redux-toolkit-react/.
  */

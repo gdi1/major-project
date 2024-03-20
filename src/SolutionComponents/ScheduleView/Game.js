@@ -25,20 +25,18 @@ const Game = ({ game, week, period, setNewConstraint, setModalOpened }) => {
     <GameDescriptionBody focused={focused} onClick={goToAddNewConstraint}>
       <TeamsDescription focused={focused}>
         <LeftTeam>{teamA.label}</LeftTeam>
-        <div
-          style={{
-            fontFamily: `${text_styles.styles.fontFamily}`,
-            fontSize: `${text_styles.fonts.xsmall}`,
-          }}
-        >
-          vs
-        </div>
+        <VS>vs</VS>
         <RightTeam>{teamB.label}</RightTeam>
       </TeamsDescription>
       <Location>Location: {location.label}</Location>
     </GameDescriptionBody>
   );
 };
+
+const VS = styled.div`
+  font-family: ${text_styles.styles.fontFamily};
+  font-size: ${text_styles.fonts.xsmall};
+`;
 
 const GameDescriptionBody = styled(ColumnContainer)`
   border: ${borders.small};

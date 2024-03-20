@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { mock_solution } from "../Utilities/MockSolution";
 
+/**
+ * References
+ *
+ * Redux Toolkit, n.d. https://redux-toolkit.js.org/.
+ */
 const solutionSlice = createSlice({
   name: "solutionSlice",
   initialState: {

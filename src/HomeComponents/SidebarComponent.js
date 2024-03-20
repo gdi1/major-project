@@ -49,10 +49,10 @@ const SidebarComponent = ({
     if (!collapsed) {
       const mIcons = document.querySelectorAll(".ps-menu-icon");
       mIcons.forEach((ic) => {
-        ic.style.marginRight = `${margins.xsmall}`;
         ic.style.width = "1vw";
-        ic.style.height = "1vw";
         ic.style.minWidth = "1vw";
+        ic.style.height = "1vw";
+        ic.style.marginRight = `${margins.xsmall}`;
       });
     }
   }, [collapsed]);

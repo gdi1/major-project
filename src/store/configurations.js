@@ -115,7 +115,7 @@ const configurationsSlice = createSlice({
         state.weeks.push({ value: i, label: `Week ${i}` });
 
       const constraint_lists_types = ["hardConstraints", "softConstraints"];
-      for (let i = action.payload; i < oldNoOfweeks; i++) {
+      for (let i = action.payload + 1; i <= oldNoOfweeks; i++) {
         const value = i;
         const type = "weeks";
         constraint_lists_types.forEach((constraints_list_type) => {

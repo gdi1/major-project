@@ -45,10 +45,6 @@ const constraintFlowSlice = createSlice({
       state.selectedNode = undefined;
       state.mode = "new";
     },
-    removeOptionIds(state, action) {
-      const toRemoveIds = action.payload;
-      toRemoveIds.forEach((id) => delete state.selectedOptions[id]);
-    },
     addNewNode(state, action) {
       const type = action.payload;
       let position = state.nodes.reduce(

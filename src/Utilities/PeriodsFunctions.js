@@ -1,7 +1,7 @@
 export const generateTimes = () => {
   const times = [];
   for (let i = 0; i < 24; i++) {
-    const hour = i.toString().padStart(2, "0");
+    const hour = i < 10 ? `0${i}` : `${i}`;
     times.push(`${hour}:00`);
     times.push(`${hour}:30`);
   }

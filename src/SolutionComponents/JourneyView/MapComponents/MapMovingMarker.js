@@ -17,6 +17,10 @@ import team_icon from "../../../icons/team_icon.png";
  *
  * “Ewoken/Leaflet.Movingmarker: A Leaflet Plug-in to Create Moving Marker.” GitHub, n.d.
  * https://github.com/ewoken/Leaflet.MovingMarker.
+ *
+ * “React Leaflet.” React Leaflet, n.d. https://react-leaflet.js.org/.
+ *
+ * “An Open-Source JavaScript Library for Interactive Maps.” Leaflet, n.d. https://leafletjs.com/.
  */
 
 const MapMovingMarker = ({ movingMarkerRef, setPulsatingGames }) => {

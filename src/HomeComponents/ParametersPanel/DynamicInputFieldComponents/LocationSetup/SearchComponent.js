@@ -23,6 +23,8 @@ import "leaflet/dist/leaflet.css";
  *
  * Smeijer. “Smeijer/Leaflet-Geosearch: A Geocoding/Address-Lookup Library Supporting Various API Providers.” GitHub, n.d.
  * https://github.com/smeijer/leaflet-geosearch.
+ *
+ * OpenStreetMap, n.d. https://www.openstreetmap.org/#map=6/54.910/-3.432.
  */
 const SearchComponent = ({
   onLocationChange,
@@ -37,10 +39,9 @@ const SearchComponent = ({
     const searchControl = new GeoSearchControl({
       provider: new OpenStreetMapProvider(),
       showMarker: false,
-      autoComplete: true,
-      autoClose: true,
       retainZoomLevel: false,
       animateZoom: true,
+      autoClose: true,
       searchLabel: "Enter address",
       keepResult: true,
     });
@@ -57,8 +58,8 @@ const SearchComponent = ({
       if (markerRef.current) markerRef.current.openPopup();
     });
 
-    const searchControlContainer = searchControl.getContainer();
-    const elementToRemove = searchControlContainer.querySelector(
+    const searchBarContainer = searchControl.getContainer();
+    const elementToRemove = searchBarContainer.querySelector(
       ".leaflet-bar-part-single"
     );
 

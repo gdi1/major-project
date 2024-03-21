@@ -16,6 +16,10 @@ const titles = {
  *
  * “Custom Button on the Leaflet Map with React-Leaflet Version3.” Stack Overflow, n.d.
  * https://stackoverflow.com/questions/68414583/custom-button-on-the-leaflet-map-with-react-leaflet-version3.
+ *
+ * “An Open-Source JavaScript Library for Interactive Maps.” Leaflet, n.d. https://leafletjs.com/.
+ *
+ * “React Leaflet.” React Leaflet, n.d. https://react-leaflet.js.org/.
  */
 const CreateButtonControl = ({ type, movingMarkerRef }) => {
   const dispatch = useDispatch();

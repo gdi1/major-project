@@ -26,6 +26,13 @@ const sortConstraintBlockTypes = (arr) => {
 
 const operators = ["and", "or"];
 
+/**
+ *
+ * References
+ *
+ * “The Handle Component – React Flow.” The Handle component – React Flow,
+ *  n.d. https://reactflow.dev/api-reference/components/handle.
+ */
 const ConstraintNode = ({ id, data }) => {
   const updateNodeInternals = useUpdateNodeInternals();
   const types = sortConstraintBlockTypes(Object.keys(data.types));

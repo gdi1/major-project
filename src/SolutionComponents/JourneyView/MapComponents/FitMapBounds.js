@@ -4,6 +4,14 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getCoordinatesOfLocations } from "../../../Utilities/MapFunctions";
 
+/**
+ *
+ * References
+ *
+ * “An Open-Source JavaScript Library for Interactive Maps.” Leaflet, n.d. https://leafletjs.com/.
+ *
+ * “React Leaflet.” React Leaflet, n.d. https://react-leaflet.js.org/.
+ */
 const FitMapBounds = () => {
   const map = useMap();
   const bounds = new L.LatLngBounds();

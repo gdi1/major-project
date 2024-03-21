@@ -9,6 +9,8 @@ import { useMapEvents } from "react-leaflet";
  * https://codesandbox.io/p/sandbox/programmatically-open-popup-with-react-leaflet-y12g0?file=%2Fsrc%2FApp.js.
  *
  * “Child Components.” React Leaflet, n.d. https://react-leaflet.js.org/docs/api-components/#marker.
+ *
+ * “Map Creation and Interactions.” React Leaflet, n.d. https://react-leaflet.js.org/docs/api-map/.
  */
 const OnClickMarker = ({
   setSearchedLocation,

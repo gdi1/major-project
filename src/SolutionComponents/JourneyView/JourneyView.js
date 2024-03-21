@@ -32,6 +32,10 @@ const controlButtonTypes = ["increase", "decrease", "start", "pause", "stop"];
  * “React Leaflet.” React Leaflet, n.d. https://react-leaflet.js.org/.
  *
  * Setup.” React Leaflet, n.d. https://react-leaflet.js.org/docs/start-setup/.
+ *
+ * OpenStreetMap, n.d. https://www.openstreetmap.org/#map=6/54.910/-3.432.
+ *
+ * “An Open-Source JavaScript Library for Interactive Maps.” Leaflet, n.d. https://leafletjs.com/.
  */
 const JourneyView = () => {
   const { selectedTeam, selectedTeamJourney, focusedGame } = useSelector(

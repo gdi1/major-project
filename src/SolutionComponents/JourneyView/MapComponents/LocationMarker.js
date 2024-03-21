@@ -16,6 +16,10 @@ import { TextWithWordBreakCSS } from "../../../GeneralComponents/TextWithoutOver
  *
  * Codesandbox.io, n.d.
  * https://codesandbox.io/p/sandbox/programmatically-open-popup-with-react-leaflet-y12g0?file=%2Fsrc%2FApp.js.
+ *
+ * “React Leaflet.” React Leaflet, n.d. https://react-leaflet.js.org/.
+ *
+ * “An Open-Source JavaScript Library for Interactive Maps.” Leaflet, n.d. https://leafletjs.com/.
  */
 const LocationMarker = ({ coordinates, games, label }) => {
   const markerRef = useRef();

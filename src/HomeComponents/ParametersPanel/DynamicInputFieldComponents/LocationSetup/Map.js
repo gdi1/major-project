@@ -38,6 +38,10 @@ import { TextWithWordBreakCSS } from "../../../../GeneralComponents/TextWithoutO
  *
  * Codesandbox.io, n.d.
  * https://codesandbox.io/p/sandbox/elegant-feather-xgelk?file=%2Fsrc%2FSearchControl.js%3A17%2C15
+ *
+ * OpenStreetMap, n.d. https://www.openstreetmap.org/#map=6/54.910/-3.432.
+ *
+ * “An Open-Source JavaScript Library for Interactive Maps.” Leaflet, n.d. https://leafletjs.com/.
  */
 const Map = () => {
   const { locations } = useSelector((state) => state.configurations);

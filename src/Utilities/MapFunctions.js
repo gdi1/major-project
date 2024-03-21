@@ -71,6 +71,11 @@ export const filterConsecutiveSameLocations = (locations) => {
   return filteredLocations;
 };
 
+/**
+ * References
+ *
+ * “React Leaflet.” React Leaflet, n.d. https://react-leaflet.js.org/.
+ */
 const calculatedDistances = (coordinates) => {
   const distances = [];
   for (let i = 0; i < coordinates.length - 1; i++) {

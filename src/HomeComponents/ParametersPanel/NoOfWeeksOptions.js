@@ -21,6 +21,13 @@ const NoOfWeeksOptions = () => {
   const [noOfWeeks, setNoOfWeeks] = useState(weeks.length);
   const noOfWeeksRef = useRef();
   const dispatch = useDispatch();
+
+  /**
+   * References
+   *
+   * Rswpthemes. “How to Remove All Characters from String except Numbers in Javascript.” RS WP THEMES | Premium WordPress Themes, Templates, and Plugins,
+   * n.d. https://rswpthemes.com/remove-all-characters-from-string-except-numbers-in-javascript/#:~:text=By%20applying%20the%20replace(),characters%20from%20the%20given%20strings.
+   */
   const handleChange = (e) => {
     let sanitizedValue = e.target.value.replace(/\D/g, "");
     setNoOfWeeks(sanitizedValue);

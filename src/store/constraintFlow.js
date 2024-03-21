@@ -30,6 +30,7 @@ const constraintFlowSlice = createSlice({
 
       for (const node of state.nodes)
         if (node.id === state.selectedNode) node.selected = true;
+        else node.selected = false;
     },
     setName(state, action) {
       state.name = action.payload;
@@ -72,9 +73,10 @@ const constraintFlowSlice = createSlice({
         return;
       }
 
-      position = { x: position.x / n, y: position.y / n };
-      const id = String(parseInt(state.nodes[state.nodes.length - 1].id) + 1);
+      if (n > 1) position = { x: position.x / n, y: position.y / n };
+      else position = { x: position.x + 50, y: position.y + 50 };
 
+      const id = String(parseInt(state.nodes[state.nodes.length - 1].id) + 1);
       const data = { types: {} };
       data.types[type] =
         type === "at-least" || type === "at-most"

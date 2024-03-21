@@ -12,7 +12,6 @@ import borders from "../style-utils/borders";
  * n.d., https://www.w3schools.com/css/tryit.asp?filename=trycss_tooltip_arrow_top.
  */
 const GeneralButton = styled.button`
-  color: #${colors.black};
   font-size: ${text_styles.fonts.small_med};
   font-weight: bold;
   cursor: pointer;

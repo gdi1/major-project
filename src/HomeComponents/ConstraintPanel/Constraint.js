@@ -9,7 +9,6 @@ const Constraint = styled.div`
   width: 100%;
   align-items: center;
   border-radius: 0.2vw;
-  color: #${colors.black};
   font-size: ${text_styles.fonts.small_med};
   font-family: ${text_styles.styles.fontFamily};
   font-weight: bold;

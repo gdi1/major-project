@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { mock_solution } from "../Utilities/MockSolution";
+import { mock_solution, mock_solution1 } from "../Utilities/MockSolution";
 
 /**
  * References

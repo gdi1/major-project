@@ -68,7 +68,7 @@ const EditConstraintModal = ({ isModalOpen, setIsModalOpen, editInfo }) => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && changeName()) closeModal();
+    if (e.key == "Enter") continueToEditConstraint();
   };
 
   return (

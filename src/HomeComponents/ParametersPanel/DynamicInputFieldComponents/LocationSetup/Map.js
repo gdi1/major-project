@@ -53,7 +53,6 @@ const Map = () => {
   const markerRef = useRef(null);
   const dispatch = useDispatch();
   const changeNameRef = useRef();
-  console.log(searchedLocation);
 
   const addNewLocation = (e) => {
     e.stopPropagation();
@@ -90,7 +89,7 @@ const Map = () => {
   };
 
   const onChangeName = (e) => {
-    setSearchedLocation((prev) => ({ ...prev, label: e.target.value }));
+    setSearchedLocation((prev) => ({ ...prev, label: e.target.value.trim() }));
   };
 
   const handleAddNewLocation = (e) => {
@@ -102,7 +101,6 @@ const Map = () => {
   }, [searchedLocation]);
 
   useEffect(() => {
-    console.log("Here", changeNameRef.current);
     if (changeNameRef.current) changeNameRef.current.focus();
   }, [searchedLocation]);
 

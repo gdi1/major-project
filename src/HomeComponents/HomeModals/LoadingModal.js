@@ -12,6 +12,12 @@ import styled from "styled-components";
 import colors from "../../style-utils/colors";
 import { spinning_animation } from "../../GeneralComponents/animations";
 
+/**
+ * References
+ *
+ * Chamochumbi, Joseph. “Using React to Understand Abort Controllers.” Medium,
+ * n.d. https://medium.com/@icjoseph/using-react-to-understand-abort-controllers-eb10654485df.
+ */
 const LoadingModal = ({ isModalOpen, setIsModalOpen, solveConfiguration }) => {
   const modalRef = useRef();
   const [controller, setController] = useState(null);

@@ -40,7 +40,7 @@ const SaveWorkingCopyModal = ({ isModalOpen, setIsModalOpen }) => {
     }
     dispatch(
       snapshotsHistoryActions.addSnapshot({
-        name,
+        name: name.trim(),
         internalState,
         solution,
         date: new window.Date().toISOString(),

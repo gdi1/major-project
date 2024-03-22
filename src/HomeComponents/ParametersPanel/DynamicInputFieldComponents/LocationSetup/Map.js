@@ -77,19 +77,25 @@ const Map = () => {
       );
       return;
     }
-    if (locations.some((l) => l.label === searchedLocation.label)) {
+    if (locations.some((l) => l.label === searchedLocation.label.trim())) {
       NotificationManager.error(
         ...formatNtf("There is already a location that has this name!", "Error")
       );
       return;
     }
-    dispatch(configurationsActions.addLocation(searchedLocation));
+
+    dispatch(
+      configurationsActions.addLocation({
+        ...searchedLocation,
+        label: searchedLocation.label.trim(),
+      })
+    );
     setShowChangeNameInput(false);
     setAddedSuccessfully(true);
   };
 
   const onChangeName = (e) => {
-    setSearchedLocation((prev) => ({ ...prev, label: e.target.value.trim() }));
+    setSearchedLocation((prev) => ({ ...prev, label: e.target.value }));
   };
 
   const handleAddNewLocation = (e) => {
@@ -105,11 +111,15 @@ const Map = () => {
   }, [searchedLocation]);
 
   const toggleChangeName = () => {
-    if (showChangeNameInput && searchedLocation.label.trim() === "") {
-      NotificationManager.error(
-        ...formatNtf("The location must have a name", "Error")
-      );
-      return;
+    if (showChangeNameInput) {
+      if (searchedLocation.label.trim() === "") {
+        NotificationManager.error(
+          ...formatNtf("The location must have a name", "Error")
+        );
+        return;
+      } else {
+        setSearchedLocation((prev) => ({ ...prev, label: prev.label.trim() }));
+      }
     }
     setShowChangeNameInput((prev) => !prev);
   };

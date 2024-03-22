@@ -134,7 +134,6 @@ const solutionSlice = createSlice({
         focusedGame,
         violatedSoftConstraints,
         schedule,
-        curvedPaths,
         speed,
         teamsMap,
         locationsMap,
@@ -151,7 +150,6 @@ const solutionSlice = createSlice({
       state.focusedGame = focusedGame;
       state.violatedSoftConstraints = violatedSoftConstraints;
       state.schedule = schedule;
-      state.curvedPaths = curvedPaths;
       state.speed = speed;
       state.teamsMap = teamsMap;
       state.locationsMap = locationsMap;
@@ -170,7 +168,6 @@ const solutionSlice = createSlice({
       state.focusedGame = undefined;
       state.violatedSoftConstraints = [];
       state.schedule = [];
-      state.curvedPaths = [];
       state.speed = 5000;
       state.teamsMap = {};
       state.locationsMap = {};

@@ -267,6 +267,7 @@ const configurationsSlice = createSlice({
         periods,
         hardConstraints,
         softConstraints,
+        outdatedConstraints,
       } = action.payload;
       state.teams = teams;
       state.locations = locations;
@@ -274,6 +275,7 @@ const configurationsSlice = createSlice({
       state.periods = periods;
       state.hardConstraints = hardConstraints;
       state.softConstraints = softConstraints;
+      state.outdatedConstraints = outdatedConstraints;
     },
   },
 });

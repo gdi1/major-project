@@ -1,3 +1,7 @@
+# References
+#
+# GitHub, n.d. https://github.com/conjure-cp/task-allocation-demo/blob/main/.github/workflows/deploy.yml. 
+
 name: Deploy Project to GitHub Pages
 
 on:
